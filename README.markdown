@@ -2,8 +2,8 @@
 Testing environment for Brighter Planet Climate Middleware emission calculation gems.
 
 This gem provides:
-* Sample climate data, representative of data found on http://data.brighterplanet.com
-* References to gems needed by each emitter gem  
+ * Sample climate data, representative of data found on http://data.brighterplanet.com
+ * References to gems needed by each emitter gem  
 
 # How to contribute
 Typical contributions will include updates to test data.
