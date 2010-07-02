@@ -4,7 +4,11 @@ module Sniff
   module Database
     extend self
 
-    def connect(base_dir, options = {})
+    attr_accessor :db_path
+
+    def init(db_path, options = {})
+      self.db_path = File.join(db_path, 'db')
+ 
       options[:load_data] = true if options[:load_data].nil?
 
       require 'active_record'
@@ -12,6 +16,7 @@ module Sniff
       FileUtils.mkdir_p db_path
       db_drop
       db_create
+      load_schema
       load_data if options[:load_data]
       load_models
     end
@@ -27,9 +32,6 @@ module Sniff
         :timeout => 5000 }
     end
 
-    def db_path
-      File.join(Sniff.root, 'db')
-    end
     def db_file_path
       File.join(db_path, 'emitter_data.sqlite3')
     end
@@ -44,8 +46,12 @@ module Sniff
     end
 
     def load_schema
-      file = "#{Sniff.root}/db/schema.rb"
-      load(file)
+      schema = "#{Sniff.root}/db/schema.rb"
+      orig_std_out = STDOUT.clone
+      STDOUT.reopen(File.open(File.join(db_path, 'schema_output'), 'w'))
+      load(schema)
+    ensure
+      STDOUT.reopen(orig_std_out)
     end
 
     def load_data
