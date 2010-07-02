@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'validates_decency_of', '>=1.5.1'
   s.add_runtime_dependency 'sqlite3-ruby'
   s.add_development_dependency('cucumber')
+  s.add_development_dependency('jeweler')
 end
