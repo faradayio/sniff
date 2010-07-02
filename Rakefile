@@ -1,12 +1,10 @@
 require 'rubygems'
-cwd = File.dirname(__FILE__)
-
 require 'bundler'
 Bundler.setup
 
-require 'jeweler'
-Jeweler::Tasks.new eval(File.read(File.join(cwd, 'sniff.gemspec')))
-Jeweler::GemcutterTasks.new
+require 'bueller'
+Bueller::Tasks.new 'sniff'
+Bueller::GemcutterTasks.new
 
 require 'spec/rake/spectask'
 
