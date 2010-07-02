@@ -27,6 +27,10 @@ module Sniff
 
       require 'cohort_scope'
 
+      require 'leap'
+      require 'characterizable'
+      ActiveRecord::Base.send :include, Characterizable
+
       require 'sniff/flight_configuration.rb'
       require 'sniff/flight_distance_class.rb'
       require 'sniff/flight_domesticity.rb'

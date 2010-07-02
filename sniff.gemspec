@@ -17,11 +17,12 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Testing environment for carbon.brighterplanet.com.}
 
-  s.add_runtime_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
-  s.add_runtime_dependency(%q<data_miner>, ["= 0.4.43"])
-  s.add_runtime_dependency(%q<sqlite3-ruby>, [">= 0"])
-  s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.0"])
-  s.add_runtime_dependency(%q<cohort_scope>, ["= 0.0.4"])
+  s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
+  s.add_dependency(%q<data_miner>, ["= 0.4.43"])
+  s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+  s.add_dependency(%q<falls_back_on>, ["= 0.0.0"])
+  s.add_dependency(%q<cohort_scope>, ["= 0.0.4"])
+  s.add_dependency(%q<leap>, ["= 0.2.4"])
   s.add_development_dependency(%q<jeweler>, [">= 0"])
   s.add_development_dependency(%q<rake>, [">= 0"])
   s.add_development_dependency(%q<rspec>, [">= 0"])
