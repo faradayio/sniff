@@ -1,10 +1,8 @@
 require 'rubygems'
-
 cwd = File.dirname(__FILE__)
-if File.exist?(cwd + '/sniff.gemspec')
-  require 'bundler'
-  Bundler.setup
-end
+
+require 'bundler'
+Bundler.setup
 
 require 'jeweler'
 Jeweler::Tasks.new eval(File.read(File.join(cwd, 'sniff.gemspec')))
