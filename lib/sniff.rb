@@ -1,5 +1,9 @@
 module Sniff
-  ROOT = File.join(File.dirname(__FILE__), '..')
+  extend self
+
+  def root 
+    File.join(File.dirname(__FILE__), '..')
+  end
 end
 
 TAPS_SERVER = 'http://example.com/data_for_me' # we will never actually be
