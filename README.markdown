@@ -5,6 +5,12 @@ This gem provides:
  * Sample climate data, representative of data found on http://data.brighterplanet.com
  * References to gems needed by each emitter gem  
 
+# Usage
+Within an emitter gem's test setup, you can:
+    require 'sniff'
+    
+    Sniff::Database.init '/path/to/emitter_project'
+
 # How to contribute
 Typical contributions will include updates to test data.
 
