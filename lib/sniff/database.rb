@@ -65,11 +65,11 @@ module Sniff
 
   private
     def load_models
+      ENV['DISABLE_FALLBACK_TABLE'] = 'true'
       require 'falls_back_on'
-      FallsBackOn::Initializer.init
+      require 'falls_back_on/active_record_ext'
 
       require 'cohort_scope'
-      require 'conversions'
       require 'leap'
 
       require 'sniff/airline.rb'
