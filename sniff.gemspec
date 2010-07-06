@@ -20,9 +20,13 @@ Gem::Specification.new do |s|
   s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
   s.add_dependency(%q<data_miner>, ["= 0.4.43"])
   s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-  s.add_dependency(%q<falls_back_on>, ["= 0.0.0"])
+  s.add_dependency(%q<falls_back_on>, ["= 0.0.0"]) unless ENV['LOCAL_FALLS_BACK_ON']
   s.add_dependency(%q<cohort_scope>, ["= 0.0.4"])
   s.add_dependency(%q<leap>, ["= 0.2.4"])
+  s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
+  s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
+  s.add_dependency(%q<common_name>, ['= 0.1.5'])
+
   s.add_development_dependency(%q<jeweler>, [">= 0"])
   s.add_development_dependency(%q<rake>, [">= 0"])
   s.add_development_dependency(%q<rspec>, [">= 0"])
