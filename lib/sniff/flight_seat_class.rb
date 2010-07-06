@@ -5,8 +5,4 @@ class FlightSeatClass < ActiveRecord::Base
 #  has_many :airline_aircraft_seat_classes, :class_name => 'AirlineAircraftSeatClass'
   
   falls_back_on :multiplier => 1
-
-  data_miner do
-    tap "Brighter Planet's sanitized flight seat class data", TAPS_SERVER
-  end
 end

@@ -34,14 +34,6 @@ class Airport < ActiveRecord::Base
   
   belongs_to :country, :foreign_key => 'country_iso_3166_code'
 
-  data_miner do
-    tap "Brighter Planet's sanitized airports data", TAPS_SERVER
-    
-    process "pull dependencies" do
-      run_data_miner_on_belongs_to_associations
-    end
-  end
-  
   def all_flights_from_here_domestic?
     !international_origin?
   end

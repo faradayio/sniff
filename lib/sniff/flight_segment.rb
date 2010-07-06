@@ -19,21 +19,6 @@ class FlightSegment < ActiveRecord::Base
                 :freight_share => lambda { weighted_average(:freight_share, :weighted_by => :passengers) },  # 0.024017329363736
                 :seats => lambda { weighted_average :seats, :weighted_by => :passengers }
 
-  data_miner do
-    tap "Brighter Planet's sanitized T100 data", TAPS_SERVER
-    
-    process "rename certain columns so that we can use them as association names" do
-      connection.rename_column :flight_segments, :domesticity, :domesticity_id
-      connection.rename_column :flight_segments, :service_class, :service_class_id
-      connection.rename_column :flight_segments, :configuration, :configuration_id
-      connection.rename_column :flight_segments, :propulsion, :propulsion_id
-    end
-    
-    process "pull dependencies" do
-      run_data_miner_on_belongs_to_associations
-    end
-  end
-
   INPUT_CHARACTERISTICS = [
     :origin_airport,
     :destination_airport,

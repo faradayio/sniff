@@ -125,10 +125,7 @@ module Sniff
           next if v.blank?
           c = characteristics[k.to_sym]
           next if c.nil?
-          puts "k: #{k.inspect} c #{c.inspect}"
-          unless c.association
-            resolved_params[k] = v
-          else
+          if c.association
             if v.is_a?(Hash)
               # h[:origin_airport][:iata_code] => 'MIA'
               attr_name, attr_value = v.to_a.flatten[0, 2]
@@ -137,6 +134,8 @@ module Sniff
               # h[:origin_airport] => 'MIA'
               resolved_params[k] = c.association.klass.loose_find v.to_s
             end
+          else
+            resolved_params[k] = v
           end
         end
         new resolved_params

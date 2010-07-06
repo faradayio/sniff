@@ -4,10 +4,6 @@ class Aircraft < ActiveRecord::Base
   belongs_to :aircraft_class, :foreign_key => 'brighter_planet_aircraft_class_code'
   belongs_to :manufacturer,   :foreign_key => 'manufacturer_name',                  :class_name => 'AircraftManufacturer'
   has_many   :segments,       :foreign_key => 'bts_aircraft_type_code',             :class_name => "FlightSegment", :primary_key => 'bts_aircraft_type_code'
-  # has_many :airline_aircraft, :class_name => 'AirlineAircraft'
-  # has_many :seat_classes, :class_name => 'AircraftSeatClass'
-  # has_many :airline_aircraft_seat_classes, :class_name => 'AirlineAircraftSeatClass'
-
 
   falls_back_on :m3 =>                      lambda { weighted_average(:m3,             :weighted_by => [:segments, :passengers]) }, # 9.73423082858437e-08   r7110: 8.6540464368905e-8      r6972: 8.37e-8
                 :m2 =>                      lambda { weighted_average(:m2,             :weighted_by => [:segments, :passengers]) }, # -0.000134350543484608  r7110: -0.00015337661447817    r6972: -4.09e-5
@@ -23,14 +19,6 @@ class Aircraft < ActiveRecord::Base
     # search by name
     def loose_right_reader
       @_loose_right_reader ||= lambda { |record| record[1,2].join ' ' }
-    end
-  end
-
-  data_miner do
-    tap "Brighter Planet's sanitized aircraft data", TAPS_SERVER
-    
-    process "pull dependencies" do
-      run_data_miner_on_belongs_to_associations
     end
   end
 end

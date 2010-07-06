@@ -18,10 +18,6 @@ class Airline < ActiveRecord::Base
     end
   end
   
-  data_miner do
-    tap "Brighter Planet's sanitized airlines data", TAPS_SERVER
-  end
-  
   def all_flights_domestic?
     !international?
   end

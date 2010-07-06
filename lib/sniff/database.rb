@@ -65,13 +65,11 @@ module Sniff
 
   private
     def load_models
-      require 'data_miner'
-
       require 'falls_back_on'
       FallsBackOn::Initializer.init
 
       require 'cohort_scope'
-
+      require 'conversions'
       require 'leap'
 
       require 'sniff/airline.rb'
