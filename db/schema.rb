@@ -1069,10 +1069,21 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string   "petroleum_administration_for_defense_district_code"
   end
 
-  create_table "flight_segments", :primary_key => "row_hash", :force => true do |t|
+  create_table "flight_segments", :primary_key => "row_hash", :id => false, :force => true do |t|
+    t.string   'row_hash'
+    t.string   "propulsion_id"
+    t.integer  "bts_aircraft_group_code"
+    t.string   "configuration_id"
+    t.integer  "bts_aircraft_configuration_code"
+    t.string   "distance_group"
+    t.integer  "bts_distance_group_code"
+    t.string   "service_class_id"
+    t.string   "bts_service_class_code"
+    t.string   "domesticity_id"
+    t.string   "bts_data_source_code"
     t.integer  "departures_performed"
     t.integer  "payload"
-    t.integer  "seats"
+    t.integer  "total_seats"
     t.integer  "passengers"
     t.integer  "freight"
     t.integer  "mail"
@@ -1109,24 +1120,17 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string   "dest_country_iso_3166_code"
     t.string   "dest_country_name"
     t.integer  "dest_wac"
-    t.integer  "bts_aircraft_group"
-    t.integer  "bts_aircraft_type"
-    t.integer  "bts_aircraft_config"
+    t.integer  "bts_aircraft_type_code"
     t.integer  "year"
     t.integer  "quarter"
     t.integer  "month"
-    t.integer  "bts_distance_group"
-    t.string   "bts_service_class"
-    t.string   "data_source"
-    t.float    "seats_per_departure"
+    t.float    "seats"
     t.string   "payload_units"
     t.string   "freight_units"
     t.string   "mail_units"
     t.string   "distance_units"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "data_miner_touch_count"
-    t.integer  "data_miner_last_run_id"
   end
 
   create_table "urbanities", :primary_key => "name", :force => true do |t|

@@ -15,7 +15,7 @@ describe Sniff::Database do
       File.exists?(@sqlite_path).should be_true
     end
     it 'should populate the database with data' do
-      Airline.first.iata_code.should == 'AF'
+      Airline.find_by_iata_code('AF').should_not be_nil
     end
   end
 end
