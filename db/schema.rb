@@ -9,20 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100702002909) do
+ActiveRecord::Schema.define(:version => 1) do
 
   create_table "air_conditioner_uses", :primary_key => "name", :force => true do |t|
     t.float  "fugitive_emission"
     t.string "fugitive_emission_units"
   end
 
-  create_table "airlines", :primary_key => "iata_code", :force => true do |t|
+  create_table "airlines", :id => false, :primary_key => 'iata_code', :force => true do |t|
+    t.string   'iata_code'
     t.string   "name"
     t.string   "dot_airline_id_code"
-    t.datetime "updated_at"
+    t.boolean  "international"
+    t.float    "distance"
+    t.float    "load_factor"
+    t.float    "freight_share"
+    t.float    "payload"
     t.datetime "created_at"
-    t.integer  "data_miner_touch_count"
-    t.integer  "data_miner_last_run_id"
+    t.datetime "updated_at"
+    t.float    "seats"
   end
 
   create_table "airports", :primary_key => "iata_code", :force => true do |t|
@@ -1064,7 +1069,7 @@ ActiveRecord::Schema.define(:version => 20100702002909) do
     t.string   "petroleum_administration_for_defense_district_code"
   end
 
-  create_table "t100_flight_segments", :primary_key => "row_hash", :force => true do |t|
+  create_table "flight_segments", :primary_key => "row_hash", :force => true do |t|
     t.integer  "departures_performed"
     t.integer  "payload"
     t.integer  "seats"

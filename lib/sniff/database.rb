@@ -55,7 +55,12 @@ module Sniff
     end
 
     def load_data
-      # TODO
+      require 'active_record/fixtures'
+
+      fixtures_dir = "#{Sniff.root}/db/fixtures"
+      Dir["#{fixtures_dir}/**/*.{yml,csv}"].each do |fixture_file|
+        Fixtures.create_fixtures(fixtures_dir, fixture_file[(fixtures_dir.size + 1)..-5])
+      end
     end
 
   private
@@ -68,9 +73,9 @@ module Sniff
       require 'cohort_scope'
 
       require 'leap'
-      require 'characterizable'
-      ActiveRecord::Base.send :include, Characterizable
 
+      require 'sniff/airline.rb'
+      require 'sniff/airport.rb'
       require 'sniff/flight_configuration.rb'
       require 'sniff/flight_distance_class.rb'
       require 'sniff/flight_domesticity.rb'
