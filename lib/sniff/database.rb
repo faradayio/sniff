@@ -2,7 +2,15 @@ require 'fileutils'
 
 module Sniff
   class Database
-    def self.init(root, options = {})
+    def self.init(local_root, options = {})
+      really_init local_root, options
+      unless local_root == Sniff.root
+        really_init Sniff.root, 
+          :db_path => File.join(local_root, 'db')
+      end
+    end
+
+    def self.really_init(root, options = {})
       db = new root, options
       db.init
     end
@@ -12,7 +20,7 @@ module Sniff
 
     def initialize(root, options)
       self.root = root
-      self.db_path = File.join(root, 'db')
+      self.db_path = options[:db_path]
       self.lib_path = File.join(root, 'lib', 'test_support')
       self.load_data = options[:load_data]
       self.schema_path = options[:schema_path]
@@ -22,6 +30,10 @@ module Sniff
     def load_data?
       @load_data = true if @load_data.nil?
       @load_data
+    end
+
+    def db_path
+      @db_path ||= File.join(root, 'db')
     end
 
     def schema_path
@@ -42,6 +54,7 @@ module Sniff
       load_schema
       load_models
       load_data if load_data?
+      load_supporting_libs
     end
 
     def ar_connect
@@ -79,11 +92,19 @@ module Sniff
 
     def load_data
       require 'active_record/fixtures'
+      puts "loading fixtures from #{fixtures_path}/**/*.{yml,csv}"
 
-      Fixtures.reset_cache
       Dir["#{fixtures_path}/**/*.{yml,csv}"].each do |fixture_file|
         puts "Loading fixture #{fixture_file}"
         Fixtures.create_fixtures(fixtures_path, fixture_file[(fixtures_path.size + 1)..-5])
+      end
+    end
+
+    def load_supporting_libs
+      $:.unshift File.join(root, 'lib')
+      Dir[File.join(root, 'lib', 'test_support', '*.rb')].each do |lib|
+        puts "Loading #{lib}"
+        require lib
       end
     end
 
