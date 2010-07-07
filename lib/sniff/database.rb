@@ -1,24 +1,47 @@
 require 'fileutils'
 
 module Sniff
-  module Database
-    extend self
+  class Database
+    def self.init(root, options = {})
+      db = new root, options
+      db.init
+    end
 
-    attr_accessor :db_path
+    attr_accessor :root, :lib_path, :db_path, :schema_path, :fixtures_path,
+      :load_data
 
-    def init(db_path, options = {})
-      self.db_path = File.join(db_path, 'db')
- 
-      options[:load_data] = true if options[:load_data].nil?
+    def initialize(root, options)
+      self.root = root
+      self.db_path = File.join(root, 'db')
+      self.lib_path = File.join(root, 'lib', 'test_support')
+      self.load_data = options[:load_data]
+      self.schema_path = options[:schema_path]
+      self.fixtures_path = options[:fixtures_path]
+    end
 
+    def load_data?
+      @load_data = true if @load_data.nil?
+      @load_data
+    end
+
+    def schema_path
+      @schema_path ||= File.join(lib_path, 'db', 'schema.rb')
+    end
+
+    def fixtures_path
+      @fixtures_path ||= File.join(lib_path, 'db', 'fixtures')
+    end
+
+    def init
       require 'active_record'
       require 'sqlite3'
+
       FileUtils.mkdir_p db_path
       db_drop
       db_create
       load_schema
-      load_data if options[:load_data]
       load_models
+      load_data if load_data?
     end
 
     def ar_connect
@@ -46,10 +69,10 @@ module Sniff
     end
 
     def load_schema
-      schema = "#{Sniff.root}/db/schema.rb"
+      puts "Loading schema #{schema_path}"
       orig_std_out = STDOUT.clone
       STDOUT.reopen(File.open(File.join(db_path, 'schema_output'), 'w'))
-      load(schema)
+      load(schema_path)
     ensure
       STDOUT.reopen(orig_std_out)
     end
@@ -57,9 +80,10 @@ module Sniff
     def load_data
       require 'active_record/fixtures'
 
-      fixtures_dir = "#{Sniff.root}/db/fixtures"
-      Dir["#{fixtures_dir}/**/*.{yml,csv}"].each do |fixture_file|
-        Fixtures.create_fixtures(fixtures_dir, fixture_file[(fixtures_dir.size + 1)..-5])
+      Fixtures.reset_cache
+      Dir["#{fixtures_path}/**/*.{yml,csv}"].each do |fixture_file|
+        puts "Loading fixture #{fixture_file}"
+        Fixtures.create_fixtures(fixtures_path, fixture_file[(fixtures_path.size + 1)..-5])
       end
     end
 
@@ -72,16 +96,10 @@ module Sniff
       require 'cohort_scope'
       require 'leap'
 
-      require 'sniff/airline.rb'
-      require 'sniff/airport.rb'
-      require 'sniff/flight_configuration.rb'
-      require 'sniff/flight_distance_class.rb'
-      require 'sniff/flight_domesticity.rb'
-      require 'sniff/flight_fuel_type.rb'
-      require 'sniff/flight_propulsion.rb'
-      require 'sniff/flight_seat_class.rb'
-      require 'sniff/flight_segment.rb'
-      require 'sniff/flight_service.rb'
+      Dir["#{lib_path}/data_models/**/*.rb"].each do |lib|
+        puts "Loading model #{lib}"
+        require lib
+      end
     end
   end
 end
