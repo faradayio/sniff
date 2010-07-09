@@ -17,18 +17,20 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Testing environment for carbon.brighterplanet.com.}
 
-  s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
-  s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-  s.add_dependency(%q<falls_back_on>, ["= 0.0.0"]) unless ENV['LOCAL_FALLS_BACK_ON']
-  s.add_dependency(%q<cohort_scope>, ["= 0.0.5"]) unless ENV['LOCAL_COHORT_SCOPE']
-  s.add_dependency(%q<leap>, ["= 0.2.4"])
-  s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
-  s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
-  s.add_dependency(%q<common_name>, ['= 0.1.5'])
-  s.add_dependency(%q<conversions>, ['= 1.4.5'])
+  s.add_dependency 'activerecord', '= 3.0.0.beta4'
+  s.add_dependency 'sqlite3-ruby', '= 1.3.0'
+  s.add_dependency 'falls_back_on', '= 0.0.0' unless ENV['LOCAL_FALLS_BACK_ON']
+  s.add_dependency 'cohort_scope', '= 0.0.5' unless ENV['LOCAL_COHORT_SCOPE']
+  s.add_dependency 'leap', '= 0.2.4' unless ENV['LOCAL_LEAP']
+  s.add_dependency 'summary_judgement', '= 1.3.8'
+  s.add_dependency 'fast_timestamp', '= 0.0.4'
+  s.add_dependency 'common_name', '= 0.1.5'
+  s.add_dependency 'conversions', '= 1.4.5'
+  s.add_dependency 'geokit', '=1.5.0'
+#  s.add_dependency 'data_miner', '=0.4.43'
 
-  s.add_development_dependency(%q<jeweler>, [">= 0"])
-  s.add_development_dependency(%q<rake>, [">= 0"])
-  s.add_development_dependency(%q<rspec>, [">= 0"])
+  s.add_development_dependency 'jeweler'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rspec'
 end
 
