@@ -5,19 +5,20 @@ begin
 rescue LoadError
   puts 'You need to install bundler, then run `bundle install` in order to run rake tasks'
 end
-cwd = File.dirname(__FILE__)
 
 require 'jeweler'                                                                 
 Jeweler::Tasks.new do |gem|                                                       
   gem.name = 'sniff'
   gem.authors = ["Derek Kastner"]
-  gem.description = File.read(File.join(cwd, 'README.markdown'))
+  gem.description = File.read(File.join(File.dirname(__FILE__), 'README.markdown'))
   gem.summary = 'Test support for Brighter Planet carbon gems'
   gem.email = 'derek.kastner@brighterplanet.com'
-  gem.files = Dir.glob(File.join(cwd, 'lib', '**/*.rb')) + 
-    Dir.glob(File.join(cwd, 'db', '**/*.rb'))
-  gem.test_files = Dir.glob(File.join(File.dirname(__FILE__), 'spec', '**', '*.rb')) +
-    Dir.glob(File.join(File.dirname(__FILE__), 'lib', 'test_support', '**', '*.rb'))
+  gem.files = Dir.glob(File.join('lib', '**','*.rb')) +
+    Dir.glob(File.join('lib', '**','*.csv')) +
+    Dir.glob(File.join('vendor','**','*'))
+  gem.test_files = Dir.glob(File.join('spec', '**', '*.rb')) +
+    Dir.glob(File.join('lib', 'test_support', '**', '*.rb')) +
+    Dir.glob(File.join('spec', 'spec.opts'))
   gem.homepage = 'http://github.com/brighterplanet/sniff'
   gem.require_paths = ["lib"]
   gem.add_dependency 'activerecord', '= 3.0.0.beta4'
