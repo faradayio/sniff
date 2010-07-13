@@ -2,14 +2,18 @@
 Testing environment for Brighter Planet Climate Middleware emission calculation gems.
 
 This gem provides:
- * Sample climate data, representative of data found on http://data.brighterplanet.com
+ * Sample data used for calculations, representative of data found on http://data.brighterplanet.com
+ * A database/ActiveRecord environment for said data
  * References to gems needed by each emitter gem  
+ * An autoloader that will load any models and sample data needed by the emitter gem being tested (see Usage)
 
 # Usage
 Within an emitter gem's test setup, you can:
     require 'sniff'
     
     Sniff.init '/path/to/emitter_project'
+
+If an emitter gem has its own test models and data, sniff will look for the models in `EMITTER_GEM_DIR/lib/test_support/data_models/` and the data fixtures in `EMITTER_GEM_DIR/lib/test_support/db/fixtures/`. It will also look for a schema in `EMITTER_GEM_DIR/lib/test_support/db/schema.rb`
 
 # How to contribute
 Typical contributions will include updates to test data.
