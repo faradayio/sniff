@@ -9,7 +9,7 @@ This gem provides:
 Within an emitter gem's test setup, you can:
     require 'sniff'
     
-    Sniff::Database.init '/path/to/emitter_project'
+    Sniff.init '/path/to/emitter_project'
 
 # How to contribute
 Typical contributions will include updates to test data.
