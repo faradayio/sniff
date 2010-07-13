@@ -84,7 +84,7 @@ module Sniff
     end
 
     def log(str)
-      logger.log str
+      logger.info str
     end
 
     def load_data?
