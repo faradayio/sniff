@@ -2,10 +2,15 @@ require 'summary_judgement'
 require 'fast_timestamp'
 require 'common_name'
 require 'falls_back_on'
+require 'falls_back_on/active_record_ext'
+require 'leap'
+require 'cohort_scope'
+require 'data_miner'
 
 module Sniff
   module Emitter
     def self.included(target)
+      target.send :extend, Leap::Subject
       target.send :extend, ClassMethods
       target.send :extend, SummaryJudgement
       target.send :extend, FastTimestamp

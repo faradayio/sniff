@@ -141,13 +141,6 @@ module Sniff
     end
 
     def load_models
-      require 'falls_back_on'
-      require 'falls_back_on/active_record_ext'
-
-      require 'cohort_scope'
-      require 'leap'
-#      require 'data_miner'
-
       Dir["#{lib_path}/data_models/**/*.rb"].each do |lib|
         log "Loading model #{lib}"
         require lib
