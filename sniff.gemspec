@@ -194,7 +194,7 @@ Typical development process:
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
-      s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.1"])
+      s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.2"])
       s.add_runtime_dependency(%q<cohort_scope>, ["= 0.0.5"])
       s.add_runtime_dependency(%q<leap>, ["= 0.3.3"])
       s.add_runtime_dependency(%q<summary_judgement>, ["= 1.3.8"])
@@ -212,7 +212,7 @@ Typical development process:
     else
       s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
       s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
-      s.add_dependency(%q<falls_back_on>, ["= 0.0.1"])
+      s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
       s.add_dependency(%q<cohort_scope>, ["= 0.0.5"])
       s.add_dependency(%q<leap>, ["= 0.3.3"])
       s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
@@ -231,7 +231,7 @@ Typical development process:
   else
     s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
     s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
-    s.add_dependency(%q<falls_back_on>, ["= 0.0.1"])
+    s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
     s.add_dependency(%q<cohort_scope>, ["= 0.0.5"])
     s.add_dependency(%q<leap>, ["= 0.3.3"])
     s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
