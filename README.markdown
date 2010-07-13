@@ -30,11 +30,11 @@ Paste the following functions into your ~/.bash_profile
       if [ "$1" == "disable" ]
       then
         echo "unset $var"
-        `unset $var`
+        unset $var
       else
         dir=${3:-"~/$2"}
         echo "export $var=$dir"
-        `export $var=$dir`
+        export $var=$dir
       fi
     }
     
