@@ -6,7 +6,7 @@ end
 task :console do
   require 'sniff'
   cwd = Dir.pwd
-  Sniff::Database.init cwd
+  Sniff.init cwd
 
   require 'irb'
   ARGV.clear
