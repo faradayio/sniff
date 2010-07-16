@@ -1,0 +1,9 @@
+rvm 1.8.7
+if rvm gemset list | grep sniff
+then
+# nothing
+  rvm 1.8.7@sniff
+else
+  rvm gemset create sniff
+  rvm gemset use sniff
+fi
