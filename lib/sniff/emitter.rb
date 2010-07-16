@@ -10,11 +10,14 @@ require 'data_miner'
 module Sniff
   module Emitter
     def self.included(target)
-      target.send :extend, Leap::Subject
-      target.send :extend, ClassMethods
-      target.send :extend, SummaryJudgement
-      target.send :extend, FastTimestamp
-      target.send :include, Characterizable
+      target.instance_eval do
+        extend Leap::Subject
+        extend ClassMethods
+        extend SummaryJudgement
+        extend FastTimestamp
+        include Characterizable
+        include CommonName
+      end
     end
     
     def parent_class
@@ -61,6 +64,10 @@ module Sniff
         new resolved_params
       end
       
+      def _common_name
+        name.underscore
+      end
+
       def pattern?
         common_name.ends_with? 'pattern'
       end
