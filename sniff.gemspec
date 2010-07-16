@@ -9,19 +9,23 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-07-13}
+  s.date = %q{2010-07-16}
   s.description = %q{# sniff
 Testing environment for Brighter Planet Climate Middleware emission calculation gems.
 
 This gem provides:
- * Sample climate data, representative of data found on http://data.brighterplanet.com
+ * Sample data used for calculations, representative of data found on http://data.brighterplanet.com
+ * A database/ActiveRecord environment for said data
  * References to gems needed by each emitter gem  
+ * An autoloader that will load any models and sample data needed by the emitter gem being tested (see Usage)
 
 # Usage
 Within an emitter gem's test setup, you can:
     require 'sniff'
     
     Sniff.init '/path/to/emitter_project'
+
+If an emitter gem has its own test models and data, sniff will look for the models in `EMITTER_GEM_DIR/lib/test_support/data_models/` and the data fixtures in `EMITTER_GEM_DIR/lib/test_support/db/fixtures/`. It will also look for a schema in `EMITTER_GEM_DIR/lib/test_support/db/schema.rb`
 
 # How to contribute
 Typical contributions will include updates to test data.
@@ -90,7 +94,6 @@ Typical development process:
   ]
   s.files = [
     "lib/sniff.rb",
-     "lib/sniff/active_record_ext.rb",
      "lib/sniff/conversions_ext.rb",
      "lib/sniff/database.rb",
      "lib/sniff/emitter.rb",
@@ -120,49 +123,7 @@ Typical development process:
      "lib/test_support/db/fixtures/yearly_anonymous_emissions.csv",
      "lib/test_support/db/fixtures/yearly_typical_emissions.csv",
      "lib/test_support/db/fixtures/zip_codes.csv",
-     "lib/test_support/db/schema.rb",
-     "vendor/geokit-rails/CHANGELOG.rdoc",
-     "vendor/geokit-rails/MIT-LICENSE",
-     "vendor/geokit-rails/README.markdown",
-     "vendor/geokit-rails/Rakefile",
-     "vendor/geokit-rails/about.yml",
-     "vendor/geokit-rails/assets/api_keys_template",
-     "vendor/geokit-rails/init.rb",
-     "vendor/geokit-rails/install.rb",
-     "vendor/geokit-rails/lib/geokit-rails.rb",
-     "vendor/geokit-rails/lib/geokit-rails/acts_as_mappable.rb",
-     "vendor/geokit-rails/lib/geokit-rails/adapters/abstract.rb",
-     "vendor/geokit-rails/lib/geokit-rails/adapters/mysql.rb",
-     "vendor/geokit-rails/lib/geokit-rails/adapters/postgresql.rb",
-     "vendor/geokit-rails/lib/geokit-rails/adapters/sqlserver.rb",
-     "vendor/geokit-rails/lib/geokit-rails/defaults.rb",
-     "vendor/geokit-rails/lib/geokit-rails/geocoder_control.rb",
-     "vendor/geokit-rails/lib/geokit-rails/ip_geocode_lookup.rb",
-     "vendor/geokit-rails/test/acts_as_mappable_test.rb",
-     "vendor/geokit-rails/test/boot.rb",
-     "vendor/geokit-rails/test/database.yml",
-     "vendor/geokit-rails/test/fixtures/companies.yml",
-     "vendor/geokit-rails/test/fixtures/custom_locations.yml",
-     "vendor/geokit-rails/test/fixtures/locations.yml",
-     "vendor/geokit-rails/test/fixtures/mock_addresses.yml",
-     "vendor/geokit-rails/test/fixtures/mock_families.yml",
-     "vendor/geokit-rails/test/fixtures/mock_houses.yml",
-     "vendor/geokit-rails/test/fixtures/mock_organizations.yml",
-     "vendor/geokit-rails/test/fixtures/mock_people.yml",
-     "vendor/geokit-rails/test/fixtures/stores.yml",
-     "vendor/geokit-rails/test/ip_geocode_lookup_test.rb",
-     "vendor/geokit-rails/test/models/company.rb",
-     "vendor/geokit-rails/test/models/custom_location.rb",
-     "vendor/geokit-rails/test/models/location.rb",
-     "vendor/geokit-rails/test/models/mock_address.rb",
-     "vendor/geokit-rails/test/models/mock_family.rb",
-     "vendor/geokit-rails/test/models/mock_house.rb",
-     "vendor/geokit-rails/test/models/mock_organization.rb",
-     "vendor/geokit-rails/test/models/mock_person.rb",
-     "vendor/geokit-rails/test/models/store.rb",
-     "vendor/geokit-rails/test/schema.rb",
-     "vendor/geokit-rails/test/tasks.rake",
-     "vendor/geokit-rails/test/test_helper.rb"
+     "lib/test_support/db/schema.rb"
   ]
   s.homepage = %q{http://github.com/brighterplanet/sniff}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -200,13 +161,12 @@ Typical development process:
       s.add_runtime_dependency(%q<summary_judgement>, ["= 1.3.8"])
       s.add_runtime_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<common_name>, ["= 0.1.5"])
-      s.add_runtime_dependency(%q<conversions>, ["= 1.4.5"])
-      s.add_runtime_dependency(%q<geokit>, ["= 1.5.0"])
-      s.add_runtime_dependency(%q<data_miner>, ["= 0.4.44"])
+      s.add_runtime_dependency(%q<timeframe>, ["= 0.0.1"])
+      s.add_runtime_dependency(%q<earth>, ["= 0.0.2"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
     else
@@ -218,13 +178,12 @@ Typical development process:
       s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
       s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_dependency(%q<common_name>, ["= 0.1.5"])
-      s.add_dependency(%q<conversions>, ["= 1.4.5"])
-      s.add_dependency(%q<geokit>, ["= 1.5.0"])
-      s.add_dependency(%q<data_miner>, ["= 0.4.44"])
+      s.add_dependency(%q<timeframe>, ["= 0.0.1"])
+      s.add_dependency(%q<earth>, ["= 0.0.2"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
-      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
     end
@@ -237,13 +196,12 @@ Typical development process:
     s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
     s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
     s.add_dependency(%q<common_name>, ["= 0.1.5"])
-    s.add_dependency(%q<conversions>, ["= 1.4.5"])
-    s.add_dependency(%q<geokit>, ["= 1.5.0"])
-    s.add_dependency(%q<data_miner>, ["= 0.4.44"])
+    s.add_dependency(%q<timeframe>, ["= 0.0.1"])
+    s.add_dependency(%q<earth>, ["= 0.0.2"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
   end

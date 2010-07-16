@@ -29,24 +29,22 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency 'summary_judgement', '= 1.3.8'
   gem.add_dependency 'fast_timestamp', '= 0.0.4'
   gem.add_dependency 'common_name', '= 0.1.5'
-  gem.add_dependency 'conversions', '= 1.4.5'
-  gem.add_dependency 'geokit', '=1.5.0'
-  gem.add_dependency 'data_miner', '=0.4.44' unless ENV['LOCAL_DATA_MINER']
+  gem.add_dependency 'timeframe', '= 0.0.1'
+  gem.add_dependency 'earth', '= 0.0.2'
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'jeweler'
   gem.add_development_dependency 'rake'
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec', '= 2.0.0.beta.17'
   gem.add_development_dependency 'rcov'
   gem.add_development_dependency 'rdoc'
 end
 Jeweler::GemcutterTasks.new
 
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
 desc "Run all examples with RCov"
-Spec::Rake::SpecTask.new('examples_with_rcov') do |t|
-   t.spec_files = FileList['spec/**/*_spec.rb']
+RSpec::Core::RakeTask.new('examples_with_rcov') do |t|
    t.rcov = true
    t.rcov_opts = ['--exclude', 'spec,~/.rvm,.rvm']
 end
