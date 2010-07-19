@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-07-16}
+  s.date = %q{2010-07-19}
   s.description = %q{# sniff
 Testing environment for Brighter Planet Climate Middleware emission calculation gems.
 
@@ -94,22 +94,10 @@ Typical development process:
   ]
   s.files = [
     "lib/sniff.rb",
-     "lib/sniff/conversions_ext.rb",
      "lib/sniff/database.rb",
      "lib/sniff/emitter.rb",
      "lib/sniff/tasks.rb",
      "lib/sniff/timeframe.rb",
-     "lib/test_support/data_models/census_division.rb",
-     "lib/test_support/data_models/census_region.rb",
-     "lib/test_support/data_models/climate_division.rb",
-     "lib/test_support/data_models/country.rb",
-     "lib/test_support/data_models/egrid_region.rb",
-     "lib/test_support/data_models/egrid_subregion.rb",
-     "lib/test_support/data_models/gender.rb",
-     "lib/test_support/data_models/petroleum_administration_for_defense_district.rb",
-     "lib/test_support/data_models/state.rb",
-     "lib/test_support/data_models/urbanity.rb",
-     "lib/test_support/data_models/zip_code.rb",
      "lib/test_support/db/fixtures/census_divisions.csv",
      "lib/test_support/db/fixtures/census_regions.csv",
      "lib/test_support/db/fixtures/climate_divisions.csv",
@@ -120,10 +108,7 @@ Typical development process:
      "lib/test_support/db/fixtures/petroleum_administration_for_defense_districts.csv",
      "lib/test_support/db/fixtures/states.csv",
      "lib/test_support/db/fixtures/urbanities.csv",
-     "lib/test_support/db/fixtures/yearly_anonymous_emissions.csv",
-     "lib/test_support/db/fixtures/yearly_typical_emissions.csv",
-     "lib/test_support/db/fixtures/zip_codes.csv",
-     "lib/test_support/db/schema.rb"
+     "lib/test_support/db/fixtures/zip_codes.csv"
   ]
   s.homepage = %q{http://github.com/brighterplanet/sniff}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -132,20 +117,7 @@ Typical development process:
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = [
     "spec/lib/sniff/database_spec.rb",
-     "spec/spec_helper.rb",
-     "lib/test_support/data_models/census_division.rb",
-     "lib/test_support/data_models/census_region.rb",
-     "lib/test_support/data_models/climate_division.rb",
-     "lib/test_support/data_models/country.rb",
-     "lib/test_support/data_models/egrid_region.rb",
-     "lib/test_support/data_models/egrid_subregion.rb",
-     "lib/test_support/data_models/gender.rb",
-     "lib/test_support/data_models/petroleum_administration_for_defense_district.rb",
-     "lib/test_support/data_models/state.rb",
-     "lib/test_support/data_models/urbanity.rb",
-     "lib/test_support/data_models/zip_code.rb",
-     "lib/test_support/db/schema.rb",
-     "spec/spec.opts"
+     "spec/spec_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -154,6 +126,7 @@ Typical development process:
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
+      s.add_runtime_dependency(%q<activesupport>, ["= 3.0.0.beta4"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
       s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.2"])
       s.add_runtime_dependency(%q<cohort_scope>, ["= 0.0.5"])
@@ -162,7 +135,7 @@ Typical development process:
       s.add_runtime_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<common_name>, ["= 0.1.5"])
       s.add_runtime_dependency(%q<timeframe>, ["= 0.0.1"])
-      s.add_runtime_dependency(%q<earth>, ["= 0.0.2"])
+      s.add_runtime_dependency(%q<earth>, ["= 0.0.6"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
@@ -171,6 +144,7 @@ Typical development process:
       s.add_development_dependency(%q<rdoc>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
+      s.add_dependency(%q<activesupport>, ["= 3.0.0.beta4"])
       s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
       s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
       s.add_dependency(%q<cohort_scope>, ["= 0.0.5"])
@@ -179,7 +153,7 @@ Typical development process:
       s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_dependency(%q<common_name>, ["= 0.1.5"])
       s.add_dependency(%q<timeframe>, ["= 0.0.1"])
-      s.add_dependency(%q<earth>, ["= 0.0.2"])
+      s.add_dependency(%q<earth>, ["= 0.0.6"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
@@ -189,6 +163,7 @@ Typical development process:
     end
   else
     s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
+    s.add_dependency(%q<activesupport>, ["= 3.0.0.beta4"])
     s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
     s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
     s.add_dependency(%q<cohort_scope>, ["= 0.0.5"])
@@ -197,7 +172,7 @@ Typical development process:
     s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
     s.add_dependency(%q<common_name>, ["= 0.1.5"])
     s.add_dependency(%q<timeframe>, ["= 0.0.1"])
-    s.add_dependency(%q<earth>, ["= 0.0.2"])
+    s.add_dependency(%q<earth>, ["= 0.0.6"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
