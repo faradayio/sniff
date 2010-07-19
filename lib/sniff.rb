@@ -7,7 +7,6 @@ module Sniff
 
   def init(local_root, options = {})
     options[:earth] ||= :none
-    require 'sqlite3'
 
     Sniff::Database.init local_root, options
   end

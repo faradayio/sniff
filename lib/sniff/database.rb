@@ -1,5 +1,7 @@
+require 'active_support'
 require 'fileutils'
 require 'logger'
+require 'sqlite3'
 
 module Sniff
   class Database
@@ -12,7 +14,7 @@ module Sniff
           environments << really_init(Sniff.root)
         end
 
-        db_init local_root
+        db_init options
         environments.each { |e| e.populate_fixtures }
       end
 
@@ -22,21 +24,20 @@ module Sniff
         db
       end
 
-      def db_init(local_root)
-        db_path = File.join(local_root, 'db')
-        db_file_path = File.join(db_path, 'emitter_data.sqlite3')
-        FileUtils.mkdir_p db_path
-        db_drop db_file_path
-        connect db_file_path
+      def db_init(options)
+        ActiveRecord::Base.logger = Logger.new nil
+        connect
         db_create
-        load_all_schemas
+        earth_init(options[:earth])
       end
 
-      def connect(db_file_path)
+      def earth_init(domain)
+        Earth.init domain, :apply_schemas => true
+      end
+
+      def connect
         ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
-          :database => db_file_path,
-          :pool => 5,
-          :timeout => 5000
+          :database => ':memory:'
       end
 
       def db_drop(db_file_path)
@@ -46,39 +47,15 @@ module Sniff
       def db_create
         ActiveRecord::Base.connection
       end
-
-      def define_schema(&blk)
-        @schemas = [] unless defined?(@schemas)
-        @schemas << blk
-      end
-
-      def schemas
-        @schemas
-      end
-
-      def load_all_schemas
-        orig_std_out = STDOUT.clone
-        STDOUT.reopen File.open(File.join('/tmp', 'schema_output'), 'w') 
-
-        ActiveRecord::Schema.define(:version => 1) do
-          ar_schema = self
-          Sniff::Database.schemas.each do |s|
-            ar_schema.instance_eval &s
-          end
-        end
-      ensure
-        STDOUT.reopen(orig_std_out)
-      end
     end
 
-    attr_accessor :root, :lib_path, :schema_path, :fixtures_path,
+    attr_accessor :root, :lib_path, :fixtures_path,
       :load_data, :fixtures, :logger
 
     def initialize(root, options)
       self.root = root
       self.lib_path = File.join(root, 'lib', 'test_support')
       self.load_data = options[:load_data]
-      self.schema_path = options[:schema_path]
       self.fixtures_path = options[:fixtures_path]
       self.logger = Logger.new options[:logdev]
     end
@@ -92,10 +69,6 @@ module Sniff
       @load_data
     end
 
-    def schema_path
-      @schema_path ||= File.join(lib_path, 'db', 'schema.rb')
-    end
-
     def fixtures_path
       @fixtures_path ||= File.join(lib_path, 'db', 'fixtures')
     end
@@ -105,15 +78,8 @@ module Sniff
     end
 
     def init
-      load_models
       load_supporting_libs
-      read_schema
       read_fixtures if load_data?
-    end
-
-    def read_schema
-      log "Reading schema #{schema_path}"
-      load(schema_path)
     end
 
     def read_fixtures
@@ -127,8 +93,12 @@ module Sniff
 
     def populate_fixtures
       fixtures.each do |fixture_file|
-        log "Loading fixture #{fixture_file}"
-        Fixtures.create_fixtures(fixtures_path, fixture_file[(fixtures_path.size + 1)..-5])
+        klass = File.basename(fixture_file, '.csv').
+          camelize.singularize
+        if Object.const_defined?(klass) and klass.constantize.table_exists?
+          log "Loading fixture #{fixture_file}"
+          Fixtures.create_fixtures(fixtures_path, fixture_file[(fixtures_path.size + 1)..-5])
+        end
       end
     end
 
@@ -136,13 +106,6 @@ module Sniff
       $:.unshift File.join(root, 'lib')
       Dir[File.join(root, 'lib', 'test_support', '*.rb')].each do |lib|
         log "Loading #{lib}"
-        require lib
-      end
-    end
-
-    def load_models
-      Dir["#{lib_path}/data_models/**/*.rb"].each do |lib|
-        log "Loading model #{lib}"
         require lib
       end
     end
