@@ -30,7 +30,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency 'fast_timestamp', '= 0.0.4'
   gem.add_dependency 'common_name', '= 0.1.5'
   gem.add_dependency 'timeframe', '= 0.0.1'
-  gem.add_dependency 'earth', '= 0.0.2'
+  gem.add_dependency 'earth', '= 0.0.6' unless ENV['LOCAL_EARTH']
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'jeweler'
