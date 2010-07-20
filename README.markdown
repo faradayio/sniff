@@ -2,7 +2,7 @@
 Development and testing environment for Brighter Planet emitters.
 
 ## Background
-Brighter Planet's emitters, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing the [emission estimates web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
+Brighter Planet's emitters, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing its [emission estimates web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
 
 ### Caution
 The data and other supporting information in the sniff environment is only representative of production data and in many cases is purely fictional, contrived to return predictable results in tests. Emission estimates and other information gleaned from execution within this environment will undoubtedly be--to put it simply--wrong. For real numbers, always use live queries to the [emission estimate web service](http://carbon.brighterplanet.com).
@@ -40,10 +40,10 @@ Summaries are human-friendly descriptions of characterized emitters. The strateg
 Summarizations are defined using a DSL provided by the [summary_judgement](http://github.com/rossmeissl/summary_judgement) library.
 
 ## Collaboration cycle 
-Brighter Planet vigorously encourages collaborative improvement of its emitter libraries.
+Brighter Planet vigorously encourages collaborative improvement of its emitter libraries. Collaboration requires a (free) GitHub account.
 
 ### You
-1.  Fork the emitter repository from GitHub.
+1.  Fork the emitter repository on GitHub.
 1.  Write a test proving the existing implementation's inadequacy. Ensure that the test fails. Commit the test.
 1.  Improve the code until your new test passes and commit your changes.
 1.  Push your changes to your GitHub fork.
