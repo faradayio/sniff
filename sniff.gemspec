@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-07-19}
+  s.date = %q{2010-07-20}
   s.description = %q{# sniff
 Testing environment for Brighter Planet Climate Middleware emission calculation gems.
 
@@ -97,7 +97,6 @@ Typical development process:
      "lib/sniff/database.rb",
      "lib/sniff/emitter.rb",
      "lib/sniff/tasks.rb",
-     "lib/sniff/timeframe.rb",
      "lib/test_support/db/fixtures/census_divisions.csv",
      "lib/test_support/db/fixtures/census_regions.csv",
      "lib/test_support/db/fixtures/climate_divisions.csv",
@@ -135,7 +134,7 @@ Typical development process:
       s.add_runtime_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<common_name>, ["= 0.1.5"])
       s.add_runtime_dependency(%q<timeframe>, ["= 0.0.1"])
-      s.add_runtime_dependency(%q<earth>, ["= 0.0.6"])
+      s.add_runtime_dependency(%q<earth>, ["= 0.0.7"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
@@ -153,7 +152,7 @@ Typical development process:
       s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_dependency(%q<common_name>, ["= 0.1.5"])
       s.add_dependency(%q<timeframe>, ["= 0.0.1"])
-      s.add_dependency(%q<earth>, ["= 0.0.6"])
+      s.add_dependency(%q<earth>, ["= 0.0.7"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
@@ -172,7 +171,7 @@ Typical development process:
     s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
     s.add_dependency(%q<common_name>, ["= 0.1.5"])
     s.add_dependency(%q<timeframe>, ["= 0.0.1"])
-    s.add_dependency(%q<earth>, ["= 0.0.6"])
+    s.add_dependency(%q<earth>, ["= 0.0.7"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
