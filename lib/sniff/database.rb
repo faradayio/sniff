@@ -7,14 +7,15 @@ module Sniff
   class Database
     class << self
       def init(local_root, options = {})
+        db_init options
+        earth_init(options[:earth])
+
         environments = []
         environments << really_init(local_root, options)
 
         unless local_root == Sniff.root
           environments << really_init(Sniff.root)
         end
-
-        db_init options
         environments.each { |e| e.populate_fixtures }
       end
 
@@ -28,10 +29,10 @@ module Sniff
         ActiveRecord::Base.logger = Logger.new nil
         connect
         db_create
-        earth_init(options[:earth])
       end
 
       def earth_init(domain)
+        domain ||= :none
         Earth.init domain, :apply_schemas => true
       end
 
