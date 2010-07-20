@@ -16,6 +16,9 @@ module Sniff
         unless local_root == Sniff.root
           environments << really_init(Sniff.root)
         end
+        
+        load_all_schemas
+
         environments.each { |e| e.populate_fixtures }
       end
 
@@ -28,7 +31,6 @@ module Sniff
       def db_init(options)
         ActiveRecord::Base.logger = Logger.new nil
         connect
-        db_create
       end
 
       def earth_init(domain)
@@ -45,8 +47,27 @@ module Sniff
         FileUtils.rm db_file_path if File.exists?(db_file_path)
       end
 
-      def db_create
-        ActiveRecord::Base.connection
+      def define_schema(&blk)
+        schemas << blk
+      end
+
+      def schemas
+        @schemas = [] unless defined?(@schemas)
+        @schemas
+      end
+
+      def load_all_schemas
+        orig_std_out = STDOUT.clone
+        STDOUT.reopen File.open(File.join('/tmp', 'schema_output'), 'w') 
+
+        ActiveRecord::Schema.define(:version => 1) do
+          ar_schema = self
+          Sniff::Database.schemas.each do |s|
+            ar_schema.instance_eval &s
+          end
+        end
+      ensure
+        STDOUT.reopen(orig_std_out)
       end
     end
 
@@ -70,6 +91,10 @@ module Sniff
       @load_data
     end
 
+    def schema_path
+      @schema_path ||= File.join(lib_path, 'db', 'schema.rb')
+    end
+
     def fixtures_path
       @fixtures_path ||= File.join(lib_path, 'db', 'fixtures')
     end
@@ -80,7 +105,13 @@ module Sniff
 
     def init
       load_supporting_libs
+      read_schema
       read_fixtures if load_data?
+    end
+
+    def read_schema
+      log "Reading schema #{schema_path}"
+      load(schema_path) if File.exist?(schema_path)
     end
 
     def read_fixtures
