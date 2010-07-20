@@ -11,40 +11,15 @@ module Sniff
         earth_init(options[:earth])
 
         environments = []
-        environments << really_init(local_root, options)
+        environments << init_environment(local_root, options)
 
         unless local_root == Sniff.root
-          environments << really_init(Sniff.root)
+          environments << init_environment(Sniff.root)
         end
         
         load_all_schemas
 
         environments.each { |e| e.populate_fixtures }
-      end
-
-      def really_init(root, options = {})
-        db = new root, options
-        db.init
-        db
-      end
-
-      def db_init(options)
-        ActiveRecord::Base.logger = Logger.new nil
-        connect
-      end
-
-      def earth_init(domain)
-        domain ||= :none
-        Earth.init domain, :apply_schemas => true
-      end
-
-      def connect
-        ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
-          :database => ':memory:'
-      end
-
-      def db_drop(db_file_path)
-        FileUtils.rm db_file_path if File.exists?(db_file_path)
       end
 
       def define_schema(&blk)
@@ -54,6 +29,24 @@ module Sniff
       def schemas
         @schemas = [] unless defined?(@schemas)
         @schemas
+      end
+
+    private
+      def init_environment(root, options = {})
+        db = new root, options
+        db.init
+        db
+      end
+
+      def db_init(options)
+        ActiveRecord::Base.logger = Logger.new options[:sqllogdev]
+        ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
+          :database => ':memory:'
+      end
+
+      def earth_init(domain)
+        domain ||= :none
+        Earth.init domain, :apply_schemas => true
       end
 
       def load_all_schemas
