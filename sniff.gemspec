@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors = ["Derek Kastner"]
   s.date = %q{2010-07-22}
   s.description = %q{# sniff
-Development and testing environment for Brighter Planet emitters.
+Development environment for Brighter Planet emitters.
 
 ## Background
 Brighter Planet's emitters, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing its [emission estimates web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
@@ -110,13 +110,7 @@ Brighter Planet vigorously encourages collaborative improvement of its emitter l
       s.add_runtime_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
       s.add_runtime_dependency(%q<activesupport>, ["= 3.0.0.beta4"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
-      s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.2"])
-      s.add_runtime_dependency(%q<cohort_scope>, ["= 0.0.5"])
-      s.add_runtime_dependency(%q<leap>, ["= 0.3.3"])
-      s.add_runtime_dependency(%q<summary_judgement>, ["= 1.3.8"])
-      s.add_runtime_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<common_name>, ["= 0.1.5"])
-      s.add_runtime_dependency(%q<timeframe>, ["= 0.0.1"])
       s.add_runtime_dependency(%q<earth>, ["= 0.0.7"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
@@ -128,13 +122,7 @@ Brighter Planet vigorously encourages collaborative improvement of its emitter l
       s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
       s.add_dependency(%q<activesupport>, ["= 3.0.0.beta4"])
       s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
-      s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
-      s.add_dependency(%q<cohort_scope>, ["= 0.0.5"])
-      s.add_dependency(%q<leap>, ["= 0.3.3"])
-      s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
-      s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_dependency(%q<common_name>, ["= 0.1.5"])
-      s.add_dependency(%q<timeframe>, ["= 0.0.1"])
       s.add_dependency(%q<earth>, ["= 0.0.7"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -147,13 +135,7 @@ Brighter Planet vigorously encourages collaborative improvement of its emitter l
     s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
     s.add_dependency(%q<activesupport>, ["= 3.0.0.beta4"])
     s.add_dependency(%q<sqlite3-ruby>, ["= 1.3.0"])
-    s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
-    s.add_dependency(%q<cohort_scope>, ["= 0.0.5"])
-    s.add_dependency(%q<leap>, ["= 0.3.3"])
-    s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
-    s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
     s.add_dependency(%q<common_name>, ["= 0.1.5"])
-    s.add_dependency(%q<timeframe>, ["= 0.0.1"])
     s.add_dependency(%q<earth>, ["= 0.0.7"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])

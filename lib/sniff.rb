@@ -18,8 +18,6 @@ module Sniff
 end
 
 require 'earth'
-require 'characterizable'
-require 'timeframe'
 
 $:.unshift File.dirname(__FILE__)
 require 'sniff/database'

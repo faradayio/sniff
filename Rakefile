@@ -24,13 +24,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency 'activerecord', '= 3.0.0.beta4'
   gem.add_dependency 'activesupport', '= 3.0.0.beta4'
   gem.add_dependency 'sqlite3-ruby', '= 1.3.0'
-  gem.add_dependency 'falls_back_on', '= 0.0.2' unless ENV['LOCAL_FALLS_BACK_ON']
-  gem.add_dependency 'cohort_scope', '= 0.0.5' unless ENV['LOCAL_COHORT_SCOPE']
-  gem.add_dependency 'leap', '= 0.3.3' unless ENV['LOCAL_LEAP']
-  gem.add_dependency 'summary_judgement', '= 1.3.8'
-  gem.add_dependency 'fast_timestamp', '= 0.0.4'
   gem.add_dependency 'common_name', '= 0.1.5'
-  gem.add_dependency 'timeframe', '= 0.0.1'
   gem.add_dependency 'earth', '= 0.0.7' unless ENV['LOCAL_EARTH']
 
   gem.add_development_dependency 'bundler'

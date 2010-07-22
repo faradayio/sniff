@@ -1,21 +1,11 @@
-require 'summary_judgement'
 require 'fast_timestamp'
 require 'common_name'
-require 'falls_back_on'
-require 'falls_back_on/active_record_ext'
-require 'leap'
-require 'cohort_scope'
-require 'data_miner'
 
 module Sniff
   module Emitter
     def self.included(target)
       target.instance_eval do
-        extend Leap::Subject
         extend ClassMethods
-        extend SummaryJudgement
-        extend FastTimestamp
-        include Characterizable
         include CommonName
       end
     end
