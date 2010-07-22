@@ -9,84 +9,65 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-07-20}
+  s.date = %q{2010-07-22}
   s.description = %q{# sniff
-Testing environment for Brighter Planet Climate Middleware emission calculation gems.
+Development and testing environment for Brighter Planet emitters.
 
-This gem provides:
- * Sample data used for calculations, representative of data found on http://data.brighterplanet.com
- * A database/ActiveRecord environment for said data
- * References to gems needed by each emitter gem  
- * An autoloader that will load any models and sample data needed by the emitter gem being tested (see Usage)
+## Background
+Brighter Planet's emitters, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing its [emission estimates web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
 
-# Usage
-Within an emitter gem's test setup, you can:
-    require 'sniff'
-    
-    Sniff.init '/path/to/emitter_project'
+### Caution
+The data and other supporting information in the sniff environment is only representative of production data and in many cases is purely fictional, contrived to return predictable results in tests. Emission estimates and other information gleaned from execution within this environment will undoubtedly be--to put it simply--wrong. For real numbers, always use live queries to the [emission estimate web service](http://carbon.brighterplanet.com).
 
-If an emitter gem has its own test models and data, sniff will look for the models in `EMITTER_GEM_DIR/lib/test_support/data_models/` and the data fixtures in `EMITTER_GEM_DIR/lib/test_support/db/fixtures/`. It will also look for a schema in `EMITTER_GEM_DIR/lib/test_support/db/schema.rb`
+## Usage
+Sniff is never used directly but rather as a requirement of a specific emitter. Current production emitters include, for example:
 
-# How to contribute
-Typical contributions will include updates to test data.
+* [Automobile](http://github.com/brighterplanet/automobile)
+* [Flight](http://github.com/brighterplanet/flight)
+* [Residence](http://github.com/brighterplanet/residence)
 
-1. Fork the project.
-1. Make your feature addition or bug fix.
-1. Commit, do not mess with rakefile, version, or history. (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-1. Send me a pull request. Bonus points for topic branches.
+For a complete list, see the emission estimate service's [documentation](http://carbon.brighterplanet.com/use).
 
-# Local Gems
-Sniff depends on several gems, some of which are developed by Brighter Planet.  You can tell Sniff or any of the carbon gems to use your local repos in lieu of installed rubygems through the following steps:
+## The emitter
+An emitter is a software model of a real-world emission source, like a flight. Brighter Planet's emitter libraries each comprise a carbon model, an attribute curation policy, a persistence schema, and a summarization strategy.
 
+### Persistence schema
+Although the production environment does not persist emitter instances, we nevertheless define emitter schemas to enable ActiveRecord assocations. An emitter's schema is defined in `lib/*emitter_name*/data.rb` within an emitter library. For example, here is [flight's schema](http://github.com/brighterplanet/flight/blob/master/lib/flight/data.rb).
 
-Paste the following functions into your ~/.bash_profile
-    function mod_devgem() {
-      var="LOCAL_`echo $2 | tr 'a-z' 'A-Z'`"
-      
-      if [ "$1" == "disable" ]
-      then
-        echo "unset $var"
-        unset $var
-      else
-        dir=${3:-"~/$2"}
-        echo "export $var=$dir"
-        export $var=$dir
-      fi
-    }
-    
-    function devgems () {
-      # Usage: devgems [enable|disable] [gemname]
-      cmd=${1:-"enable"}
-      if [ -z $2 ]
-      then
-        mod_devgem $cmd characterizable
-        mod_devgem $cmd cohort_scope
-        mod_devgem $cmd falls_back_on
-        mod_devgem $cmd leap
-        mod_devgem $cmd loose_tight_dictionary
-        mod_devgem $cmd sniff
-        mod_devgem $cmd data_miner
-      else
-        mod_devgem $cmd $2
-      fi
-    }
+Schema are defined using a DSL provided by the [data_miner](http://github.com/seamusabshere/data_miner) library.
 
-To enable all local gems, run `devgems enable`
-To turn off devgems, run `devgems disable`
-To turn off a specific gem, run `devgems disable leap`
-To turn on a specific gem, run `devgems enable leap`
+### Attribute curation policy
+This defines how an emitter's attributes (initialized and stored with respect to the schema) are curated and decorated into a snapshot for later use by the carbon model. The policy is defined in `lib/*emitter_name*/characterization.rb` within an emitter library. For example, here is [flight's characterization](http://github.com/brighterplanet/flight/blob/master/lib/flight/characterization.rb).
 
-Typical development process:
-    cd ~
-    git clone http://github.com/rossmeissl/leap.git
-    cd leap
-    <do some development on leap>
-    cd ~/sniff
-    devgems enable leap
-    rake gemspec
-    rm -f Gemfile.lock
-    bundle install
-    <run tests, e.g. `spec spec`>
+Characterizations are defined using a DSL provided by the [characterizable](http://github.com/seamusabshere/characterizable) library.
+
+### Carbon model
+An emission estimate is obtained by giving an emitter's curated characteristics as input to an execution of its carbon model. The model is defined in `lib/*emitter_name*/characterization.rb` within an emitter library. For example, here is [flight's carbon model](http://github.com/brighterplanet/flight/blob/master/lib/flight/carbon_model.rb).
+
+Carbon models are defined using a DSL provided by the [leap](http://github.com/rossmeissl/leap) library.
+
+### Summarization strategy
+Summaries are human-friendly descriptions of characterized emitters. The strategy is defined in `lib/*emitter_name*/summarization.rb` within an emitter library. For example, here is [flight's summarization strategy](http://github.com/brighterplanet/flight/blob/master/lib/flight/summarization.rb).
+
+Summarizations are defined using a DSL provided by the [summary_judgement](http://github.com/rossmeissl/summary_judgement) library.
+
+## Collaboration cycle 
+Brighter Planet vigorously encourages collaborative improvement of its emitter libraries. Collaboration requires a (free) GitHub account.
+
+### You
+1.  Fork the emitter repository on GitHub.
+1.  Write a test proving the existing implementation's inadequacy. Ensure that the test fails. Commit the test.
+1.  Improve the code until your new test passes and commit your changes.
+1.  Push your changes to your GitHub fork.
+1.  Submit a pull request to brighterplanet.
+
+### Brighter Planet
+1.  Receive a pull request.
+1.  Pull changes from forked repository.
+1.  Ensure tests pass.
+1.  Review changes for scientific accuracy.
+1.  Merge changes to master repository and publish.
+1.  Direct production environment to use new emitter version.
 }
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -107,7 +88,8 @@ Typical development process:
      "lib/test_support/db/fixtures/petroleum_administration_for_defense_districts.csv",
      "lib/test_support/db/fixtures/states.csv",
      "lib/test_support/db/fixtures/urbanities.csv",
-     "lib/test_support/db/fixtures/zip_codes.csv"
+     "lib/test_support/db/fixtures/zip_codes.csv",
+     "lib/test_support/step_definitions/carbon_steps.rb"
   ]
   s.homepage = %q{http://github.com/brighterplanet/sniff}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -116,7 +98,8 @@ Typical development process:
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = [
     "spec/lib/sniff/database_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "lib/test_support/step_definitions/carbon_steps.rb"
   ]
 
   if s.respond_to? :specification_version then
