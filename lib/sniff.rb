@@ -10,8 +10,10 @@ module Sniff
 
     Sniff::Database.init local_root, options
 
-    step_definitions = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'step_definitions', '**', '*.rb')
-    step_definitions.each { |definition| require definition }
+    if defined?(Cucumber)
+      step_definitions = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'step_definitions', '**', '*.rb')
+      step_definitions.each { |definition| require definition }
+    end
   end
 end
 
