@@ -1,5 +1,5 @@
 # sniff
-Development and testing environment for Brighter Planet emitters.
+Development environment for Brighter Planet emitters.
 
 ## Background
 Brighter Planet's emitters, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing its [emission estimates web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
