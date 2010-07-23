@@ -1,4 +1,5 @@
 require 'time'
+require 'timeframe'
 
 Given /^a (.+) (has|used) "(.+)" (of\s?)?"(.*)"$/ do |emitter, _, field, __, value|
   @emitter_class = emitter.gsub(/\s+/,'_').camelize
