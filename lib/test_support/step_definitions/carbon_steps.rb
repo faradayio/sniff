@@ -1,7 +1,7 @@
 require 'time'
 require 'timeframe'
 
-Given /^a (.+) (has|used) "(.+)" (of\s?)?"(.*)"$/ do |emitter, _, field, __, value|
+Given /^an? (.+) (has|used) "(.+)" (of\s?)?"(.*)"$/ do |emitter, _, field, __, value|
   @emitter_class = emitter.gsub(/\s+/,'_').camelize
   @emitter_class = "#{@emitter_class}Record".constantize
   Given "it has \"#{field}\" of \"#{value}\""
