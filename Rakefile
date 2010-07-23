@@ -26,7 +26,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency 'sqlite3-ruby', '= 1.3.0'
   gem.add_dependency 'common_name', '= 0.1.5'
   gem.add_dependency 'earth', '= 0.0.7' unless ENV['LOCAL_EARTH']
-  gem.add_dependency 'timeframe', '= 0.0.1'
+  gem.add_dependency 'timeframe', '= 0.0.8'
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'jeweler'
