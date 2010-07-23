@@ -42,7 +42,7 @@ GEM
       remote_table (>= 0.2.27)
       taps (= 0.3.11)
     diff-lcs (1.1.2)
-    earth (0.0.8)
+    earth (0.0.11)
       activerecord (>= 3.0.0.beta4)
       cohort_scope (= 0.0.5)
       conversions (= 1.4.5)
@@ -55,6 +55,7 @@ GEM
     escape (0.0.4)
     falls_back_on (0.0.2)
       activerecord
+    fast_timestamp (0.0.4)
     fastercsv (1.5.3)
     gemcutter (0.6.1)
     geokit (1.5.0)
@@ -130,7 +131,8 @@ DEPENDENCIES
   activesupport (= 3.0.0.beta4)
   bundler
   common_name (= 0.1.5)
-  earth (= 0.0.8)
+  earth (= 0.0.11)
+  fast_timestamp (= 0.0.4)
   jeweler
   rake
   rcov

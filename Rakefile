@@ -1,9 +1,11 @@
-require 'rubygems'
-begin
-  require 'bundler'
-  Bundler.setup
-rescue LoadError
-  puts 'You need to install bundler, then run `bundle install` in order to run rake tasks'
+unless ENV['NOBUNDLE']
+  require 'rubygems'
+  begin
+    require 'bundler'
+    Bundler.setup
+  rescue LoadError
+    puts 'You need to install bundler, then run `bundle install` in order to run rake tasks'
+  end
 end
 
 require 'jeweler'                                                                 
@@ -25,7 +27,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_dependency 'activesupport', '= 3.0.0.beta4'
   gem.add_dependency 'sqlite3-ruby', '= 1.3.0'
   gem.add_dependency 'common_name', '= 0.1.5'
-  gem.add_dependency 'earth', '= 0.0.8' unless ENV['LOCAL_EARTH']
+  gem.add_dependency 'earth', '= 0.0.11' unless ENV['LOCAL_EARTH']
   gem.add_dependency 'timeframe', '= 0.0.8'
 
   gem.add_development_dependency 'bundler'
@@ -34,6 +36,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_development_dependency 'rspec', '= 2.0.0.beta.17'
   gem.add_development_dependency 'rcov'
   gem.add_development_dependency 'rdoc'
+  gem.add_development_dependency 'fast_timestamp', '= 0.0.4'
 end
 Jeweler::GemcutterTasks.new
 

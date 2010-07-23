@@ -44,9 +44,13 @@ module Sniff
           :database => ':memory:'
       end
 
-      def earth_init(domain)
-        domain ||= :none
-        Earth.init domain, :apply_schemas => true
+      def earth_init(domains)
+        domains ||= :none
+        domains = [domains] unless domains.is_a? Array
+        args = domains
+        args << {:apply_schemas => true}
+
+        Earth.init *args
       end
 
       def load_all_schemas
