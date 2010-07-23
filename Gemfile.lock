@@ -118,6 +118,9 @@ GEM
       sequel (~> 3.13.0)
       sinatra (~> 1.0.0)
       sqlite3-ruby (~> 1.2)
+    timeframe (0.0.1)
+      activesupport (= 3.0.0.beta4)
+      andand
     tzinfo (0.3.22)
 
 PLATFORMS
@@ -135,3 +138,4 @@ DEPENDENCIES
   rdoc
   rspec (= 2.0.0.beta.17)
   sqlite3-ruby (= 1.3.0)
+  timeframe (= 0.0.1)
