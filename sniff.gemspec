@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.0.10"
+  s.version = "0.0.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-07-22}
+  s.date = %q{2010-07-23}
   s.description = %q{# sniff
 Development environment for Brighter Planet emitters.
 
