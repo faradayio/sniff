@@ -53,6 +53,12 @@ module Sniff
         end
         new resolved_params
       end
+
+      def add_implicit_characteristics
+        decisions[:emission].committees.map(&:name).reject { |c| characteristics.keys.unshift(:emission).include? c }.each do |c|
+          characterize { has c }
+        end
+      end
       
       def _common_name
         name.underscore
