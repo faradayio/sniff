@@ -39,6 +39,7 @@ When /^emissions are calculated$/ do
 end
 
 Then /^the emission value should be within ([\d\.]+) kgs of ([\d\.]+)$/ do |cusion, emissions|
+  @emission.should_not be_nil
   @emission.should be_close(emissions.to_f, cusion.to_f)
 end
 
