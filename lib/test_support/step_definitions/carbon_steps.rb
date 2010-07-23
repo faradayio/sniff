@@ -38,7 +38,7 @@ When /^emissions are calculated$/ do
   @characteristics = @activity.deliberations[:emission].characteristics
 end
 
-Then /^the emission value should be within (\d+) kgs of (\d+)$/ do |cusion, emissions|
+Then /^the emission value should be within ([\d\.]+) kgs of ([\d\.]+)$/ do |cusion, emissions|
   @emission.should be_close(emissions.to_f, cusion.to_f)
 end
 
