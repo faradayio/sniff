@@ -6,6 +6,15 @@ require 'sqlite3'
 module Sniff
   class Database
     class << self
+      # Initialize a database used for testing emitter gems
+      #
+      # local_root: Root directory of the emitter gem to be tested (path to the repo)
+      # options: 
+      # * :earth is the list of domains Earth.init should load (default: none)
+      # * :load_data determines whether fixture data is loaded (default: true)
+      # * :sqllogdev is a Logger log device used by ActiveRecord (default: nil)
+      # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
+      # * :logdev is a Logger log device used for general logging (default: nil)
       def init(local_root, options = {})
         db_init options
         earth_init(options[:earth])
@@ -22,10 +31,18 @@ module Sniff
         environments.each { |e| e.populate_fixtures }
       end
 
+      # Used within an emitter's custom schema definition - aggregates muliple 
+      # schemas into a single schema generation transaction.
+      #
+      # Instead of:
+      # <tt>ActiveRecord::Schema.define(:version => XYZ) do</tt>
+      # It's:
+      # <tt>Sniff::Database.define_schema do</tt>
       def define_schema(&blk)
         schemas << blk
       end
 
+      # The list of schemas that have been loaded via define_schema
       def schemas
         @schemas = [] unless defined?(@schemas)
         @schemas
@@ -38,12 +55,15 @@ module Sniff
         db
       end
 
+      # Connect to the database and set up an ActiveRecord logger
       def db_init(options)
         ActiveRecord::Base.logger = Logger.new options[:sqllogdev]
         ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
           :database => ':memory:'
       end
 
+      # Initialize Earth, tell it to load schemas defined by each domain model's
+      # data_miner definition
       def earth_init(domains)
         domains ||= :none
         domains = [domains] unless domains.is_a? Array
@@ -53,6 +73,7 @@ module Sniff
         Earth.init *args
       end
 
+      # Apply defined schemas to database
       def load_all_schemas
         orig_std_out = STDOUT.clone
         STDOUT.reopen File.open(File.join('/tmp', 'schema_output'), 'w') 
