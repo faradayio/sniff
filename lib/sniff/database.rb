@@ -145,6 +145,8 @@ module Sniff
       fixtures.each do |fixture_file|
         klass = File.basename(fixture_file, '.csv').
           camelize.singularize
+        pluralized_klass = klass.pluralize
+        klass = klass.pluralize unless Object.const_defined?(klass)
         if Object.const_defined?(klass) and klass.constantize.table_exists?
           log "Loading fixture #{fixture_file}"
           Fixtures.create_fixtures(fixtures_path, fixture_file[(fixtures_path.size + 1)..-5])
