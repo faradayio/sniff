@@ -16,6 +16,21 @@ Sniff is never used directly but rather as a requirement of a specific emitter. 
 
 For a complete list, see the emission estimate service's [documentation](http://carbon.brighterplanet.com/use).
 
+### Rake Task
+Sniff comes with a rake task that will load a console with a given earth domain:
+
+    require 'sniff'
+    require 'sniff/rake_task'
+    Sniff::RakeTask.new do |t|
+      t.earth_domains = [:air, :locality]
+    end
+
+At the command prompt, do:
+
+    > rake console
+    irb > ZipCode.first
+    #=> <ZipCode id="...>
+
 ## The emitter
 An emitter is a software model of a real-world emission source, like a flight. Brighter Planet's emitter libraries each comprise a carbon model, an attribute curation policy, a persistence schema, and a summarization strategy.
 
