@@ -22,8 +22,8 @@ module Sniff
     Sniff::Database.init local_root, options
 
     if defined?(Cucumber)
-      step_definitions = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'step_definitions', '**', '*.rb')
-      step_definitions.each { |definition| require definition }
+      cukes = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'cucumber', '**', '*.rb')
+      cukes.each { |support_file| require support_file }
     end
   end
 end
