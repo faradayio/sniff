@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.0.19"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-07-29}
+  s.date = %q{2010-08-03}
   s.description = %q{Provides data environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -20,6 +20,9 @@ Gem::Specification.new do |s|
      "lib/sniff/database.rb",
      "lib/sniff/emitter.rb",
      "lib/sniff/tasks.rb",
+     "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
+     "lib/test_support/cucumber/step_definitions/committee_steps.rb",
+     "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/db/fixtures/census_divisions.csv",
      "lib/test_support/db/fixtures/census_regions.csv",
      "lib/test_support/db/fixtures/climate_divisions.csv",
@@ -30,8 +33,7 @@ Gem::Specification.new do |s|
      "lib/test_support/db/fixtures/petroleum_administration_for_defense_districts.csv",
      "lib/test_support/db/fixtures/states.csv",
      "lib/test_support/db/fixtures/urbanities.csv",
-     "lib/test_support/db/fixtures/zip_codes.csv",
-     "lib/test_support/step_definitions/carbon_steps.rb"
+     "lib/test_support/db/fixtures/zip_codes.csv"
   ]
   s.homepage = %q{http://github.com/brighterplanet/sniff}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -41,7 +43,9 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/lib/sniff/database_spec.rb",
      "spec/spec_helper.rb",
-     "lib/test_support/step_definitions/carbon_steps.rb"
+     "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
+     "lib/test_support/cucumber/step_definitions/committee_steps.rb",
+     "lib/test_support/cucumber/support/values.rb"
   ]
 
   if s.respond_to? :specification_version then
