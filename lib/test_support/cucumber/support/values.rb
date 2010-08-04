@@ -18,7 +18,7 @@ def coerce_value(value)
 end
 
 def compare_values(a, b)
-  if b.nil?
+  if b.nil? or b.empty?
     a.should be_nil
   elsif a.is_a? Date or a.is_a? Time
     b = Date.parse b
