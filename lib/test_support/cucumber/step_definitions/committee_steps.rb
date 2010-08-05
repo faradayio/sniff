@@ -1,7 +1,13 @@
-Given /^a (.+) emitter$/ do |name|
+Given /^a (.+) emitter( deciding on (.*))$/ do |name, _, decision_name|
   name = name.gsub(/\s+/,'_').camelize + 'Record'
   @activity = name.constantize
   @characteristics ||= {}
+  if decision_name
+    decision_name.gsub! /\s+/,'_'
+    @decision = @activity.decisions[decision_name.to_sym]
+  else
+    @decision = @activity.decisions[:emission]
+  end
 end
 
 Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
@@ -14,17 +20,23 @@ Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
       association.klass
     end
     value = model.send "find_by_#{attribute}", value
-    @characteristics[model_name.to_sym] = value
+    set_characteristic model_name, value
   elsif name == 'timeframe'
-    @characteristics[name.to_sym] = (value.present?) ? Timeframe.interval(value) : nil
+    value = (value.present?) ? Timeframe.interval(value) : nil
+    set_characteristic name, value
   else
     value = coerce_value(value)
-    @characteristics[name.to_sym] = value
+    set_characteristic name, value
+  end
+end
+Given /^(a )?characteristic "(.*)" including "(.*)"$/ do |_, name, values|
+  @characteristics[name.to_sym] ||= []
+  values.split(/,/).each do |value|
+    Given "characteristic \"#{name}\" of \"#{value}\""
   end
 end
 
 When /^the "(.*)" committee is calculated$/ do |committee_name|
-  @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
   args = [@characteristics]
   if @characteristics[:timeframe]
@@ -74,6 +86,11 @@ Then /^the conclusion of the committee should have a record identified with "(.*
   records = @report.conclusion
   record = records.send("find_by_#{id_field}", id)
   coerce_value(record.send(field)).should == coerce_value(value)
+end
+Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" including "(.*)"$/ do |id_field, id, field, values|
+  values.split(/,/).each do |value|
+    Then "the conclusion of the committee should have a record identified with \"#{id_field}\" of \"#{id}\" and having \"#{field}\" of \"#{value}\""
+  end
 end
 
 Then /^the conclusion of the committee should have a record with "([^"]*)" equal to "([^"]*)"$/ do |field, value|

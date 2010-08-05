@@ -26,21 +26,28 @@ Given /^the current date is (.+)$/ do |current_date|
   @current_date = Time.parse(current_date)
 end
 
-When /^emissions are calculated$/ do
+When /^(.*) are calculated$/ do |decision_name|
+  decision_name = decision_name.singularize if decision_name == 'emissions'
+  decision_name = decision_name.gsub(/\s+/,'_').to_sym
   @activity = @emitter_class.from_params_hash @activity_hash
   if @current_date
     Timecop.travel(@current_date) do
-      @emission = @activity.emission Timeframe.this_year
+      @emission = @activity.send decision_name, Timeframe.this_year
     end
   else
-    @emission = @activity.emission Timeframe.this_year
+    @emission = @activity.send decision_name, Timeframe.this_year
   end
-  @characteristics = @activity.deliberations[:emission].characteristics
+  @characteristics = @activity.deliberations[decision_name].characteristics
 end
 
 Then /^the emission value should be within ([\d\.]+) kgs of ([\d\.]+)$/ do |cusion, emissions|
   @emission.should_not be_nil
   @emission.should be_close(emissions.to_f, cusion.to_f)
+end
+
+Then /^the emission value for "([^\"]*)" should be within ([\d\.]+) kgs of ([\d\.]+)$/ do |io_code, cusion, emissions|
+  @emission.should_not be_nil
+  @emission[io_code].should be_close(emissions.to_f, cusion.to_f)
 end
 
 Then /^the calculation should have used committees (.*)$/ do |committee_list|

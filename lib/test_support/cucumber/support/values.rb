@@ -33,3 +33,11 @@ def compare_values(a, b)
     a.should == b
   end
 end
+
+def set_characteristic(name, value)
+  if @characteristics[name.to_sym].is_a?(Array)
+    @characteristics[name.to_sym] << value
+  else
+    @characteristics[name.to_sym] = value
+  end
+end
