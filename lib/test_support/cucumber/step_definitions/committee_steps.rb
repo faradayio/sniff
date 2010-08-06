@@ -23,6 +23,11 @@ Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
   end
 end
 
+Given /^(a )?characteristic "(.*)" including "(.*)"$/ do |_, name, values|
+  @characteristics[name.to_sym] ||= []
+  @characteristics[name.to_sym] += values.split(/,/)
+end
+
 When /^the "(.*)" committee is calculated$/ do |committee_name|
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
@@ -33,7 +38,11 @@ When /^the "(.*)" committee is calculated$/ do |committee_name|
     args << []
   end
   @report = @committee.report *args
-  @characteristics[committee_name.to_sym] = @report.andand.conclusion
+  if @report.nil?
+    raise "The committee #{@committee.name} did not come to a conclusion. Characteristics: #{@characteristics.inspect}"
+  else
+    @characteristics[committee_name.to_sym] = @report.andand.conclusion
+  end
 end
 
 Then /^the committee should have used quorum "(.*)"$/ do |quorum|
@@ -72,8 +81,14 @@ end
 Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |id_field, id, field, value|
   id_field = id_field.to_sym
   records = @report.conclusion
-  record = records.send("find_by_#{id_field}", id)
+  record = records.to_a.find { |r| r.send(id_field) == id }
   coerce_value(record.send(field)).should == coerce_value(value)
+end
+
+Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" including "(.*)"$/ do |id_field, id, field, values|
+  values.split(/,/).each do |value|
+    Then "the conclusion of the committee should have a record identified with \"#{id_field}\" of \"#{id}\" and having \"#{field}\" of \"#{value}\""
+  end
 end
 
 Then /^the conclusion of the committee should have a record with "([^"]*)" equal to "([^"]*)"$/ do |field, value|
