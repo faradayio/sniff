@@ -58,7 +58,7 @@ Then /^the conclusion of the committee should be nil$/ do
   compare_values(@report.andand.conclusion, nil)
 end
 
-Then /^the conclusion of the committee should include a key of (.*) and value (.*)$/ do |key, value|
+Then /^the conclusion of the committee should include a key of "(.*)" and value "(.*)"$/ do |key, value|
   if key.present?
     @report.conclusion.keys.map(&:to_s).should include(key)
   else
