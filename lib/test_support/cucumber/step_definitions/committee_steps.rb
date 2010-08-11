@@ -75,14 +75,22 @@ end
 
 Then /^the conclusion of the committee should have "(.*)" of "(.*)"$/ do |attribute, value|
   report_value = coerce_value @report.conclusion.send(attribute)
-  report_value.should == coerce_value(value)
+  compare_values report_value, value
+end
+
+Then /^the conclusion of the committee should include "(.*)"$/ do |value|
+  result = @report.conclusion.find do |item|
+    equality? item, value
+  end
+  result.should_not be_nil
 end
 
 Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |id_field, id, field, value|
   id_field = id_field.to_sym
   records = @report.conclusion
-  record = records.to_a.find { |r| r.send(id_field) == id }
-  coerce_value(record.send(field)).should == coerce_value(value)
+  record = records.to_a.find { |r| equality? r.send(id_field), id }
+  record.should_not be_nil
+  compare_values record.send(field), value
 end
 
 Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" including "(.*)"$/ do |id_field, id, field, values|

@@ -33,3 +33,18 @@ def compare_values(a, b)
     a.should == b
   end
 end
+
+def equality?(a, b)
+  if b.nil? or b.empty?
+    a.nil?
+  elsif a.is_a? Date or a.is_a? Time
+    b = Date.parse b
+    a == b
+  elsif b =~ /\d+\.\d+/
+    (a.to_f - b.to_f).abs <= 0.00001
+  elsif b =~ /^\d+$/
+    a.to_i == b.to_i
+  else
+    a == b
+  end
+end
