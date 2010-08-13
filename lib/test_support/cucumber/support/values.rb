@@ -19,7 +19,7 @@ end
 
 def compare_values(a, b)
   if b.nil? or b.empty?
-    a.should be_nil
+    a.should be_empty
   elsif a.is_a? Date or a.is_a? Time
     b = Date.parse b
     a.should == b
