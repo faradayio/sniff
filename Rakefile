@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'jeweler'
-require 'rspec/core/rake_task'
 require 'rake/rdoctask'
+require 'rspec/core/rake_task'
 
 if ENV['BUNDLE'] == 'true'
   begin
