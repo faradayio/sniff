@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'jeweler'
 require 'rake/rdoctask'
-require 'rspec/core/rake_task'
 
 if ENV['BUNDLE'] == 'true'
   begin
@@ -43,13 +42,18 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::GemcutterTasks.new
 
-desc "Run all examples with RCov"
-RSpec::Core::RakeTask.new('examples_with_rcov') do |t|
-   t.rcov = true
-   t.rcov_opts = ['--exclude', 'spec,~/.rvm,.rvm']
+begin
+  require 'rspec/core/rake_task'
+  desc "Run all examples with RCov"
+  RSpec::Core::RakeTask.new('examples_with_rcov') do |t|
+     t.rcov = true
+     t.rcov_opts = ['--exclude', 'spec,~/.rvm,.rvm']
+  end
+  
+  task :default => :spec
+rescue LoadError
+  puts 'Skipping Rspec'
 end
-
-task :default => :spec
 
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
