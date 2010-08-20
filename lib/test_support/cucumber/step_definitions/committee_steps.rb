@@ -1,4 +1,4 @@
-Given /^a (.+) emitter$/ do |name|
+Given /^an? (.+) emitter$/ do |name|
   name = name.gsub(/\s+/,'_').camelize + 'Record'
   @activity = name.constantize
   @characteristics ||= {}
