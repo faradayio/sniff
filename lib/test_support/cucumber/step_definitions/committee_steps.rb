@@ -38,11 +38,11 @@ When /^the "(.*)" committee is calculated$/ do |committee_name|
     args << []
   end
   @report = @committee.report *args
-  if @report.nil?
-    raise "The committee #{@committee.name} did not come to a conclusion. Characteristics: #{@characteristics.inspect}"
-  else
+#  if @report.nil?
+#    raise "The committee #{@committee.name} did not come to a conclusion. Characteristics: #{@characteristics.inspect}"
+#  else
     @characteristics[committee_name.to_sym] = @report.andand.conclusion
-  end
+#  end
 end
 
 Then /^the committee should have used quorum "(.*)"$/ do |quorum|
@@ -86,11 +86,15 @@ Then /^the conclusion of the committee should include "(.*)"$/ do |value|
 end
 
 Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |id_field, id, field, value|
-  id_field = id_field.to_sym
-  records = @report.conclusion
-  record = records.to_a.find { |r| equality? r.send(id_field), id }
-  record.should_not be_nil
-  compare_values record.send(field), value
+  if value.blank?
+    @report.should be_nil
+  else
+    id_field = id_field.to_sym
+    records = @report.conclusion
+    record = records.to_a.find { |r| equality? r.send(id_field), id }
+    record.should_not be_nil
+    compare_values record.send(field), value
+  end
 end
 
 Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" including "(.*)"$/ do |id_field, id, field, values|
@@ -114,4 +118,11 @@ Then /^the conclusion of the committee should include a key of "(.*)" and subval
   else
     @report.conclusion.keys.map(&:to_s).should be_empty
   end
+end
+
+Then /^the conclusion of the committee should be a vector with value "(.*)" and position for key "(.*)"$/ do |value, key|
+  vector = @report.conclusion
+  puts vector.inspect
+  position = vector.class.key_map.index key
+  compare_values vector[position], value
 end

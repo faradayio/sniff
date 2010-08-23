@@ -1,14 +1,18 @@
 require 'time'
 require 'timeframe'
 
-Given /^an? (.+) (has|used) "(.+)" (of\s?)?"(.*)"$/ do |emitter, _, field, __, value|
+Given /^an? (.+) emission$/ do |emitter|
   @emitter_class = emitter.gsub(/\s+/,'_').camelize
   @emitter_class = "#{@emitter_class}Record".constantize
+  @activity_hash = {}
+end
+
+Given /^an? (.+) (has|used) "(.+)" (of\s?)?"(.*)"$/ do |emitter, _, field, __, value|
+  Given "a #{emitter} emission"
   Given "it has \"#{field}\" of \"#{value}\""
 end
 
 Given /^it (has|used) "(.+)" (of\s?)?"(.*)"$/ do |_, field, __, value|
-  @activity_hash ||= {}
   if value.present?
     methods = field.split('.')
     context = @activity_hash

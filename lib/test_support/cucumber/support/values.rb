@@ -25,10 +25,10 @@ def compare_values(a, b)
     a.should == b
   elsif b =~ /\d+\.\d+/
     b = b.to_f
-    a.should be_close(b, 0.00001)
+    a.to_f.should be_close(b, 0.00001)
   elsif b =~ /^\d+$/
     b = b.to_i
-    a.should == b
+    a.to_i.should == b
   else
     a.should == b
   end
