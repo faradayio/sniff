@@ -85,7 +85,7 @@ Then /^the conclusion of the committee should include "(.*)"$/ do |value|
   result.should_not be_nil
 end
 
-Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |id_field, id, field, value|
+Then /^the conclusion of the committee should have a( single)? record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |single, id_field, id, field, value|
   if value.blank?
     @report.should be_nil
   else
@@ -94,6 +94,9 @@ Then /^the conclusion of the committee should have a record identified with "(.*
     record = records.to_a.find { |r| equality? r.send(id_field), id }
     record.should_not be_nil
     compare_values record.send(field), value
+    if single
+      records.count.should == 1
+    end
   end
 end
 
