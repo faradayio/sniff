@@ -122,10 +122,3 @@ Then /^the conclusion of the committee should include a key of "(.*)" and subval
     @report.conclusion.keys.map(&:to_s).should be_empty
   end
 end
-
-Then /^the conclusion of the committee should be a vector with value "(.*)" and position for key "(.*)"$/ do |value, key|
-  vector = @report.conclusion
-  puts vector.inspect
-  position = vector.class.key_map.index key
-  compare_values vector[position], value
-end
