@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-08-20}
+  s.date = %q{2010-08-25}
   s.description = %q{Provides data environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
