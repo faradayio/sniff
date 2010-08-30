@@ -87,7 +87,7 @@ end
 
 Then /^the conclusion of the committee should have a( single)? record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |single, id_field, id, field, value|
   if value.blank?
-    @report.should be_nil
+    @report.conclusion.should be_empty
   else
     id_field = id_field.to_sym
     records = @report.conclusion
