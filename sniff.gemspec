@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.1.11"
+  s.version = "0.1.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0.beta4"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, [">= 1.3.0"])
       s.add_runtime_dependency(%q<common_name>, [">= 0.1.5"])
-      s.add_runtime_dependency(%q<earth>, [">= 0.0.14"])
+      s.add_runtime_dependency(%q<earth>, ["~> 0.0.32"])
       s.add_runtime_dependency(%q<timeframe>, [">= 0.0.8"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
@@ -71,7 +71,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<activesupport>, [">= 3.0.0.beta4"])
       s.add_dependency(%q<sqlite3-ruby>, [">= 1.3.0"])
       s.add_dependency(%q<common_name>, [">= 0.1.5"])
-      s.add_dependency(%q<earth>, [">= 0.0.14"])
+      s.add_dependency(%q<earth>, ["~> 0.0.32"])
       s.add_dependency(%q<timeframe>, [">= 0.0.8"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -86,7 +86,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<activesupport>, [">= 3.0.0.beta4"])
     s.add_dependency(%q<sqlite3-ruby>, [">= 1.3.0"])
     s.add_dependency(%q<common_name>, [">= 0.1.5"])
-    s.add_dependency(%q<earth>, [">= 0.0.14"])
+    s.add_dependency(%q<earth>, ["~> 0.0.32"])
     s.add_dependency(%q<timeframe>, [">= 0.0.8"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
