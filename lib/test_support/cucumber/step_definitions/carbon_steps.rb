@@ -7,12 +7,16 @@ Given /^an? (.+) emission$/ do |emitter|
   @activity_hash = {}
 end
 
-Given /^an? (.+) (has|used) "(.+)" (of\s?)?"(.*)"$/ do |emitter, _, field, __, value|
+Given /^an? (.+) has nothing$/ do |emitter|
+  Given "a #{emitter} emission"
+end
+
+Given /^an? (.+) has "(.+)" of "(.*)"$/ do |emitter, field, value|
   Given "a #{emitter} emission"
   Given "it has \"#{field}\" of \"#{value}\""
 end
 
-Given /^it (has|used) "(.+)" (of\s?)?"(.*)"$/ do |_, field, __, value|
+Given /^it has "(.+)" of "(.*)"$/ do |field, value|
   if value.present?
     methods = field.split('.')
     context = @activity_hash
