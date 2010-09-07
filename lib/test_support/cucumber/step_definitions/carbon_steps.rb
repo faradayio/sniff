@@ -30,7 +30,7 @@ Given /^it has "(.+)" of "(.*)"$/ do |field, value|
   end
 end
 
-Given /^the current date is (.+)$/ do |current_date|
+Given /^the current date is "(.+)"$/ do |current_date|
   @current_date = Time.parse(current_date)
 end
 
@@ -46,28 +46,27 @@ When /^emissions are calculated$/ do
   @characteristics = @activity.deliberations[:emission].characteristics
 end
 
-Then /^the emission value should be within ([\d\.]+) kgs of ([\d\.]+)$/ do |cusion, emissions|
+Then /^the emission value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, emissions|
   @emission.should_not be_nil
   @emission.should be_close(emissions.to_f, cusion.to_f)
 end
 
-Then /^the calculation should have used committees (.*)$/ do |committee_list|
+Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
   committees = committee_list.split(/,\s*/)
   committees.each do |committee|
     @characteristics.keys.should include(committee)
   end
 end
 
-Then /^the (.+) committee should be close to ([^,]+), \+\/-(.+)$/ do |committee, value, cusion|
+Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cusion|
   @characteristics[committee.to_sym].to_f.should be_close(value.to_f, cusion.to_f)
 end
 
-Then /^the (.+) committee should be exactly (.*)$/ do |committee, value|
+Then /^the (.+) committee should be exactly "(.*)"$/ do |committee, value|
   @characteristics[committee.to_sym].to_s.should == value
 end
 
-Then /^the active_subtimeframe committee should have timeframe (.*)$/ do |tf_string|
+Then /^the active_subtimeframe committee should have timeframe "(.*)"$/ do |tf_string|
   days, start, finish = tf_string.split(/,\s*/)
   @characteristics[:active_subtimeframe].to_s.should =~ /#{days} days starting #{start} ending #{finish}/
 end
-
