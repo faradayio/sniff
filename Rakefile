@@ -40,6 +40,7 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.require_paths = ["lib"]
     gem.add_dependency 'activerecord', '~>3.0.0'
     gem.add_dependency 'activesupport', '~>3.0.0'
+    gem.add_dependency 'chronic', '~>0.2.3'
     gem.add_dependency 'common_name', '~>0.1.5'
     gem.add_dependency 'earth', '~> 0.0.32' unless ENV['LOCAL_EARTH']
     gem.add_dependency 'sqlite3-ruby', '~>1.3.0'

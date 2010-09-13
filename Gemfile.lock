@@ -23,6 +23,8 @@ GEM
       activesupport (~> 3.0.0)
     blockenspiel (0.3.2)
     builder (2.1.2)
+    chronic (0.2.3)
+      hoe (>= 1.2.1)
     cohort_scope (0.0.7)
       activerecord (>= 3.0.0.beta4)
       activesupport (>= 3.0.0.beta4)
@@ -132,6 +134,7 @@ DEPENDENCIES
   activerecord (~> 3.0.0)
   activesupport (~> 3.0.0)
   bundler
+  chronic (~> 0.2.3)
   common_name (~> 0.1.5)
   earth (~> 0.0.32)
   fast_timestamp (~> 0.0.4)
