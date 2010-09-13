@@ -1,4 +1,5 @@
 require 'date'
+require 'active_support'
 
 def coerce_value(value)
   # what is this, PHP?
@@ -18,8 +19,8 @@ def coerce_value(value)
 end
 
 def compare_values(a, b)
-  if b.nil? or b.empty?
-    a.should be_empty
+  if b.blank?
+    a.should be_blank
   elsif a.is_a? Date or a.is_a? Time
     b = Date.parse b
     a.should == b
@@ -35,8 +36,8 @@ def compare_values(a, b)
 end
 
 def equality?(a, b)
-  if b.nil? or b.empty?
-    a.nil?
+  if b.blank?
+    a.blank?
   elsif a.is_a? Date or a.is_a? Time
     b = Date.parse b
     a == b

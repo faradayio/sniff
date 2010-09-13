@@ -1,3 +1,5 @@
+require 'active_support'
+
 Given /^an? (.+) emitter$/ do |name|
   name = name.gsub(/\s+/,'_').camelize + 'Record'
   @activity = name.constantize
@@ -62,7 +64,7 @@ Then /^the conclusion of the committee should include a key of "(.*)" and value 
   if key.present?
     @report.conclusion.keys.map(&:to_s).should include(key)
   else
-    @report.conclusion.keys.map(&:to_s).should be_empty
+    @report.conclusion.keys.map(&:to_s).should be_blank
   end
 
   if value.present?
@@ -87,7 +89,7 @@ end
 
 Then /^the conclusion of the committee should have a( single)? record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |single, id_field, id, field, value|
   if value.blank?
-    @report.conclusion.should be_empty
+    @report.conclusion.should be_blank
   else
     id_field = id_field.to_sym
     records = @report.conclusion
@@ -119,6 +121,6 @@ Then /^the conclusion of the committee should include a key of "(.*)" and subval
     actual_subvalue2 = coerce_value(@report.conclusion[key.to_s][subkey2.to_sym].to_s)
     compare_values(actual_subvalue2, subvalue2)
   else
-    @report.conclusion.keys.map(&:to_s).should be_empty
+    @report.conclusion.keys.map(&:to_s).should be_blank
   end
 end
