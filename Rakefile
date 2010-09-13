@@ -62,7 +62,7 @@ require_or_fail('rspec', 'RSpec gem not found, rspec tasks unavailable') do
   desc "Run all examples"
   RSpec::Core::RakeTask.new('examples') do |t|
     if ENV['CUCUMBER_FORMAT']
-      t.spec_opts = ['--format', ENV['CUCUMBER_FORMAT'], '--diff']
+      t.spec_opts = ['--format', ENV['CUCUMBER_FORMAT']]
     end
   end
 
