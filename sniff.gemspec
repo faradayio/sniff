@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.1.13"
+  s.version = "0.1.14"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = [
     "spec/lib/sniff/database_spec.rb",
+     "spec/lib/test_support/cucumber/support/values_spec.rb",
      "spec/spec_helper.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
      "lib/test_support/cucumber/step_definitions/committee_steps.rb",
