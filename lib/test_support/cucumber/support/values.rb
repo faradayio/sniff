@@ -5,7 +5,7 @@ require 'chronic'
 module CucumberValueParser
   def coerce_value(value)
     # what is this, PHP?
-    if value.nil?
+    if value.blank?
       nil
     elsif value == 'true'
       true
