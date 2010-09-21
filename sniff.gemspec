@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-09-20}
+  s.date = %q{2010-09-21}
   s.description = %q{Provides data environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -58,7 +58,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.0"])
       s.add_runtime_dependency(%q<chronic>, ["~> 0.2.3"])
       s.add_runtime_dependency(%q<common_name>, ["~> 0.1.5"])
-      s.add_runtime_dependency(%q<earth>, ["~> 0.1.0"])
+      s.add_runtime_dependency(%q<earth>, ["~> 0.2.0"])
       s.add_runtime_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_runtime_dependency(%q<timeframe>, ["~> 0.0.8"])
@@ -73,7 +73,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
       s.add_dependency(%q<chronic>, ["~> 0.2.3"])
       s.add_dependency(%q<common_name>, ["~> 0.1.5"])
-      s.add_dependency(%q<earth>, ["~> 0.1.0"])
+      s.add_dependency(%q<earth>, ["~> 0.2.0"])
       s.add_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
       s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
@@ -89,7 +89,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
     s.add_dependency(%q<chronic>, ["~> 0.2.3"])
     s.add_dependency(%q<common_name>, ["~> 0.1.5"])
-    s.add_dependency(%q<earth>, ["~> 0.1.0"])
+    s.add_dependency(%q<earth>, ["~> 0.2.0"])
     s.add_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
     s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
     s.add_dependency(%q<timeframe>, ["~> 0.0.8"])

@@ -45,7 +45,7 @@ GEM
       remote_table (>= 0.2.30)
       taps (>= 0.3.11)
     diff-lcs (1.1.2)
-    earth (0.1.1)
+    earth (0.2.0)
       activerecord (>= 3.0.0.beta4)
       cohort_scope (>= 0.0.7)
       conversions (>= 1.4.5)
@@ -147,7 +147,7 @@ DEPENDENCIES
   bundler
   chronic (~> 0.2.3)
   common_name (~> 0.1.5)
-  earth (~> 0.1.0)
+  earth (~> 0.2.0)
   fast_timestamp (~> 0.0.4)
   jeweler
   rake
