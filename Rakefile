@@ -48,6 +48,7 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.add_dependency 'timeframe', '~>0.0.8'
 
     gem.add_development_dependency 'bundler'
+    gem.add_development_dependency 'emitter'
     gem.add_development_dependency 'jeweler'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rcov'

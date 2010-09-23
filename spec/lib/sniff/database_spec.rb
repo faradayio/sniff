@@ -3,18 +3,24 @@ require 'fileutils'
 
 describe Sniff::Database do
   describe '#connect' do
+    let(:dirigible_path) { File.expand_path '../../fixtures/dirigible', File.dirname(__FILE__) }
+    
     before :each do
-      @db_path = File.join(File.dirname(__FILE__), '..', '..', '..')
+      require File.join(dirigible_path, 'lib', 'dirigible')
     end
+
     it 'should load the air domain' do
-      Sniff.init(@db_path, :earth => :air, :apply_schemas => true)
+      Sniff.init(dirigible_path, :earth => :air, :apply_schemas => true)
       Airport.count.should == 0 # we don't have fixtures for this here
       ZipCode.count.should > 0
       expect { AutomobileFuelType }.should raise_error
     end
     it 'should load data for all domains' do
-      Sniff.init(@db_path, :earth => :all, :apply_schemas => true)
+      Sniff.init(dirigible_path, :earth => :all, :apply_schemas => true)
       ZipCode.count.should > 0
+    end
+    it 'should load a schema for the emitter record' do
+      DirigibleRecord.table_exists?.should be_true
     end
   end
 end

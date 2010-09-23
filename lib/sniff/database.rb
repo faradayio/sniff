@@ -26,26 +26,7 @@ module Sniff
           environments << init_environment(Sniff.root)
         end
         
-        load_all_schemas
-
         environments.each { |e| e.populate_fixtures }
-      end
-
-      # Used within an emitter's custom schema definition - aggregates muliple 
-      # schemas into a single schema generation transaction.
-      #
-      # Instead of:
-      # <tt>ActiveRecord::Schema.define(:version => XYZ) do</tt>
-      # It's:
-      # <tt>Sniff::Database.define_schema do</tt>
-      def define_schema(&blk)
-        schemas << blk
-      end
-
-      # The list of schemas that have been loaded via define_schema
-      def schemas
-        @schemas = [] unless defined?(@schemas)
-        @schemas
       end
 
     private
@@ -72,21 +53,6 @@ module Sniff
 
         Earth.init *args
       end
-
-      # Apply defined schemas to database
-      def load_all_schemas
-        orig_std_out = STDOUT.clone
-        STDOUT.reopen File.open(File.join('/tmp', 'schema_output'), 'w') 
-
-        ActiveRecord::Schema.define(:version => 1) do
-          ar_schema = self
-          Sniff::Database.schemas.each do |s|
-            ar_schema.instance_eval &s
-          end
-        end
-      ensure
-        STDOUT.reopen(orig_std_out)
-      end
     end
 
     attr_accessor :root, :lib_path, :fixtures_path,
@@ -109,10 +75,6 @@ module Sniff
       @load_data
     end
 
-    def schema_path
-      @schema_path ||= File.join(lib_path, 'db', 'schema.rb')
-    end
-
     def fixtures_path
       @fixtures_path ||= File.join(lib_path, 'db', 'fixtures')
     end
@@ -123,13 +85,22 @@ module Sniff
 
     def init
       load_supporting_libs
-      read_schema
+      create_emitter_table
       read_fixtures if load_data?
     end
 
-    def read_schema
-      log "Reading schema #{schema_path}"
-      load(schema_path) if File.exist?(schema_path)
+    def emitter_class
+      return @emitter_class unless @emitter_class.nil?
+      record_class_file = Dir.glob(File.join(root, 'lib', 'test_support', '*_record.rb')).first
+      if record_class_file
+        record_class = File.read(record_class_file)
+        klass = record_class.scan(/class ([^\s]*Record)/).flatten.first
+        @emitter_class = klass.constantize
+      end
+    end
+
+    def create_emitter_table
+      emitter_class.execute_schema if emitter_class
     end
 
     def read_fixtures
