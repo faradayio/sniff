@@ -17,7 +17,9 @@ Given /^an? (.+) has "(.+)" of "(.*)"$/ do |emitter, field, value|
 end
 
 Given /^it has "(.+)" of "(.*)"$/ do |field, value|
-  if value.present?
+  if value =~ /[\d-]+\/[\d-]+/
+    @timeframe = Timeframe.interval(value) 
+  elsif value.present?
     methods = field.split('.')
     context = @activity_hash
     methods.each do |method|
@@ -35,13 +37,14 @@ Given /^the current date is "(.+)"$/ do |current_date|
 end
 
 When /^emissions are calculated$/ do
+  @timeframe ||= Timeframe.this_year
   @activity = @emitter_class.from_params_hash @activity_hash
   if @current_date
     Timecop.travel(@current_date) do
-      @emission = @activity.emission Timeframe.this_year
+      @emission = @activity.emission @timeframe
     end
   else
-    @emission = @activity.emission Timeframe.this_year
+    @emission = @activity.emission @timeframe
   end
   @characteristics = @activity.deliberations[:emission].characteristics
 end
