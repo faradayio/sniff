@@ -29,7 +29,6 @@ module Sniff
     module ClassMethods
       def from_params_hash(params = Hash.new)
         resolved_params = Hash.new
-        instance = new
         associations = reflect_on_all_associations
         params.each do |k, v|
           next if v.blank?
