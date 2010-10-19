@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sniff (0.2.1)
+    sniff (0.2.2)
       aaronh-chronic (~> 0.3.9)
       activerecord (~> 3.0.0)
       activesupport (~> 3.0.0)
