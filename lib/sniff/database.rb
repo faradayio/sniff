@@ -113,6 +113,7 @@ module Sniff
     end
 
     def populate_fixtures
+      Encoding.default_external ||= 'UTF-8'
       fixtures.each do |fixture_file|
         klass = File.basename(fixture_file, '.csv').
           camelize.singularize
