@@ -56,6 +56,10 @@ Then /^the conclusion of the committee should be "(.*)"$/ do |conclusion|
   compare_values(@report.andand.conclusion, conclusion)
 end
 
+Then /^the conclusion of the committee should be timeframe "(.*)"$/ do |conclusion|
+  compare_values(@report.andand.conclusion, timeframe)
+end
+
 Then /^the conclusion of the committee should be nil$/ do
   compare_values(@report.andand.conclusion, nil)
 end
