@@ -17,7 +17,7 @@ Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
     end
     value = model.send "find_by_#{attribute}", value
     @characteristics[model_name.to_sym] = value
-  elsif name == 'timeframe'
+  elsif name == 'timeframe' || name == 'active_subtimeframe'
     @characteristics[name.to_sym] = (value.present?) ? Timeframe.interval(value) : nil
   else
     value = coerce_value(value)
