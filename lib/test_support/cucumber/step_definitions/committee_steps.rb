@@ -57,6 +57,7 @@ Then /^the conclusion of the committee should be "(.*)"$/ do |conclusion|
 end
 
 Then /^the conclusion of the committee should be timeframe "(.*)"$/ do |conclusion|
+  timeframe = Timeframe.interval(conclusion)
   compare_values(@report.andand.conclusion, timeframe)
 end
 
