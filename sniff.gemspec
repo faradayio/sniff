@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.2.7"
+  s.version = "0.2.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-11-05}
+  s.date = %q{2010-11-06}
   s.description = %q{Provides data environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -41,18 +41,18 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = [
-    "spec/fixtures/dirigible/lib/dirigible/carbon_model.rb",
-     "spec/fixtures/dirigible/lib/dirigible/characterization.rb",
+    "spec/fixtures/dirigible/lib/test_support/dirigible_record.rb",
+     "spec/fixtures/dirigible/lib/dirigible/carbon_model.rb",
      "spec/fixtures/dirigible/lib/dirigible/data.rb",
+     "spec/fixtures/dirigible/lib/dirigible/characterization.rb",
      "spec/fixtures/dirigible/lib/dirigible/summarization.rb",
      "spec/fixtures/dirigible/lib/dirigible.rb",
-     "spec/fixtures/dirigible/lib/test_support/dirigible_record.rb",
-     "spec/lib/sniff/database_spec.rb",
      "spec/lib/test_support/cucumber/support/values_spec.rb",
+     "spec/lib/sniff/database_spec.rb",
      "spec/spec_helper.rb",
+     "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
-     "lib/test_support/cucumber/step_definitions/committee_steps.rb",
-     "lib/test_support/cucumber/support/values.rb"
+     "lib/test_support/cucumber/step_definitions/committee_steps.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.0"])
       s.add_runtime_dependency(%q<aaronh-chronic>, ["~> 0.3.9"])
       s.add_runtime_dependency(%q<common_name>, ["~> 0.1.5"])
-      s.add_runtime_dependency(%q<earth>, ["~> 0.2.6"])
+      s.add_runtime_dependency(%q<earth>, ["~> 0.2.7"])
       s.add_runtime_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_runtime_dependency(%q<timeframe>, ["~> 0.0.8"])
@@ -80,7 +80,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
       s.add_dependency(%q<aaronh-chronic>, ["~> 0.3.9"])
       s.add_dependency(%q<common_name>, ["~> 0.1.5"])
-      s.add_dependency(%q<earth>, ["~> 0.2.6"])
+      s.add_dependency(%q<earth>, ["~> 0.2.7"])
       s.add_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
       s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
@@ -97,7 +97,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
     s.add_dependency(%q<aaronh-chronic>, ["~> 0.3.9"])
     s.add_dependency(%q<common_name>, ["~> 0.1.5"])
-    s.add_dependency(%q<earth>, ["~> 0.2.6"])
+    s.add_dependency(%q<earth>, ["~> 0.2.7"])
     s.add_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
     s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
     s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
