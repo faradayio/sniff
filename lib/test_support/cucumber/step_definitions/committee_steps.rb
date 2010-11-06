@@ -33,7 +33,7 @@ end
 When /^the "(.*)" committee is calculated$/ do |committee_name|
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
-  args = [@characteristics]
+  args = [@activity, @characteristics]
   if @characteristics[:timeframe]
     args << [@characteristics[:timeframe]]
   else
