@@ -1,6 +1,5 @@
 require 'active_record'
 require 'falls_back_on'
-require 'dirigible'
 require 'sniff'
 
 class DirigibleRecord < ActiveRecord::Base

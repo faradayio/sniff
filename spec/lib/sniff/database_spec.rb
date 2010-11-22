@@ -5,8 +5,9 @@ describe Sniff::Database do
   describe '#connect' do
     let(:dirigible_path) { File.expand_path '../../fixtures/dirigible', File.dirname(__FILE__) }
     
-    before :each do
-      require File.join(dirigible_path, 'lib', 'dirigible')
+    before :all do
+      $:.unshift File.join(dirigible_path, 'lib')
+      require File.join('dirigible')
     end
 
     it 'should load the air domain' do
@@ -20,6 +21,8 @@ describe Sniff::Database do
       ZipCode.count.should > 0
     end
     it 'should load a schema for the emitter record' do
+      Sniff.init(dirigible_path, :apply_schemas => true)
+      require File.join(dirigible_path, 'lib', 'test_support', 'dirigible_record')
       DirigibleRecord.table_exists?.should be_true
     end
   end
