@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-11-19}
+  s.date = %q{2010-11-22}
   s.description = %q{Provides data environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
      "lib/test_support/db/fixtures/egrid_regions.csv",
      "lib/test_support/db/fixtures/egrid_subregions.csv",
      "lib/test_support/db/fixtures/genders.csv",
-     "lib/test_support/db/fixtures/petroleum_administration_for_defense_districts.csv",
+     "lib/test_support/db/fixtures/petrolem_districts.csv",
      "lib/test_support/db/fixtures/states.csv",
      "lib/test_support/db/fixtures/urbanities.csv",
      "lib/test_support/db/fixtures/zip_codes.csv"
