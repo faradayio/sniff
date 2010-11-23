@@ -10,16 +10,14 @@ require 'rocco/tasks'
 
 module Sniff
   class RakeTasks
-    def self.define_tasks
-      new.define_tasks
+    def self.define_tasks(&blk)
+      new.define_tasks(&blk)
     end
 
     attr_accessor :earth_domains
 
     def initialize
       yield self if block_given?
-
-      define_task
     end
 
     def earth_domains
@@ -37,7 +35,6 @@ module Sniff
       sh full_cmd, &blk
     end
 
-  private
     def define_tasks
       task :console do
         require 'sniff'
