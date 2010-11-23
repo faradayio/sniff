@@ -73,11 +73,11 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rcov>, [">= 0"])
       s.add_runtime_dependency(%q<rdoc>, [">= 0"])
       s.add_runtime_dependency(%q<rocco>, [">= 0"])
+      s.add_runtime_dependency(%q<rspec>, ["~> 2.0.0"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_runtime_dependency(%q<timeframe>, ["~> 0.0.8"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<emitter>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
       s.add_development_dependency(%q<sandbox>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
@@ -92,11 +92,11 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<rocco>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.0.0"])
       s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<emitter>, [">= 0"])
-      s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
       s.add_dependency(%q<sandbox>, [">= 0"])
     end
   else
@@ -112,11 +112,11 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<rocco>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.0.0"])
     s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
     s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<emitter>, [">= 0"])
-    s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
     s.add_dependency(%q<sandbox>, [">= 0"])
   end
 end

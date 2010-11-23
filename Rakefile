@@ -49,12 +49,12 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.add_dependency 'rcov'
     gem.add_dependency 'rdoc'
     gem.add_dependency 'rocco'
+    gem.add_dependency 'rspec', '~>2.0.0'
     gem.add_dependency 'sqlite3-ruby', '~>1.3.0'
     gem.add_dependency 'timeframe', '~>0.0.8'
 
     gem.add_development_dependency 'bundler'
     gem.add_development_dependency 'emitter'
-    gem.add_development_dependency 'rspec', '~>2.0.0.beta.17'
     gem.add_development_dependency 'sandbox'
   end
   Jeweler::GemcutterTasks.new
