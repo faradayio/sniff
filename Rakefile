@@ -60,26 +60,10 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
   Jeweler::GemcutterTasks.new
 end
 
-require_or_fail('rspec', 'RSpec gem not found, rspec tasks unavailable') do
-  require 'rspec/core/rake_task'
-
-  desc "Run all examples"
-  RSpec::Core::RakeTask.new('examples') do |t|
-    if ENV['CUCUMBER_FORMAT']
-      t.spec_opts = ['--format', ENV['CUCUMBER_FORMAT']]
-    end
-  end
-
-  task :test => :examples
-  task :default => :test
-end
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "lodging #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+$:.unshift File.expand_path('lib', File.dirname(__FILE__))
+require 'sniff'
+require 'sniff/rake_tasks'
+Sniff::RakeTasks.define_tasks do |s|
+  s.cucumber = false
+  s.rspec = true
 end
