@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
     "lib/sniff.rb",
      "lib/sniff/database.rb",
      "lib/sniff/emitter.rb",
-     "lib/sniff/rake_task.rb",
+     "lib/sniff/rake_tasks.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
      "lib/test_support/cucumber/step_definitions/committee_steps.rb",
      "lib/test_support/cucumber/support/values.rb",
@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
      "spec/fixtures/dirigible/lib/dirigible.rb",
      "spec/lib/test_support/cucumber/support/values_spec.rb",
      "spec/lib/sniff/database_spec.rb",
-     "spec/lib/sniff/rake_task_spec.rb",
+     "spec/lib/sniff/rake_tasks_spec.rb",
      "spec/spec_helper.rb",
      "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
