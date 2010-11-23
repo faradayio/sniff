@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-11-22}
-  s.description = %q{Provides data environment for emitter gems}
+  s.date = %q{2010-11-23}
+  s.description = %q{Provides development and test environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
     "README.markdown"
@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
      "spec/fixtures/dirigible/lib/dirigible.rb",
      "spec/lib/test_support/cucumber/support/values_spec.rb",
      "spec/lib/sniff/database_spec.rb",
+     "spec/lib/sniff/rake_task_spec.rb",
      "spec/spec_helper.rb",
      "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
@@ -64,50 +65,59 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.0"])
       s.add_runtime_dependency(%q<aaronh-chronic>, ["~> 0.3.9"])
       s.add_runtime_dependency(%q<common_name>, ["~> 0.1.5"])
+      s.add_runtime_dependency(%q<cucumber>, ["~> 0.9.4"])
       s.add_runtime_dependency(%q<earth>, ["~> 0.3.1"])
       s.add_runtime_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
+      s.add_runtime_dependency(%q<jeweler>, ["~> 1.4.0"])
+      s.add_runtime_dependency(%q<rake>, [">= 0"])
+      s.add_runtime_dependency(%q<rcov>, [">= 0"])
+      s.add_runtime_dependency(%q<rdoc>, [">= 0"])
+      s.add_runtime_dependency(%q<rocco>, [">= 0"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
       s.add_runtime_dependency(%q<timeframe>, ["~> 0.0.8"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<emitter>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.4.0"])
-      s.add_development_dependency(%q<rake>, [">= 0"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
-      s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
+      s.add_development_dependency(%q<sandbox>, [">= 0"])
     else
       s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
       s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
       s.add_dependency(%q<aaronh-chronic>, ["~> 0.3.9"])
       s.add_dependency(%q<common_name>, ["~> 0.1.5"])
+      s.add_dependency(%q<cucumber>, ["~> 0.9.4"])
       s.add_dependency(%q<earth>, ["~> 0.3.1"])
       s.add_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
-      s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
-      s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
-      s.add_dependency(%q<bundler>, [">= 0"])
-      s.add_dependency(%q<emitter>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
+      s.add_dependency(%q<rocco>, [">= 0"])
+      s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
+      s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<emitter>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
+      s.add_dependency(%q<sandbox>, [">= 0"])
     end
   else
     s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
     s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
     s.add_dependency(%q<aaronh-chronic>, ["~> 0.3.9"])
     s.add_dependency(%q<common_name>, ["~> 0.1.5"])
+    s.add_dependency(%q<cucumber>, ["~> 0.9.4"])
     s.add_dependency(%q<earth>, ["~> 0.3.1"])
     s.add_dependency(%q<fast_timestamp>, ["~> 0.0.4"])
-    s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
-    s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
-    s.add_dependency(%q<bundler>, [">= 0"])
-    s.add_dependency(%q<emitter>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
+    s.add_dependency(%q<rocco>, [">= 0"])
+    s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
+    s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<emitter>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
+    s.add_dependency(%q<sandbox>, [">= 0"])
   end
 end
 
