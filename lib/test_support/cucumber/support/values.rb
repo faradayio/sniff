@@ -11,10 +11,16 @@ module CucumberValueParser
       true
     elsif value == 'false'
       false
+    elsif value =~ /\d+.*,.*\d/
+      value
     elsif value =~ /\d+\.\d+/
       value.to_f
+    elsif value =~ /^0/
+      value
     elsif value =~ /^\d+$/
       value.to_i
+    elsif value =~ /Address:/
+      value.sub(/Address:\s*/,'')
     elsif value.is_a?(String) and date = Chronic.parse(value)
       date
     else
@@ -31,9 +37,13 @@ module CucumberValueParser
     elsif a.is_a? Date 
       b = Date.parse b unless b.is_a?(Date)
       a.should == b
+    elsif b =~ /\d+.*,.*\d/
+      a.should == b
     elsif b =~ /\d+\.\d+/
       b = b.to_f
       a.to_f.should be_close(b, 0.00001)
+    elsif b =~ /^0/
+      a.to_s.should == b
     elsif b =~ /^\d+$/
       b = b.to_i
       a.to_i.should == b
@@ -48,8 +58,12 @@ module CucumberValueParser
     elsif a.is_a? Date or a.is_a? Time
       b = Date.parse b
       a == b
+    elsif b =~ /\d+.*,.*\d/
+      a == b
     elsif b =~ /\d+\.\d+/
       (a.to_f - b.to_f).abs <= 0.00001
+    elsif b =~ /^0/
+      a == b
     elsif b =~ /^\d+$/
       a.to_i == b.to_i
     else
