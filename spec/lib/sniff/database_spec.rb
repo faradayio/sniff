@@ -25,6 +25,10 @@ describe Sniff::Database do
       require File.join(dirigible_path, 'lib', 'test_support', 'dirigible_record')
       DirigibleRecord.table_exists?.should be_true
     end
+    it 'should load data for PADD' do
+      Sniff.init(dirigible_path, :earth => :locality, :apply_schemas => true)
+      PetroleumAdministrationForDefenseDistrict.all.count.should == 7
+    end
   end
 end
 

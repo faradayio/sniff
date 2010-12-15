@@ -114,14 +114,16 @@ module Sniff
 
     def populate_fixtures
       Encoding.default_external = 'UTF-8'
-      fixtures.each do |fixture_file|
-        klass = File.basename(fixture_file, '.csv').
-          camelize.singularize
-        pluralized_klass = klass.pluralize
+      Earth.resource_names.each do |klass|
         klass = klass.pluralize unless Object.const_defined?(klass)
         if Object.const_defined?(klass) and klass.constantize.table_exists?
-          log "Loading fixture #{fixture_file}"
-          Fixtures.create_fixtures(fixtures_path, fixture_file[(fixtures_path.size + 1)..-5])
+          object = klass.constantize
+          table_name = object.table_name
+          fixture_file = File.join(fixtures_path, table_name + '.csv')
+          if File.exist? fixture_file
+            log "Loading fixture #{fixture_file}"
+            Fixtures.create_fixtures(fixtures_path, table_name, klass => table_name)
+          end
         end
       end
     end
