@@ -6,7 +6,11 @@ Given /^an? (.+) emitter$/ do |name|
   @characteristics ||= {}
 end
 
-Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
+Given /^(a )?characteristic "(.*)" of integer value "(.*)"$/ do |_, name, value|
+  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_i\""
+end
+
+Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do |_, name, value, __, converter|
   if name =~ /\./
     model_name, attribute = name.split /\./
     model = begin
@@ -19,6 +23,9 @@ Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
     @characteristics[model_name.to_sym] = value
   elsif name == 'timeframe' || name == 'active_subtimeframe'
     @characteristics[name.to_sym] = (value.present?) ? Timeframe.interval(value) : nil
+  elsif converter
+    value = value.send converter
+    @characteristics[name.to_sym] = value
   else
     value = coerce_value(value)
     @characteristics[name.to_sym] = value
