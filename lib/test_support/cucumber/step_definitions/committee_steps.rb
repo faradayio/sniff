@@ -4,10 +4,14 @@ Given /^an? (.+) emitter$/ do |name|
   name = name.gsub(/\s+/,'_').camelize + 'Record'
   @activity = name.constantize
   @characteristics ||= {}
+  @expectations ||= []
 end
 
 Given /^(a )?characteristic "(.*)" of integer value "(.*)"$/ do |_, name, value|
   Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_i\""
+end
+Given /^(a )?characteristic "(.*)" of address value "(.*)"$/ do |_, name, value|
+  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_s\""
 end
 
 Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do |_, name, value, __, converter|
@@ -38,6 +42,7 @@ Given /^(a )?characteristic "(.*)" including "(.*)"$/ do |_, name, values|
 end
 
 When /^the "(.*)" committee is calculated$/ do |committee_name|
+  @expectations.map(&:call)
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
   args = [@activity, @characteristics]

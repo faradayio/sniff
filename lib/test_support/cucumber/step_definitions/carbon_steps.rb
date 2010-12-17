@@ -5,6 +5,7 @@ Given /^an? (.+) emission$/ do |emitter|
   @emitter_class = emitter.gsub(/\s+/,'_').camelize
   @emitter_class = "#{@emitter_class}Record".constantize
   @activity_hash = {}
+  @expectations = []
 end
 
 Given /^an? (.+) has nothing$/ do |emitter|
@@ -39,6 +40,7 @@ end
 When /^emissions are calculated$/ do
   @timeframe ||= Timeframe.this_year
   @activity = @emitter_class.from_params_hash @activity_hash
+  @expectations.map(&:call)
   if @current_date
     Timecop.travel(@current_date) do
       @emission = @activity.emission @timeframe
