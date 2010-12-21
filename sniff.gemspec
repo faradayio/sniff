@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sniff}
-  s.version = "0.4.7"
+  s.version = "0.4.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-12-17}
+  s.date = %q{2010-12-21}
   s.description = %q{Provides development and test environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
      "lib/sniff/rake_tasks.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
      "lib/test_support/cucumber/step_definitions/committee_steps.rb",
+     "lib/test_support/cucumber/step_definitions/data_steps.rb",
      "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/db/fixtures/census_divisions.csv",
      "lib/test_support/db/fixtures/census_regions.csv",
@@ -42,8 +43,10 @@ Gem::Specification.new do |s|
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = [
     "spec/fixtures/dirigible/lib/test_support/dirigible_record.rb",
+     "spec/fixtures/dirigible/lib/dirigible/fallback.rb",
      "spec/fixtures/dirigible/lib/dirigible/carbon_model.rb",
      "spec/fixtures/dirigible/lib/dirigible/data.rb",
+     "spec/fixtures/dirigible/lib/dirigible/relationships.rb",
      "spec/fixtures/dirigible/lib/dirigible/characterization.rb",
      "spec/fixtures/dirigible/lib/dirigible/summarization.rb",
      "spec/fixtures/dirigible/lib/dirigible.rb",
@@ -53,7 +56,8 @@ Gem::Specification.new do |s|
      "spec/spec_helper.rb",
      "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
-     "lib/test_support/cucumber/step_definitions/committee_steps.rb"
+     "lib/test_support/cucumber/step_definitions/committee_steps.rb",
+     "lib/test_support/cucumber/step_definitions/data_steps.rb"
   ]
 
   if s.respond_to? :specification_version then
