@@ -136,8 +136,8 @@ module Sniff
       test_tasks << :examples if rspec
       test_tasks << :features if cucumber
       unless test_tasks.empty?
-        task :default => test_tasks.first
         task :test => test_tasks
+        task :default => :test
       end
 
       Rake::RDocTask.new do |rdoc|
