@@ -115,7 +115,7 @@ module Sniff
     end
 
     def populate_fixtures
-      Encoding.default_external = 'UTF-8'
+      Encoding.default_external = 'UTF-8' if Object.const_defined?('Encoding')
       Earth.resource_names.each do |klass|
         klass = klass.pluralize unless Object.const_defined?(klass)
         if Object.const_defined?(klass) and klass.constantize.table_exists?
