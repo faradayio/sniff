@@ -3,3 +3,4 @@ spec/db/emitter_data.sqlite3
 db/schema_output
 spec/db/schema_output
 *~
+Gemfile.lock
