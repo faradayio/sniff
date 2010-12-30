@@ -9,3 +9,7 @@ source :rubygems
 
 gemspec :path => File.dirname(__FILE__) 
 path File.join(File.dirname(__FILE__), 'lib')
+
+if RUBY_VERSION =~ /^1\.8/
+  gem 'fastercsv'
+end
