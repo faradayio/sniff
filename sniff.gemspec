@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = %q{2010-12-30}
+  s.date = %q{2011-01-07}
   s.description = %q{Provides development and test environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
      "lib/test_support/cucumber/step_definitions/committee_steps.rb",
      "lib/test_support/cucumber/step_definitions/data_steps.rb",
+     "lib/test_support/cucumber/step_definitions/temporal_steps.rb",
      "lib/test_support/cucumber/support/values.rb",
      "lib/test_support/db/fixtures/census_divisions.csv",
      "lib/test_support/db/fixtures/census_regions.csv",
@@ -55,6 +56,7 @@ Gem::Specification.new do |s|
      "spec/lib/sniff/rake_tasks_spec.rb",
      "spec/spec_helper.rb",
      "lib/test_support/cucumber/support/values.rb",
+     "lib/test_support/cucumber/step_definitions/temporal_steps.rb",
      "lib/test_support/cucumber/step_definitions/carbon_steps.rb",
      "lib/test_support/cucumber/step_definitions/committee_steps.rb",
      "lib/test_support/cucumber/step_definitions/data_steps.rb"
@@ -79,6 +81,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rocco>, [">= 0"])
       s.add_runtime_dependency(%q<rspec>, ["~> 2.0.0"])
       s.add_runtime_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
+      s.add_runtime_dependency(%q<timecop>, [">= 0"])
       s.add_runtime_dependency(%q<timeframe>, ["~> 0.0.8"])
       s.add_development_dependency(%q<bundler>, [">= 0"])
       s.add_development_dependency(%q<emitter>, [">= 0"])
@@ -98,6 +101,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rocco>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.0.0"])
       s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
+      s.add_dependency(%q<timecop>, [">= 0"])
       s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
       s.add_dependency(%q<bundler>, [">= 0"])
       s.add_dependency(%q<emitter>, [">= 0"])
@@ -118,6 +122,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rocco>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.0.0"])
     s.add_dependency(%q<sqlite3-ruby>, ["~> 1.3.0"])
+    s.add_dependency(%q<timecop>, [">= 0"])
     s.add_dependency(%q<timeframe>, ["~> 0.0.8"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<emitter>, [">= 0"])

@@ -51,6 +51,7 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.add_dependency 'rocco'
     gem.add_dependency 'rspec', '~>2.0.0'
     gem.add_dependency 'sqlite3-ruby', '~>1.3.0'
+    gem.add_dependency 'timecop'
     gem.add_dependency 'timeframe', '~>0.0.8'
 
     gem.add_development_dependency 'bundler'
