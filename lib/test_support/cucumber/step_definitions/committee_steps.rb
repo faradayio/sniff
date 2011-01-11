@@ -64,6 +64,22 @@ Then /^the committee should have used quorum "(.*)"$/ do |quorum|
   @report.quorum.name.should == quorum
 end
 
+Then /^the conclusion should comply with standards? "(.*)"$/ do |standard_list|
+  raise "Missing report for committee #{@committee.name}" if @report.nil?
+  standards = standard_list.split(/,\s*/)
+  standards.each do |standard|
+    @report.quorum.compliance.map(&:to_s).should include(standard)
+  end
+end
+
+Then /^the conclusion should not comply with standards? "(.*)"$/ do |standard_list|
+  raise "Missing report for committee #{@committee.name}" if @report.nil?
+  standards = standard_list.split(/,\s*/)
+  standards.each do |standard|
+    @report.quorum.compliance.map(&:to_s).should_not include(standard)
+  end
+end
+
 Then /^the conclusion of the committee should be "(.*)"$/ do |conclusion|
   compare_values(@report.andand.conclusion, conclusion)
 end
