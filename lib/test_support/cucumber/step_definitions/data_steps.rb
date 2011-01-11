@@ -1,4 +1,4 @@
-Given /^a "([^\"]*)" data import fetches results listed in "(.*)"$/ do |model, file_name|
+Given /^an? "([^\"]*)" data import fetches results listed in "(.*)"$/ do |model, file_name|
   @data_import_model = model.constantize
   table_name = @data_import_model.table_name
 
