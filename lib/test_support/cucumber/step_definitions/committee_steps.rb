@@ -59,13 +59,17 @@ When /^the "(.*)" committee is calculated$/ do |committee_name|
 #  end
 end
 
-Then /^the committee should have used quorum "(.*)"$/ do |quorum|
+Then /^then a report should exist for the committee$/ do
   raise "Missing report for committee #{@committee.name}" if @report.nil?
+end
+
+Then /^the committee should have used quorum "(.*)"$/ do |quorum|
+  Then 'then a report should exist for the committee'
   @report.quorum.name.should == quorum
 end
 
 Then /^the conclusion should comply with standards? "(.*)"$/ do |standard_list|
-  raise "Missing report for committee #{@committee.name}" if @report.nil?
+  Then 'then a report should exist for the committee'
   standards = standard_list.split(/,\s*/)
   standards.each do |standard|
     @report.quorum.compliance.map(&:to_s).should include(standard)
@@ -73,7 +77,7 @@ Then /^the conclusion should comply with standards? "(.*)"$/ do |standard_list|
 end
 
 Then /^the conclusion should not comply with standards? "(.*)"$/ do |standard_list|
-  raise "Missing report for committee #{@committee.name}" if @report.nil?
+  Then 'then a report should exist for the committee'
   standards = standard_list.split(/,\s*/)
   standards.each do |standard|
     @report.quorum.compliance.map(&:to_s).should_not include(standard)
