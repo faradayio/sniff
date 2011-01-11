@@ -64,15 +64,13 @@ Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
 end
 
 Then /^the calculation should comply with standards? "(.*)"$/ do |standard_list|
-  standards = standard_list.split(/,\s*/)
-  This test should pass if the final emission calculation complies with every standard specified
-  (this means that every committee that was used complies with every standard specified)
+  standards = standard_list.split(/,\s*/).map(&:to_sym)
+  (@emission.compliance - standards).should be_empty
 end
 
 Then /^the calculation should not comply with standards? "(.*)"$/ do |standard_list|
-  standards = standard_list.split(/,\s*/)
-  This test should pass if the final emission calculation does not comply with any of the standards specified
-  (this means that at least one committee did not comply with each of the standards specified)
+  standards = standard_list.split(/,\s*/).map(&:to_sym)
+  (@emission.compliance - standards).should == @emission.compliance
 end
 
 Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cusion|
