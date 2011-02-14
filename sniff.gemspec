@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'aaronh-chronic', '~> 0.3.9'
   s.add_runtime_dependency 'common_name', '~> 0.1.5'
   s.add_runtime_dependency 'cucumber', '~> 0.9.4'
-  s.add_runtime_dependency 'earth', '~> 0.3.1'
+  s.add_runtime_dependency 'earth', '~> 0.3.15'
   s.add_runtime_dependency 'fast_timestamp', '~> 0.0.4'
   s.add_runtime_dependency 'bueller', '~> 0.0.4'
   s.add_runtime_dependency 'rake'
