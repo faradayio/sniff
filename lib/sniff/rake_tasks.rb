@@ -79,7 +79,7 @@ module Sniff
 
           file '.git/refs/heads/gh-pages' => 'docs/' do |f|
             unless File.exist? f.name
-              git 'branch gh-pages --track origin/gh-pages', 'docs' 
+              git 'branch gh-pages', 'docs' 
             end
           end
 
