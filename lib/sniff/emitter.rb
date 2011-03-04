@@ -1,12 +1,8 @@
-require 'fast_timestamp'
-require 'common_name'
-
 module Sniff
   module Emitter
     def self.included(target)
       target.instance_eval do
         extend ClassMethods
-        include CommonName
       end
     end
     
@@ -20,10 +16,6 @@ module Sniff
       
     def retired?
       has_attribute?(:retirement) and retirement
-    end
-    
-    def pattern?
-      self.class.pattern?
     end
     
     module ClassMethods
@@ -51,14 +43,6 @@ module Sniff
           end
         end
         new resolved_params
-      end
-
-      def _common_name
-        name.underscore
-      end
-
-      def pattern?
-        common_name.ends_with? 'pattern'
       end
     end
   end

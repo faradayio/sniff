@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
-  s.date = "2011-01-27"
+  s.date = "2011-03-04"
   s.description = %q{Provides development and test environment for emitter gems}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -22,15 +22,11 @@ Gem::Specification.new do |s|
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = Dir.glob('spec/**/*')
 
-  s.specification_version = 3
-  s.add_runtime_dependency 'activerecord', '~> 3.0.0'
   s.add_runtime_dependency 'activesupport', '~> 3.0.0'
   s.add_runtime_dependency 'aaronh-chronic', '~> 0.3.9'
-  s.add_runtime_dependency 'common_name', '~> 0.1.5'
-  s.add_runtime_dependency 'cucumber', '~> 0.10.0'
-  s.add_runtime_dependency 'earth'
-  s.add_runtime_dependency 'fast_timestamp', '~> 0.0.4'
-  s.add_runtime_dependency 'bueller', '~> 0.0.4'
+  s.add_runtime_dependency 'bueller', '~> 0.0.5'
+#  s.add_runtime_dependency 'cucumber', '~> 0.10.0'
+  s.add_runtime_dependency 'earth', '>= 0.4.5'
   s.add_runtime_dependency 'rake'
   s.add_runtime_dependency 'rcov'
   s.add_runtime_dependency 'rdoc'
@@ -39,8 +35,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'sqlite3-ruby', '~> 1.3.0'
   s.add_runtime_dependency 'timecop'
   s.add_runtime_dependency 'timeframe', '~> 0.0.8'
-  s.add_development_dependency 'bundler'
-  s.add_development_dependency 'emitter'
   s.add_development_dependency 'sandbox'
 end
 
