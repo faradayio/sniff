@@ -1,12 +1,7 @@
-require 'cucumber'
-require 'cucumber/rake/task'
 require 'rake'
 require 'rake/clean'
 require 'rake/rdoctask'
 require 'rake/tasklib'
-require 'rocco'
-require 'rocco/tasks'
-
 
 module Sniff
   class RakeTasks
@@ -48,6 +43,9 @@ module Sniff
       end
 
       if rocco
+        require 'rocco'
+        require 'rocco/tasks'
+
         Rocco::make 'docs/', "lib/#{gemname}/carbon_model.rb"
 
         desc 'Set up and build rocco docs'
@@ -95,6 +93,9 @@ module Sniff
       end
 
       if cucumber
+        require 'cucumber'
+        require 'cucumber/rake/task'
+
         desc 'Run all cucumber tests'
         Cucumber::Rake::Task.new(:features) do |t|
           if ENV['CUCUMBER_FORMAT']
