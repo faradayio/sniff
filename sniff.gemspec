@@ -36,5 +36,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'timecop'
   s.add_runtime_dependency 'timeframe', '~> 0.0.8'
   s.add_development_dependency 'sandbox'
+  s.add_development_dependency 'emitter'
 end
 

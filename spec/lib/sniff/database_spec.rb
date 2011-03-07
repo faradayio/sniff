@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'fileutils'
+require 'data_miner'
+require 'logger'
 
 describe Sniff::Database do
   describe '#connect' do
@@ -8,6 +10,7 @@ describe Sniff::Database do
     before :all do
       $:.unshift File.join(dirigible_path, 'lib')
       require File.join('dirigible')
+      DataMiner.logger = Logger.new nil
     end
 
     it 'should load the air domain' do

@@ -1,30 +1,37 @@
+require "dirigible/fallback"
+require 'characterizable'
+require 'cohort_scope'
+require 'data_miner'
+require 'dirigible/carbon_model'
+require 'dirigible/characterization'
+require 'dirigible/data'
+require 'dirigible/relationships'
+require 'dirigible/summarization'
 require 'emitter'
+require 'falls_back_on'
+require 'leap'
+require 'summary_judgement'
 
 module BrighterPlanet
   module Dirigible
-    instance_variable_set :@emission_scope, @emission_scope if @emission_scope
-    
-    require 'leap'
-    require 'cohort_scope'
-    extend Leap::Subject
-    include CarbonModel
+    def self.included(base)
+      instance_variable_set :@emission_scope, @emission_scope if @emission_scope
+      
+      base.extend Leap::Subject
+      base.send :include, CarbonModel
 
-    require 'characterizable'
-    include Characterizable
-    include Characterization
-    add_implicit_characteristics
+      base.send :include, Characterizable
+      base.send :include, Characterization
+#      add_implicit_characteristics
 
-    require 'data_miner'
-    include Data
+      base.send :include, Data
 
-    require 'summary_judgement'
-    base.extend ::SummaryJudgement
-    include Summarization
+      base.extend SummaryJudgement
+      base.send :include, Summarization
 
-    require 'falls_back_on'
-    require "dirigible/fallback"
-    include Fallback
+      base.send :include, Fallback
 
-    include Relationships
+      base.send :include, Relationships
+    end
   end
 end
