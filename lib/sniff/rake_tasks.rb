@@ -120,7 +120,11 @@ module Sniff
 
         desc "Run all examples"
         RSpec::Core::RakeTask.new('examples') do |c|
-          c.rspec_opts = '-Ispec'
+          if ENV['RSPEC_FORMAT']
+            c.rspec_opts = "-Ispec --format #{ENV['RSPEC_FORMAT']}"
+          else
+            c.rspec_opts = '-Ispec --format documentation'
+          end
         end
 
         if rcov
