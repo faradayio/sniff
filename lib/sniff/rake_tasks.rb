@@ -9,7 +9,7 @@ module Sniff
       new(&blk).define_tasks
     end
 
-    attr_accessor :earth_domains, :cucumber, :rspec, :rcov, :rocco
+    attr_accessor :earth_domains, :cucumber, :rspec, :rcov, :rocco, :bueller
 
     def initialize
       self.earth_domains = :all
@@ -17,6 +17,7 @@ module Sniff
       self.rspec = false
       self.rcov = true
       self.rocco = true
+      self.bueller = true
       yield self if block_given?
     end
 
@@ -152,6 +153,11 @@ module Sniff
         rdoc.title = "#{gemname} #{version}"
         rdoc.rdoc_files.include('README*')
         rdoc.rdoc_files.include('lib/**/*.rb')
+      end
+
+      if bueller
+        require 'bueller'
+        Bueller::Tasks.new
       end
     end
   end
