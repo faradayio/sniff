@@ -59,6 +59,7 @@ module Sniff
         desc 'Update gh-pages branch'
         task :pages => :docs do
           rev = `git rev-parse --short HEAD`.strip
+          sh "mv docs/lib/#{gemname}/carbon_model.html docs/"
           git 'add *.html', 'docs'
           git "commit -m 'rebuild pages from #{rev}'", 'docs' do |ok,res|
             if ok
