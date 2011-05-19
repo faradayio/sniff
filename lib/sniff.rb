@@ -1,8 +1,17 @@
+require 'data_miner'
+
 module Sniff
   extend self
 
   def root 
     File.join(File.dirname(__FILE__), '..')
+  end
+
+  def logger
+    @logger ||= Logger.new nil
+  end
+  def logger=(val)
+    @logger = val
   end
 
   # Prepares the environment for running tests against Earth data and emitter 
@@ -13,11 +22,15 @@ module Sniff
   # options: 
   # * :earth is the list of domains Earth.init should load (default: none)
   # * :load_data determines whether fixture data is loaded (default: true)
-  # * :sqllogdev is a Logger log device used by ActiveRecord (default: nil)
+  # * :logger is a Logger log device used by Sniff and ActiveRecord (default: nil)
+  #           logger: nil = no log, string = file path, STDOUT for terminal
   # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
-  # * :logdev is a Logger log device used for general logging (default: nil)
   def init(local_root, options = {})
     options[:earth] ||= :none
+
+    logger = options.delete(:logger) || ENV['LOGGER']
+    Sniff.logger = Logger.new logger
+    DataMiner.logger = Sniff.logger
 
     Sniff::Database.init local_root, options
 
