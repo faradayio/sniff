@@ -41,7 +41,7 @@ module CucumberValueParser
       a.should == b
     elsif b =~ /\d+\.\d+/
       b = b.to_f
-      a.to_f.should be_close(b, 0.00001)
+      a.to_f.should be_within(0.00001).of(b)
     elsif b =~ /^0/
       a.to_s.should == b
     elsif b =~ /^\d+$/

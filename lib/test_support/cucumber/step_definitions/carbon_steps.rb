@@ -53,7 +53,7 @@ end
 
 Then /^the emission value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, emissions|
   @emission.should_not be_nil
-  @emission.should be_close(emissions.to_f, cusion.to_f)
+  @emission.should be_within(cusion.to_f).of(emissions.to_f)
 end
 
 Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
@@ -64,7 +64,7 @@ Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
 end
 
 Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cusion|
-  @characteristics[committee.to_sym].to_f.should be_close(value.to_f, cusion.to_f)
+  @characteristics[committee.to_sym].to_f.should be_within(cusion.to_f).of(value.to_f)
 end
 
 Then /^the (.+) committee should be exactly "(.*)"$/ do |committee, value|
