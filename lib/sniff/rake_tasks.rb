@@ -1,10 +1,12 @@
 require 'rake'
 require 'rake/clean'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rake/tasklib'
 
 module Sniff
   class RakeTasks
+    include Rake::DSL
+
     def self.define_tasks(&blk)
       new(&blk).define_tasks
     end
@@ -147,7 +149,7 @@ module Sniff
         task :default => :test
       end
 
-      Rake::RDocTask.new do |rdoc|
+      RDoc::Task.new do |rdoc|
         version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
         rdoc.rdoc_dir = 'rdoc'
