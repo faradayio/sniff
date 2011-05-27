@@ -63,6 +63,25 @@ Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
   end
 end
 
+Then /^the calculation should comply with standards? "(.*)"$/ do |standard_list|
+  standards = Set.new standard_list.split(/,\s*/).map(&:to_sym)
+  compliance = Set.new @activity.deliberations[:emission].compliance
+  unless standards.empty?
+    compliance.should_not be_empty, 'Expected calculation to comply with some standards, but it complied with none'
+  end
+  exclusive_list = (compliance ^ standards)
+  exclusive_list.should be_empty, "Calculation did not comply with #{(standards - compliance).to_a.inspect})"
+end
+
+Then /^the calculation should not comply with standards? "(.*)"$/ do |standard_list|
+  standards = Set.new standard_list.split(/,\s*/).map(&:to_sym)
+  compliance = Set.new @activity.deliberations[:emission].compliance
+  unless compliance.empty?
+    diff_list = (standards - compliance)  # s - c = set of anything in s that is not in c
+    diff_list.should be(standards), "Calculation should not have complied with #{(standards - diff_list).to_a.inspect}"
+  end
+end
+
 Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cusion|
   @characteristics[committee.to_sym].to_f.should be_within(cusion.to_f).of(value.to_f)
 end
