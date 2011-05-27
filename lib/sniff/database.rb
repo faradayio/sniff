@@ -12,9 +12,7 @@ module Sniff
       # options: 
       # * :earth is the list of domains Earth.init should load (default: none)
       # * :load_data determines whether fixture data is loaded (default: true)
-      # * :sqllogdev is a Logger log device used by ActiveRecord (default: nil)
       # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
-      # * :logdev is a Logger log device used for general logging (default: nil)
       def init(local_root, options = {})
         db_init options
         earth_init(options[:earth])
@@ -40,7 +38,7 @@ module Sniff
       def db_init(options)
         options[:db_adapter] ||= 'sqlite3'
         options[:db_name] ||= ':memory:'
-        ActiveRecord::Base.logger = Logger.new options[:sqllogdev]
+        ActiveRecord::Base.logger = Sniff.logger
         ActiveRecord::Base.establish_connection :adapter => options[:db_adapter],
           :database => options[:db_name]
       end
@@ -65,7 +63,7 @@ module Sniff
       self.lib_path = File.join(root, 'lib', 'test_support')
       self.load_data = options[:load_data]
       self.fixtures_path = options[:fixtures_path]
-      self.logger = Logger.new options[:logdev]
+      self.logger = Sniff.logger
     end
 
     def log(str)

@@ -1,11 +1,11 @@
 # sniff
-Development environment for Brighter Planet emitters.
+Development environment for Brighter Planet "emitter" libraries.
 
 ## Background
-Brighter Planet's emitters, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing its [emission estimates web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
+Brighter Planet's carbon models, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing the [CM1 carbon calculation web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
 
 ### Caution
-The data and other supporting information in the sniff environment is only representative of production data and in many cases is purely fictional, contrived to return predictable results in tests. Emission estimates and other information gleaned from execution within this environment will undoubtedly be--to put it simply--wrong. For real numbers, always use live queries to the [emission estimate web service](http://carbon.brighterplanet.com).
+The data and other supporting information in the sniff environment is only representative of production data and in many cases is purely fictional, contrived to return predictable results in tests. Emission estimates and other information gleaned from execution within this environment will undoubtedly be--to put it simply--wrong. For real numbers, always use live queries to [CM1](http://carbon.brighterplanet.com).
 
 ## Usage
 Sniff is never used directly but rather as a requirement of a specific emitter. Current production emitters include, for example:
@@ -14,7 +14,7 @@ Sniff is never used directly but rather as a requirement of a specific emitter. 
 * [Flight](http://github.com/brighterplanet/flight)
 * [Residence](http://github.com/brighterplanet/residence)
 
-For a complete list, see the emission estimate service's [documentation](http://carbon.brighterplanet.com/use).
+For a complete list see [CM1's models page](http://carbon.brighterplanet.com/models).
 
 ### Rake Task
 Sniff comes with a rake task that will load a console with a given earth domain:
@@ -32,10 +32,10 @@ At the command prompt, do:
     #=> <ZipCode id="...>
 
 ## The emitter
-An emitter is a software model of a real-world emission source, like a flight. Brighter Planet's emitter libraries each comprise a carbon model, an attribute curation policy, a persistence schema, and a summarization strategy.
+An *emitter* is a software model of a real-world GHG emission source, like a flight. Brighter Planet's emitter libraries each comprise a carbon model, an attribute curation policy, a persistence schema, and a summarization strategy.
 
 ### Persistence schema
-Although the production environment does not persist emitter instances, we nevertheless define emitter schemas to enable ActiveRecord assocations. An emitter's schema is defined in `lib/*emitter_name*/data.rb` within an emitter library. For example, here is [flight's schema](http://github.com/brighterplanet/flight/blob/master/lib/flight/data.rb).
+Although the production environment does not persist emitter instances, we nevertheless define emitter schemas to ease ActiveRecord assocations. An emitter's schema is defined in `lib/*emitter_name*/data.rb` within an emitter library. For example, here is [flight's schema](http://github.com/brighterplanet/flight/blob/master/lib/flight/data.rb).
 
 Schema are defined using a DSL provided by the [data_miner](http://github.com/seamusabshere/data_miner) library.
 

@@ -1,20 +1,17 @@
-require 'cucumber'
-require 'cucumber/rake/task'
 require 'rake'
 require 'rake/clean'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rake/tasklib'
-require 'rocco'
-require 'rocco/tasks'
-
 
 module Sniff
   class RakeTasks
+    include Rake::DSL
+
     def self.define_tasks(&blk)
       new(&blk).define_tasks
     end
 
-    attr_accessor :earth_domains, :cucumber, :rspec, :rcov, :rocco
+    attr_accessor :earth_domains, :cucumber, :rspec, :rcov, :rocco, :bueller
 
     def initialize
       self.earth_domains = :all
@@ -22,6 +19,7 @@ module Sniff
       self.rspec = false
       self.rcov = true
       self.rocco = true
+      self.bueller = true
       yield self if block_given?
     end
 
@@ -48,6 +46,9 @@ module Sniff
       end
 
       if rocco
+        require 'rocco'
+        require 'rocco/tasks'
+
         Rocco::make 'docs/', "lib/#{gemname}/carbon_model.rb"
 
         desc 'Set up and build rocco docs'
@@ -60,6 +61,7 @@ module Sniff
         desc 'Update gh-pages branch'
         task :pages => :docs do
           rev = `git rev-parse --short HEAD`.strip
+          sh "mv docs/lib/#{gemname}/carbon_model.html docs/carbon_model.html"
           git 'add *.html', 'docs'
           git "commit -m 'rebuild pages from #{rev}'", 'docs' do |ok,res|
             if ok
@@ -79,7 +81,7 @@ module Sniff
 
           file '.git/refs/heads/gh-pages' => 'docs/' do |f|
             unless File.exist? f.name
-              git 'branch gh-pages --track origin/gh-pages', 'docs' 
+              git 'branch gh-pages', 'docs' 
             end
           end
 
@@ -95,6 +97,9 @@ module Sniff
       end
 
       if cucumber
+        require 'cucumber'
+        require 'cucumber/rake/task'
+
         desc 'Run all cucumber tests'
         Cucumber::Rake::Task.new(:features) do |t|
           if ENV['CUCUMBER_FORMAT']
@@ -119,7 +124,11 @@ module Sniff
 
         desc "Run all examples"
         RSpec::Core::RakeTask.new('examples') do |c|
-          c.rspec_opts = '-Ispec'
+          if ENV['RSPEC_FORMAT']
+            c.rspec_opts = "-Ispec --format #{ENV['RSPEC_FORMAT']}"
+          else
+            c.rspec_opts = '-Ispec --format documentation'
+          end
         end
 
         if rcov
@@ -140,13 +149,18 @@ module Sniff
         task :default => :test
       end
 
-      Rake::RDocTask.new do |rdoc|
+      RDoc::Task.new do |rdoc|
         version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
         rdoc.rdoc_dir = 'rdoc'
         rdoc.title = "#{gemname} #{version}"
         rdoc.rdoc_files.include('README*')
         rdoc.rdoc_files.include('lib/**/*.rb')
+      end
+
+      if bueller
+        require 'bueller'
+        Bueller::Tasks.new
       end
     end
   end
