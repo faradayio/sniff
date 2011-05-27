@@ -65,12 +65,14 @@ end
 
 Then /^the calculation should comply with standards? "(.*)"$/ do |standard_list|
   standards = standard_list.split(/,\s*/).map(&:to_sym)
-  (@emission.compliance - standards).should be_empty
+  compliance = @activity.deliberations[:emission].compliance
+  (compliance - standards).should be_empty
 end
 
 Then /^the calculation should not comply with standards? "(.*)"$/ do |standard_list|
   standards = standard_list.split(/,\s*/).map(&:to_sym)
-  (@emission.compliance - standards).should == @emission.compliance
+  compliance = @activity.deliberations[:emission].compliance
+  (compliance - standards).should == compliance
 end
 
 Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cusion|
