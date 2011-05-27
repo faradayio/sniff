@@ -66,6 +66,9 @@ end
 Then /^the calculation should comply with standards? "(.*)"$/ do |standard_list|
   standards = standard_list.split(/,\s*/).map(&:to_sym)
   compliance = @activity.deliberations[:emission].compliance
+  unless standards.empty?
+    compliance.should_not be_empty, 'Expected calculation to comply with some standards, but it complied with none'
+  end
   (compliance - standards).should be_empty
 end
 
