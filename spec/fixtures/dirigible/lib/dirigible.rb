@@ -1,5 +1,5 @@
 require "dirigible/fallback"
-require 'characterizable'
+require 'charisma'
 require 'cohort_scope'
 require 'data_miner'
 require 'dirigible/carbon_model'
@@ -20,7 +20,7 @@ module BrighterPlanet
       base.extend Leap::Subject
       base.send :include, CarbonModel
 
-      base.send :include, Characterizable
+      base.send :include, Charisma
       base.send :include, Characterization
 #      add_implicit_characteristics
 

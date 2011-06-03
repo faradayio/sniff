@@ -9,23 +9,15 @@ module Sniff
     def parent_class
       Emitter
     end
-          
-    def visible_effective_characteristics
-      characteristics.effective.reject { |_, c| c.hidden? }
-    end
-      
-    def retired?
-      has_attribute?(:retirement) and retirement
-    end
-    
+
     module ClassMethods
       def from_params_hash(params = Hash.new)
         resolved_params = Hash.new
         associations = reflect_on_all_associations
         params.each do |k, v|
           next if v.blank?
-          c = characteristics[k.to_sym]
-          next if c.nil?
+          c = characterization[k.to_sym]
+          next unless c
           if associations.map(&:name).include?(c.name.to_sym)
             association = associations.find { |a| a.name == c.name.to_sym }
             klass = association.options[:class_name] || association.name.to_s.pluralize.classify

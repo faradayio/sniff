@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = Dir.glob('lib/**/*')
-  s.homepage = %q{http://github.com/brighterplanet/sniff}
+  s.homepage = %q{https://github.com/brighterplanet/sniff}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
@@ -34,8 +34,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rspec', '~> 2'
   s.add_runtime_dependency 'sqlite3-ruby', '~> 1.3.0'
   s.add_runtime_dependency 'timecop'
-  s.add_runtime_dependency 'timeframe', '~> 0.0.8'
+  s.add_runtime_dependency 'timeframe', '>= 0.0.8'
   s.add_development_dependency 'sandbox'
-  s.add_development_dependency 'emitter'
+  s.add_development_dependency 'emitter', '>= 0.5.0'
 end
 

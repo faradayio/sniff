@@ -45,7 +45,7 @@ When /^the "(.*)" committee is calculated$/ do |committee_name|
   @expectations.map(&:call)
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
-  args = [@activity, @characteristics]
+  args = [@characteristics]
   if @characteristics[:timeframe]
     args << [@characteristics[:timeframe]]
   else
