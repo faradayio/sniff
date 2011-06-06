@@ -141,7 +141,9 @@ module Sniff
         end
       end
 
-      test_tasks = []
+      directory 'log/'
+
+      test_tasks = ['log/']
       test_tasks << :examples if rspec
       test_tasks << :features if cucumber
       unless test_tasks.empty?
