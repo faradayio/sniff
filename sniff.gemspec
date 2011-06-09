@@ -22,19 +22,19 @@ Gem::Specification.new do |s|
   s.summary = %q{Test support for Brighter Planet carbon gems}
   s.test_files = Dir.glob('spec/**/*')
 
-  s.add_runtime_dependency 'activesupport', '~> 3.0.0'
-  s.add_runtime_dependency 'aaronh-chronic', '~> 0.3.9'
-  s.add_runtime_dependency 'bueller', '~> 0.0.5'
+  s.add_runtime_dependency 'activesupport', '>=3'
+  s.add_runtime_dependency 'aaronh-chronic', '>=0.3.9'
+  s.add_runtime_dependency 'bueller', '>=0.0.5'
   s.add_runtime_dependency 'cucumber'
-  s.add_runtime_dependency 'earth', '>= 0.4.5'
-  s.add_runtime_dependency 'rake', '~> 0.9.0'
+  s.add_runtime_dependency 'earth', '>=0.4.5'
+  s.add_runtime_dependency 'rake', '>=0.9.0'
   s.add_runtime_dependency 'rcov'
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'dkastner-rocco'
   s.add_runtime_dependency 'rspec', '~> 2'
-  s.add_runtime_dependency 'sqlite3-ruby', '~> 1.3.0'
+  s.add_runtime_dependency 'sqlite3-ruby', '>=1.3.0'
   s.add_runtime_dependency 'timecop'
-  s.add_runtime_dependency 'timeframe', '>= 0.0.8'
+  s.add_runtime_dependency 'timeframe', '>=0.0.8'
   s.add_development_dependency 'sandbox'
   s.add_development_dependency 'emitter', '>= 0.5.0'
 end
