@@ -1,4 +1,6 @@
 require 'data_miner'
+require 'create_table'
+require 'logger'
 
 module Sniff
   extend self

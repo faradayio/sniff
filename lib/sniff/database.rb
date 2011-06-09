@@ -1,6 +1,4 @@
 require 'active_support'
-require 'fileutils'
-require 'logger'
 require 'sqlite3'
 
 module Sniff
@@ -100,7 +98,7 @@ module Sniff
     end
 
     def create_emitter_table
-      emitter_class.execute_schema if emitter_class
+      emitter_class.create_table! if emitter_class
     end
 
     def read_fixtures
@@ -114,15 +112,15 @@ module Sniff
 
     def populate_fixtures
       Encoding.default_external = 'UTF-8' if Object.const_defined?('Encoding')
-      Earth.resource_names.each do |klass|
-        klass = klass.pluralize unless Object.const_defined?(klass)
-        if Object.const_defined?(klass) and klass.constantize.table_exists?
-          object = klass.constantize
-          table_name = object.table_name
+      Earth.resources.each do |resource|
+        next unless Object.const_defined?(resource)
+        resource_model = resource.constantize
+        if resource_model.table_exists?
+          table_name = resource_model.table_name
           fixture_file = File.join(fixtures_path, table_name + '.csv')
           if File.exist? fixture_file
             log "Loading fixture #{fixture_file}"
-            Fixtures.create_fixtures(fixtures_path, table_name, klass => table_name)
+            Fixtures.create_fixtures(fixtures_path, table_name, resource => table_name)
           end
         end
       end
