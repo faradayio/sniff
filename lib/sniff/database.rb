@@ -10,7 +10,7 @@ module Sniff
       # options: 
       # * :earth is the list of domains Earth.init should load (default: none)
       # * :load_data determines whether fixture data is loaded (default: true)
-      # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
+      # * :fixtures_path is the path to your gem's fixtures (default: local_root/features/support/db/fixtures)
       def init(local_root, options = {})
         db_init options
         earth_init(options[:earth])
