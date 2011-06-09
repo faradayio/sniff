@@ -55,7 +55,7 @@ When /^the "(.*)" committee is calculated$/ do |committee_name|
 #  if @report.nil?
 #    raise "The committee #{@committee.name} did not come to a conclusion. Characteristics: #{@characteristics.inspect}"
 #  else
-    @characteristics[committee_name.to_sym] = @report.andand.conclusion
+    @characteristics[committee_name.to_sym] = @report.try(:conclusion)
 #  end
 end
 
@@ -85,16 +85,16 @@ Then /^the conclusion should not comply with standards? "(.*)"$/ do |standard_li
 end
 
 Then /^the conclusion of the committee should be "(.*)"$/ do |conclusion|
-  compare_values(@report.andand.conclusion, conclusion)
+  compare_values(@report.try(:conclusion), conclusion)
 end
 
 Then /^the conclusion of the committee should be timeframe "(.*)"$/ do |conclusion|
   timeframe = Timeframe.interval(conclusion)
-  compare_values(@report.andand.conclusion, timeframe)
+  compare_values(@report.try(:conclusion), timeframe)
 end
 
 Then /^the conclusion of the committee should be nil$/ do
-  compare_values(@report.andand.conclusion, nil)
+  compare_values(@report.try(:conclusion), nil)
 end
 
 Then /^the conclusion of the committee should include a key of "(.*)" and value "(.*)"$/ do |key, value|
