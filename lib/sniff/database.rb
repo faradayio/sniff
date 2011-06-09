@@ -53,12 +53,12 @@ module Sniff
       end
     end
 
-    attr_accessor :root, :lib_path, :fixtures_path,
+    attr_accessor :root, :test_support_path, :fixtures_path,
       :load_data, :fixtures, :logger
 
     def initialize(root, options)
       self.root = root
-      self.lib_path = File.join(root, 'lib', 'test_support')
+      self.test_support_path = File.join(root, 'features', 'support')
       self.load_data = options[:load_data]
       self.fixtures_path = options[:fixtures_path]
       self.logger = Sniff.logger
@@ -74,7 +74,7 @@ module Sniff
     end
 
     def fixtures_path
-      @fixtures_path ||= File.join(lib_path, 'db', 'fixtures')
+      @fixtures_path ||= File.join(test_support_path, 'db', 'fixtures')
     end
 
     def fixtures
@@ -89,9 +89,10 @@ module Sniff
 
     def emitter_class
       return @emitter_class unless @emitter_class.nil?
-      record_class_file = Dir.glob(File.join(root, 'lib', 'test_support', '*_record.rb')).first
-      if record_class_file
-        record_class = File.read(record_class_file)
+      record_class_path = Dir.glob(File.join(test_support_path, '*_record.rb')).first
+      if record_class_path
+        require record_class_path
+        record_class = File.read(record_class_path)
         klass = record_class.scan(/class ([^\s]*Record)/).flatten.first
         @emitter_class = klass.constantize
       end
