@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'fileutils'
-require 'data_miner'
-require 'logger'
 
 describe Sniff::Database do
   describe '#connect' do
@@ -10,18 +7,18 @@ describe Sniff::Database do
     before :all do
       $:.unshift File.join(dirigible_path, 'lib')
       require File.join('dirigible')
-      DataMiner.logger = Logger.new nil
+      DataMiner.logger = Logger.new $stdout
     end
 
     it 'should load the air domain' do
       Sniff.init(dirigible_path, :earth => :air, :apply_schemas => true)
       Airport.count.should == 0 # we don't have fixtures for this here
-      ZipCode.count.should > 0
-      expect { AutomobileFuelType }.should raise_error
+      expect { ZipCode.count }.should raise_error
+      expect { AutomobileFuelType.count }.should raise_error
     end
     it 'should load data for all domains' do
       Sniff.init(dirigible_path, :earth => :all, :apply_schemas => true)
-      PetroleumAdministrationForDefenseDistrict.all.count.should == 7
+      PetroleumAdministrationForDefenseDistrict.count.should == 7
       ZipCode.count.should > 0
     end
     it 'should load a schema for the emitter record' do

@@ -1,6 +1,4 @@
 require 'active_support'
-require 'fileutils'
-require 'logger'
 require 'sqlite3'
 
 module Sniff
@@ -12,7 +10,7 @@ module Sniff
       # options: 
       # * :earth is the list of domains Earth.init should load (default: none)
       # * :load_data determines whether fixture data is loaded (default: true)
-      # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
+      # * :fixtures_path is the path to your gem's fixtures (default: local_root/features/support/db/fixtures)
       def init(local_root, options = {})
         db_init options
         earth_init(options[:earth])
@@ -55,12 +53,12 @@ module Sniff
       end
     end
 
-    attr_accessor :root, :lib_path, :fixtures_path,
+    attr_accessor :root, :test_support_path, :fixtures_path,
       :load_data, :fixtures, :logger
 
     def initialize(root, options)
       self.root = root
-      self.lib_path = File.join(root, 'lib', 'test_support')
+      self.test_support_path = File.join(root, 'features', 'support')
       self.load_data = options[:load_data]
       self.fixtures_path = options[:fixtures_path]
       self.logger = Sniff.logger
@@ -76,7 +74,7 @@ module Sniff
     end
 
     def fixtures_path
-      @fixtures_path ||= File.join(lib_path, 'db', 'fixtures')
+      @fixtures_path ||= File.join(test_support_path, 'db', 'fixtures')
     end
 
     def fixtures
@@ -91,16 +89,17 @@ module Sniff
 
     def emitter_class
       return @emitter_class unless @emitter_class.nil?
-      record_class_file = Dir.glob(File.join(root, 'lib', 'test_support', '*_record.rb')).first
-      if record_class_file
-        record_class = File.read(record_class_file)
+      record_class_path = Dir.glob(File.join(test_support_path, '*_record.rb')).first
+      if record_class_path
+        require record_class_path
+        record_class = File.read(record_class_path)
         klass = record_class.scan(/class ([^\s]*Record)/).flatten.first
         @emitter_class = klass.constantize
       end
     end
 
     def create_emitter_table
-      emitter_class.execute_schema if emitter_class
+      emitter_class.create_table! if emitter_class
     end
 
     def read_fixtures
@@ -114,15 +113,15 @@ module Sniff
 
     def populate_fixtures
       Encoding.default_external = 'UTF-8' if Object.const_defined?('Encoding')
-      Earth.resource_names.each do |klass|
-        klass = klass.pluralize unless Object.const_defined?(klass)
-        if Object.const_defined?(klass) and klass.constantize.table_exists?
-          object = klass.constantize
-          table_name = object.table_name
+      Earth.resources.each do |resource|
+        next unless Object.const_defined?(resource)
+        resource_model = resource.constantize
+        if resource_model.table_exists?
+          table_name = resource_model.table_name
           fixture_file = File.join(fixtures_path, table_name + '.csv')
           if File.exist? fixture_file
             log "Loading fixture #{fixture_file}"
-            Fixtures.create_fixtures(fixtures_path, table_name, klass => table_name)
+            Fixtures.create_fixtures(fixtures_path, table_name, resource => table_name)
           end
         end
       end

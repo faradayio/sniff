@@ -3,13 +3,11 @@ gem 'cohort_scope', :path => ENV['LOCAL_COHORT_SCOPE'] if ENV['LOCAL_COHORT_SCOP
 gem 'data_miner', :path => ENV['LOCAL_DATA_MINER'] if ENV['LOCAL_DATA_MINER']
 gem 'leap', :path => ENV['LOCAL_LEAP'] if ENV['LOCAL_LEAP']
 gem 'earth', :path => ENV['LOCAL_EARTH'] if ENV['LOCAL_EARTH']
-# To use local gems, see README.markdown under the Local Gems heading.
 
 source :rubygems
 
-gemspec :path => File.dirname(__FILE__) 
-path File.join(File.dirname(__FILE__), 'lib')
+gemspec :path => '.'
 
-if RUBY_VERSION <= '1.9'
+if RUBY_VERSION < '1.9'
   gem 'fastercsv'
 end
