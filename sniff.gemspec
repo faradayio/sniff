@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activesupport', '>=3'
   s.add_runtime_dependency 'aaronh-chronic', '>=0.3.9'
   s.add_runtime_dependency 'bueller', '>=0.0.5'
+  s.add_runtime_dependency 'create_table'
   s.add_runtime_dependency 'cucumber'
   s.add_runtime_dependency 'earth', '>=0.4.5'
   s.add_runtime_dependency 'rake', '>=0.9.0'
