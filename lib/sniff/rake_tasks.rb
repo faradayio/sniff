@@ -54,18 +54,42 @@ module Sniff
         desc 'Set up and build rocco docs'
         task :docs_init => :rocco
 
+        task :google_analyzed_rocco => :rocco do
+          source = File.read "docs/lib/#{gemname}/carbon_model.html"
+          unless source =~ /_gaq/
+            source.sub! '</head>', <<-HTML
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1667526-20']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</head>
+          HTML
+            File.open "docs/lib/#{gemname}/carbon_model.html", 'w' do |f|
+              f.puts source
+            end
+          end
+        end
+
         desc 'Rebuild rocco docs'
-        task :docs => ['pages:sync', :rocco]
+        task :docs => ['pages:sync', :google_analyzed_rocco]
         directory 'docs/'
 
-        desc 'Update gh-pages branch'
+        desc 'Update rocco docs on gh-pages branch'
         task :pages => :docs do
           rev = `git rev-parse --short HEAD`.strip
           sh "mv docs/lib/#{gemname}/carbon_model.html docs/carbon_model.html"
           git 'add *.html', 'docs'
-          git "commit -m 'rebuild pages from #{rev}'", 'docs' do |ok,res|
+          puts "Commiting with message 'Rebuild pages from #{rev}'"
+          git "commit -m 'Rebuild pages from #{rev}'", 'docs' do |ok,res|
             if ok
-              verbose { puts "gh-pages updated" }
+              puts "Pushing to HEAD"
               git 'push -q o HEAD:gh-pages', 'docs' unless ENV['NO_PUSH']
             end
           end
