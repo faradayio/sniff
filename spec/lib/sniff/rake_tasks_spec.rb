@@ -52,7 +52,7 @@ Sniff::RakeTasks.define_tasks
           `cd #{flight_path} && NO_PUSH=true rake pages`
 
           git('log -n 1', File.join(flight_path, 'docs')).
-            should =~ /rebuild pages/
+            should =~ /rebuild pages/i
         end
       end
     end
