@@ -11,16 +11,24 @@ module Sniff
       new(&blk).define_tasks
     end
 
-    attr_accessor :earth_domains, :cucumber, :rspec, :rcov, :rocco, :bueller
+    attr_accessor :earth_domains, :cucumber, :rspec, :coverage, :rocco, :bueller
 
     def initialize
       self.earth_domains = :all
       self.cucumber = true
       self.rspec = false
-      self.rcov = true
+      self.coverage = true
       self.rocco = true
       self.bueller = true
       yield self if block_given?
+    end
+
+    def ruby18?
+      RUBY_VERSION =~ /^1\.8/ ? true : false
+    end
+
+    def rcov=(val)
+      self.coverage = val
     end
 
     def gemname
@@ -35,6 +43,20 @@ module Sniff
     end
 
     def define_tasks
+      if coverage && ruby18?
+        require 'rcov'
+      elsif coverage
+        task :simplecov do
+          require 'simplecov' 
+
+          SimpleCov.start do
+            add_filter '/spec/'
+            add_filter '/features/'
+            add_filter '/vendor/'
+          end
+        end
+      end
+
       task :console do
         require 'sniff'
         cwd = Dir.pwd
@@ -133,13 +155,15 @@ module Sniff
           end
         end
 
-        if rcov
+        if coverage && ruby18?
           desc "Run cucumber tests with RCov"
           Cucumber::Rake::Task.new(:features_with_coverage) do |t|
             t.cucumber_opts = "features --format pretty"
             t.rcov = true
             t.rcov_opts = ['--exclude', 'features']
           end
+        elsif coverage
+          task :features_with_coverage => [:simplecov, :features]
         end
       end
 
@@ -155,13 +179,15 @@ module Sniff
           end
         end
 
-        if rcov
+        if coverage && ruby18?
           desc "Run specs with RCov"
           RSpec::Core::RakeTask.new(:examples_with_coverage) do |t|
             t.rcov = true
             t.rcov_opts = ['--exclude', 'spec']
             t.rspec_opts = '-Ispec'
           end
+        elsif coverage
+          task :examples_with_coverage => [:simplecov, :examples]
         end
       end
 

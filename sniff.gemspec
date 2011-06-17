@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'dkastner-rocco'
   s.add_runtime_dependency 'rspec', '~> 2'
+  s.add_runtime_dependency 'simplecov'
   s.add_runtime_dependency 'sqlite3-ruby', '>=1.3.0'
   s.add_runtime_dependency 'timecop'
   s.add_runtime_dependency 'timeframe', '>=0.0.8'
