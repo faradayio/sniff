@@ -71,12 +71,11 @@ module Sniff
         require 'rocco'
         require 'rocco/tasks'
 
+        directory 'docs/'
+
         Rocco::make 'docs/', "lib/#{gemname}/carbon_model.rb"
 
-        desc 'Set up and build rocco docs'
-        task :docs_init => :rocco
-
-        task :google_analyzed_rocco => :rocco do
+        task :google_analyzed_rocco => ['docs/', :rocco] do
           source = File.read "docs/lib/#{gemname}/carbon_model.html"
           unless source =~ /_gaq/
             source.sub! '</head>', <<-HTML
@@ -99,47 +98,45 @@ module Sniff
           end
         end
 
-        desc 'Rebuild rocco docs'
-        task :docs => ['pages:sync', :google_analyzed_rocco]
-        directory 'docs/'
-
         desc 'Update rocco docs on gh-pages branch'
-        task :pages => :docs do
+        task :pages => ['pages:sync', :google_analyzed_rocco] do
           rev = `git rev-parse --short HEAD`.strip
-          sh "mv docs/lib/#{gemname}/carbon_model.html docs/carbon_model.html"
-          git 'add *.html', 'docs'
+          html = File.read "docs/lib/#{gemname}/carbon_model.html"
+
+          puts `git checkout gh-pages`
+          File.open 'carbon_model.html', 'w' do |f|
+            f.puts html
+          end
+
+          puts `git add *.html`
+
           puts "Commiting with message 'Rebuild pages from #{rev}'"
-          git "commit -m 'Rebuild pages from #{rev}'", 'docs' do |ok,res|
+          git "commit -m 'Rebuild pages from #{rev}'" do |ok,res|
             if ok
-              puts "Pushing to HEAD"
-              git 'push -q o HEAD:gh-pages', 'docs' unless ENV['NO_PUSH']
+              puts "Pushing to origin"
+              git 'push origin gh-pages' unless ENV['NO_PUSH']
             end
           end
+
+          git 'checkout master'
         end
 
-        # Update the pages/ directory clone
         namespace :pages do
-          task 'sync' => ['.git/refs/heads/gh-pages', 'docs/.git/refs/remotes/o'] do |f|
-            git 'fetch -q o', 'docs'
-            git 'reset -q --hard o/gh-pages', 'docs'
-            sh 'touch docs'
+          task 'sync' => ['.git/refs/heads/gh-pages'] do |f|
+            git 'fetch origin'
+            git 'checkout gh-pages'
+            git 'reset --hard origin/gh-pages'
+            git 'checkout master'
           end
 
-          file '.git/refs/heads/gh-pages' => 'docs/' do |f|
+          file '.git/refs/heads/gh-pages' do |f|
             unless File.exist? f.name
-              git 'branch gh-pages', 'docs' 
-            end
-          end
-
-          file 'docs/.git/refs/remotes/o' => 'docs/' do |f|
-            unless File.exist? f.name
-              git 'init -q docs'
-              git 'remote add o ../.git', 'docs'
+              git 'branch gh-pages'
             end
           end
         end
 
-        CLOBBER.include 'docs/.git'
+        CLOBBER.include 'docs/'
       end
 
       if cucumber
