@@ -19,7 +19,8 @@ module Sniff
         environments << init_environment(local_root, options)
 
         unless local_root == Sniff.root
-          environments << init_environment(Sniff.root)
+          fixtures_path = File.join(Sniff.root, 'lib', 'test_support', 'db', 'fixtures')
+          environments << init_environment(Sniff.root, :fixtures_path => fixtures_path)
         end
         
         environments.each { |e| e.populate_fixtures }

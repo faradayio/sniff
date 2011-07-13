@@ -1,5 +1,3 @@
-require 'conversions'
-
 module BrighterPlanet
   module Dirigible
     module CarbonModel

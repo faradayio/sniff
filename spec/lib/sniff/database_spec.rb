@@ -23,7 +23,7 @@ describe Sniff::Database do
     end
     it 'should load a schema for the emitter record' do
       Sniff.init(dirigible_path, :apply_schemas => true)
-      require File.join(dirigible_path, 'lib', 'test_support', 'dirigible_record')
+      require File.join(dirigible_path, 'features', 'support', 'dirigible_record')
       DirigibleRecord.table_exists?.should be_true
     end
   end
