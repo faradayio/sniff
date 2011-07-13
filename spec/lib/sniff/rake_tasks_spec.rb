@@ -23,36 +23,27 @@ Sniff::RakeTasks.define_tasks
   end
 
   describe '#define' do
-    describe 'docs task' do
-      it 'should generate docs' do
-        Sandbox.play do |path|
-          flight_path = File.join(path, 'flight')
-          git "clone git://github.com/brighterplanet/flight.git #{flight_path}"
-          File.open(File.join(flight_path, 'Rakefile'), 'w') do |f|
-            f.puts rakefile
-          end
-
-          `cd #{flight_path} && rake docs`
-          Dir.entries(File.join(flight_path, 'docs')).
-            count.should > 2
-        end
-      end
-    end
-
     describe 'pages task' do
       it 'should commit any changed doc files' do
         Sandbox.play do |path|
           flight_path = File.join(path, 'flight')
+
           git "clone git://github.com/brighterplanet/flight.git #{flight_path}"
+
           File.open(File.join(flight_path, 'Rakefile'), 'w') do |f|
             f.puts rakefile
           end
 
-          `cd #{flight_path} && mkdir docs && echo "<html>" > docs/foobar.html`
-          `cd #{flight_path} && NO_PUSH=true rake pages`
+          Dir.chdir flight_path do
+            `git commit -am "new rakefile"`
+            `git checkout -b gh-pages --track origin/gh-pages`
+            `echo "<html>" > foobar.html`
+            `git commit -am "dummy update"`
+            `git checkout master && NO_PUSH=true rake pages`
+            `git checkout gh-pages`
 
-          git('log -n 1', File.join(flight_path, 'docs')).
-            should =~ /rebuild pages/i
+            `git log -n 1`.should =~ /rebuild pages/i
+          end
         end
       end
     end
