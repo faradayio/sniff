@@ -6,8 +6,14 @@ require 'logger'
 module Sniff
   extend self
 
+  # Sniff's root directory (the gem's location on the filesystem)
   def root 
     File.join(File.dirname(__FILE__), '..')
+  end
+
+  # Get a path relative to sniff's root
+  def path(*rest)
+    File.join(root, *rest)
   end
 
   def logger
