@@ -1,5 +1,6 @@
 require 'data_miner'
 require 'create_table'
+require 'sniff/leap_ext'
 require 'logger'
 
 module Sniff
