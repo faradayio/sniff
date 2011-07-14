@@ -11,7 +11,7 @@ module Sniff
       new(&blk).define_tasks
     end
 
-    attr_accessor :earth_domains, :cucumber, :rspec, :coverage, :rocco, :bueller
+    attr_accessor :earth_domains, :cucumber, :rspec, :coverage, :rocco, :bueller, :watchr
 
     def initialize
       self.earth_domains = :all
@@ -20,6 +20,7 @@ module Sniff
       self.coverage = true
       self.rocco = true
       self.bueller = true
+      self.watchr = true
       yield self if block_given?
     end
 
@@ -210,6 +211,17 @@ module Sniff
       if bueller
         require 'bueller'
         Bueller::Tasks.new
+      end
+
+      if watchr
+        namespace :watch do
+          task :tests do
+            require 'watchr'
+            path = File.expand_path(Sniff.path(%w{lib sniff watcher.rb}))
+            script = Watchr::Script.new Pathname(path)
+            Watchr::Controller.new(script, Watchr.handler.new).run
+          end
+        end
       end
     end
   end

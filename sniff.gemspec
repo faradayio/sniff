@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'sqlite3-ruby', '>=1.3.0'
   s.add_runtime_dependency 'timecop'
   s.add_runtime_dependency 'timeframe', '>=0.0.8'
+  s.add_runtime_dependency 'watchr'
   s.add_development_dependency 'sandbox'
   s.add_development_dependency 'emitter', '>= 0.5.0'
 end
