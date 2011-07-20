@@ -1,5 +1,5 @@
 require 'data_miner'
-require 'create_table'
+require 'force_schema'
 require 'sniff/leap_ext'
 require 'logger'
 

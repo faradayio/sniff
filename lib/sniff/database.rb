@@ -100,7 +100,7 @@ module Sniff
     end
 
     def create_emitter_table
-      emitter_class.create_table! if emitter_class
+      emitter_class.force_schema! if emitter_class
     end
 
     def read_fixtures
