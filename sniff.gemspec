@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Derek Kastner"]
   s.date = "2011-10-05"
-  s.description = %q{Provides development and test environment for emitter gems}
+  s.description = %q{Provides development and test environment for Brighter Planet's impact model libraries.}
   s.email = %q{derek.kastner@brighterplanet.com}
   s.extra_rdoc_files = [
     "README.markdown"
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Test support for Brighter Planet carbon gems}
+  s.summary = %q{Provides development and test environment for Brighter Planet's impact model libraries.}
   s.test_files = Dir.glob('spec/**/*')
 
   s.add_runtime_dependency 'activesupport', '>=3'

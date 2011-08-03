@@ -2,7 +2,7 @@
 Development environment for Brighter Planet "emitter" libraries.
 
 ## Background
-Brighter Planet's carbon models, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing the [CM1 carbon calculation web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
+Brighter Planet's impact models, such as [`flight`](http://github.com/brighterplanet/flight), inhabit a complex production runtime environment backing the [CM1 web service](http://carbon.brighterplanet.com). Sniff simulates this environment, including representative data, fixtures, and other supporting code, so that developers can test improvements to the emitters before submitting them back to Brighter Planet.
 
 ### Caution
 The data and other supporting information in the sniff environment is only representative of production data and in many cases is purely fictional, contrived to return predictable results in tests. Emission estimates and other information gleaned from execution within this environment will undoubtedly be--to put it simply--wrong. For real numbers, always use live queries to [CM1](http://carbon.brighterplanet.com).
@@ -32,7 +32,7 @@ At the command prompt, do:
     #=> <ZipCode id="...>
 
 ## The emitter
-An *emitter* is a software model of a real-world GHG emission source, like a flight. Brighter Planet's emitter libraries each comprise a carbon model, an attribute curation policy, a persistence schema, and a summarization strategy.
+An *emitter* is a software model of a real-world GHG emission source, like a flight. Brighter Planet's emitter libraries each comprise an impact model, an attribute curation policy, a persistence schema, and a summarization strategy.
 
 ### Persistence schema
 Although the production environment does not persist emitter instances, we nevertheless define emitter schemas to ease ActiveRecord assocations. An emitter's schema is defined in `lib/*emitter_name*/data.rb` within an emitter library. For example, here is [flight's schema](http://github.com/brighterplanet/flight/blob/master/lib/flight/data.rb).
@@ -40,12 +40,12 @@ Although the production environment does not persist emitter instances, we never
 Schema are defined using a DSL provided by the [data_miner](http://github.com/seamusabshere/data_miner) library.
 
 ### Attribute curation policy
-This defines how an emitter's attributes (initialized and stored with respect to the schema) are curated and decorated into a snapshot for later use by the carbon model. The policy is defined in `lib/*emitter_name*/characterization.rb` within an emitter library. For example, here is [flight's characterization](http://github.com/brighterplanet/flight/blob/master/lib/flight/characterization.rb).
+This defines how an emitter's attributes (initialized and stored with respect to the schema) are curated and decorated into a snapshot for later use by the impact model. The policy is defined in `lib/*emitter_name*/characterization.rb` within an emitter library. For example, here is [flight's characterization](http://github.com/brighterplanet/flight/blob/master/lib/flight/characterization.rb).
 
 Characterizations are defined using a DSL provided by the [characterizable](http://github.com/seamusabshere/characterizable) library.
 
-### Carbon model
-An emission estimate is obtained by giving an emitter's curated characteristics as input to an execution of its carbon model. The model is defined in `lib/*emitter_name*/characterization.rb` within an emitter library. For example, here is [flight's carbon model](http://github.com/brighterplanet/flight/blob/master/lib/flight/carbon_model.rb).
+### Impact model
+An impact estimate is obtained by giving an emitter's curated characteristics as input to an execution of its impact model. The model is defined in `lib/*emitter_name*/characterization.rb` within an emitter library. For example, here is [flight's impact model](http://github.com/brighterplanet/flight/blob/master/lib/flight/impact_model.rb).
 
 Carbon models are defined using a DSL provided by the [leap](http://github.com/rossmeissl/leap) library.
 

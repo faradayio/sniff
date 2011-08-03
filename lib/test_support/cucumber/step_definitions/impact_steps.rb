@@ -1,7 +1,7 @@
 require 'time'
 require 'timeframe'
 
-Given %r{^an? (.+) (emitter|emission)$} do |name, _|
+Given %r{^an? (.+) impact$} do |name|
   name = name.gsub(/\s+/,'_').camelize + 'Record'
   @activity = name.constantize
   @characteristics = {}
@@ -51,7 +51,7 @@ Given /^it has "(.+)" of "(.*)"$/ do |field, value|
   Given %Q{characteristic "#{field}" of "#{value}"}
 end
 
-When /^emissions are calculated$/ do
+When /^impacts are calculated$/ do
   @expectations.map(&:call)
   Timecop.travel(@current_date || Time.now) do
     @timeframe ||= Timeframe.this_year
@@ -61,9 +61,9 @@ When /^emissions are calculated$/ do
   @characteristics = @activity_instance.deliberations[:emission].characteristics
 end
 
-Then /^the emission value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, emissions|
-  @emission.should_not be_nil
-  @emission.should be_within(cusion.to_f).of(emissions.to_f)
+Then /^the impact value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, impacts|
+  @impact.should_not be_nil
+  @impact.should be_within(cusion.to_f).of(impacts.to_f)
 end
 
 Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
@@ -75,7 +75,7 @@ end
 
 Then /^the calculation should comply with standards? "(.*)"$/ do |standard_list|
   standards = Set.new standard_list.split(/,\s*/).map(&:to_sym)
-  compliance = Set.new @activity_instance.deliberations[:emission].compliance
+  compliance = Set.new @activity_instance.deliberations[:impact].compliance
   unless standards.empty?
     compliance.should_not be_empty, 'Expected calculation to comply with some standards, but it complied with none'
   end
@@ -85,7 +85,7 @@ end
 
 Then /^the calculation should not comply with standards? "(.*)"$/ do |standard_list|
   standards = Set.new standard_list.split(/,\s*/).map(&:to_sym)
-  compliance = Set.new @activity_instance.deliberations[:emission].compliance
+  compliance = Set.new @activity_instance.deliberations[:impact].compliance
   unless compliance.empty?
     diff_list = (standards - compliance)  # s - c = set of anything in s that is not in c
     diff_list.should be(standards), "Calculation should not have complied with #{(standards - diff_list).to_a.inspect}"

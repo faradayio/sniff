@@ -1,9 +1,9 @@
 module BrighterPlanet
   module Dirigible
-    module CarbonModel
+    module ImpactModel
       def self.included(base)
-        base.decide :emission, :with => :characteristics do
-          committee :emission do # returns kg CO2
+        base.decide :impact, :with => :characteristics do
+          committee :carbon do # returns kg CO2
             quorum 'default' do
               100.0
             end

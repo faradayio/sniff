@@ -74,10 +74,10 @@ module Sniff
 
         directory 'docs/'
 
-        Rocco::make 'docs/', "lib/#{gemname}/carbon_model.rb"
+        Rocco::make 'docs/', "lib/#{gemname}/impact_model.rb"
 
         task :google_analyzed_rocco => ['docs/', :rocco] do
-          source = File.read "docs/lib/#{gemname}/carbon_model.html"
+          source = File.read "docs/lib/#{gemname}/impact_model.html"
           unless source =~ /_gaq/
             source.sub! '</head>', <<-HTML
   <script type="text/javascript">
@@ -111,7 +111,7 @@ module Sniff
   </style>
 </head>
           HTML
-            File.open "docs/lib/#{gemname}/carbon_model.html", 'w' do |f|
+            File.open "docs/lib/#{gemname}/impact_model.html", 'w' do |f|
               f.puts source
             end
           end
@@ -120,10 +120,10 @@ module Sniff
         desc 'Update rocco docs on gh-pages branch'
         task :pages => ['pages:sync', :google_analyzed_rocco] do
           rev = `git rev-parse --short HEAD`.strip
-          html = File.read "docs/lib/#{gemname}/carbon_model.html"
+          html = File.read "docs/lib/#{gemname}/impact_model.html"
 
           puts `git checkout gh-pages`
-          File.open 'carbon_model.html', 'w' do |f|
+          File.open 'impact_model.html', 'w' do |f|
             f.puts html
           end
 
