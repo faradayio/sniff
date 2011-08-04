@@ -8,7 +8,7 @@ def bless_characteristics(characteristics)
   end
 end
 
-When /^the "(.*)" committee is calculated$/ do |committee_name|
+When /^the "(.*)" committee reports$/ do |committee_name|
   @expectations.map(&:call)
   @decision ||= @activity.decisions[:impact]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }

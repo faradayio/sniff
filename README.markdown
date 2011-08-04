@@ -32,7 +32,7 @@ At the command prompt, do:
     #=> <ZipCode id="...>
 
 ## The emitter
-An *emitter* is a software model of a real-world GHG emission source, like a flight. Brighter Planet's emitter libraries each comprise an impact model, an attribute curation policy, a persistence schema, and a summarization strategy.
+An *emitter* is a software model of a real-world impact source, like a flight. Brighter Planet's emitter libraries each comprise an impact model, an attribute curation policy, a persistence schema, and a summarization strategy.
 
 ### Persistence schema
 Although the production environment does not persist emitter instances, we nevertheless define emitter schemas to ease ActiveRecord assocations. An emitter's schema is defined in `lib/*emitter_name*/data.rb` within an emitter library. For example, here is [flight's schema](http://github.com/brighterplanet/flight/blob/master/lib/flight/data.rb).
