@@ -91,6 +91,13 @@ module Sniff
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
+  <style type="text/css">
+    @media print {
+      .code pre {
+        white-space: pre-wrap;
+      }
+    }
+  </style>
 </head>
           HTML
             File.open "docs/lib/#{gemname}/carbon_model.html", 'w' do |f|
