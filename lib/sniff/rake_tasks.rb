@@ -92,9 +92,19 @@ module Sniff
     })();
   </script>
   <style type="text/css">
+    td.docs h1 {
+      margin-top: 0;
+    }
     @media print {
       .code pre {
         white-space: pre-wrap;
+      }
+      .code {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .code .highlight {
+        margin-left: 15px;
       }
     }
   </style>
