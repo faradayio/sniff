@@ -102,10 +102,10 @@ module Sniff
       .code {
         padding-left: 0 !important;
         padding-right: 0 !important;
-        width: 95% !important;
       }
       .code .highlight {
         margin-left: 15px;
+        margin-right: 15px;
       }
     }
   </style>
