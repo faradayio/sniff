@@ -25,9 +25,11 @@ Given /^it has "(.+)" of "(.*)"$/ do |field, value|
     context = @activity_hash
     methods.each do |method|
       method = method.to_sym
-      context[method] ||= {}
-      value = Date.parse(value) if value =~ /\d{4}-\d{2}-\d{2}/
-      context[method] = value if method == methods.last.to_sym
+      if method == methods.last.to_sym
+        context[method] = coerce_value(value) 
+      else
+        context[method] ||= {}
+      end
       context = context[method]
     end
   end
