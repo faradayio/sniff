@@ -1,56 +1,64 @@
 require 'time'
 require 'timeframe'
 
-Given /^an? (.+) emission$/ do |emitter|
-  @emitter_class = emitter.gsub(/\s+/,'_').camelize
-  @emitter_class = "#{@emitter_class}Record".constantize
-  @activity_hash = {}
-  @expectations = []
+Given %r{^an? (.+) (emitter|emission)$} do |name, _|
+  name = name.gsub(/\s+/,'_').camelize + 'Record'
+  @activity = name.constantize
+  @characteristics = {}
+  @expectations ||= []
+end
+
+Given /^(a )?characteristic "(.*)" of integer value "(.*)"$/ do |_, name, value|
+  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_i\""
+end
+Given /^(a )?characteristic "(.*)" of address value "(.*)"$/ do |_, name, value|
+  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_s\""
+end
+
+Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do |_, name, value, __, converter|
+  if name =~ /\./
+    model_name, attribute = name.split /\./
+    model = begin
+      model_name.singularize.camelize.constantize
+    rescue NameError
+      association = @activity.reflect_on_association model_name.to_sym
+      association.klass
+    end
+    value = model.send "find_by_#{attribute}", value
+    @characteristics[model_name.to_sym] = value
+  elsif name == 'timeframe' 
+    @timeframe = (value.present?) ? Timeframe.interval(value) : nil
+  elsif name == 'active_subtimeframe'
+    @characteristics[:active_subtimeframe] = (value.present?) ? Timeframe.interval(value) : nil
+  elsif converter
+    value = value.send converter
+    @characteristics[name.to_sym] = value
+  else
+    value = coerce_value(value)
+    @characteristics[name.to_sym] = value
+  end
+end
+
+Given /^(a )?characteristic "(.*)" including "(.*)"$/ do |_, name, values|
+  @characteristics[name.to_sym] ||= []
+  @characteristics[name.to_sym] += values.split(/,/)
 end
 
 Given /^an? (.+) has nothing$/ do |emitter|
-  Given "a #{emitter} emission"
-end
-
-Given /^an? (.+) has "(.+)" of "(.*)"$/ do |emitter, field, value|
-  Given "a #{emitter} emission"
-  Given "it has \"#{field}\" of \"#{value}\""
 end
 
 Given /^it has "(.+)" of "(.*)"$/ do |field, value|
-  if value =~ /[\d-]+\/[\d-]+/
-    @timeframe = Timeframe.interval(value) 
-  elsif value.present?
-    methods = field.split('.')
-    context = @activity_hash
-    methods.each do |method|
-      method = method.to_sym
-      if method == methods.last.to_sym
-        context[method] = coerce_value(value) 
-      else
-        context[method] ||= {}
-      end
-      context = context[method]
-    end
-  end
-end
-
-Given /^the current date is "(.+)"$/ do |current_date|
-  @current_date = Time.parse(current_date)
+  Given %Q{characteristic "#{field}" of "#{value}"}
 end
 
 When /^emissions are calculated$/ do
-  @timeframe ||= Timeframe.this_year
-  @activity = @emitter_class.from_params_hash @activity_hash
   @expectations.map(&:call)
-  if @current_date
-    Timecop.travel(@current_date) do
-      @emission = @activity.emission @timeframe
-    end
-  else
-    @emission = @activity.emission @timeframe
+  Timecop.travel(@current_date || Time.now) do
+    @timeframe ||= Timeframe.this_year
+    @activity_instance = @activity.new @characteristics
+    @emission = @activity_instance.emission @timeframe
   end
-  @characteristics = @activity.deliberations[:emission].characteristics
+  @characteristics = @activity_instance.deliberations[:emission].characteristics
 end
 
 Then /^the emission value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, emissions|
@@ -67,7 +75,7 @@ end
 
 Then /^the calculation should comply with standards? "(.*)"$/ do |standard_list|
   standards = Set.new standard_list.split(/,\s*/).map(&:to_sym)
-  compliance = Set.new @activity.deliberations[:emission].compliance
+  compliance = Set.new @activity_instance.deliberations[:emission].compliance
   unless standards.empty?
     compliance.should_not be_empty, 'Expected calculation to comply with some standards, but it complied with none'
   end
@@ -77,7 +85,7 @@ end
 
 Then /^the calculation should not comply with standards? "(.*)"$/ do |standard_list|
   standards = Set.new standard_list.split(/,\s*/).map(&:to_sym)
-  compliance = Set.new @activity.deliberations[:emission].compliance
+  compliance = Set.new @activity_instance.deliberations[:emission].compliance
   unless compliance.empty?
     diff_list = (standards - compliance)  # s - c = set of anything in s that is not in c
     diff_list.should be(standards), "Calculation should not have complied with #{(standards - diff_list).to_a.inspect}"

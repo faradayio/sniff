@@ -54,4 +54,3 @@ require 'earth'
 
 $:.unshift File.dirname(__FILE__)
 require 'sniff/database'
-require 'sniff/emitter'

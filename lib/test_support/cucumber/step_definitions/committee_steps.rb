@@ -1,53 +1,12 @@
 require 'active_support'
 
-Given /^an? (.+) emitter$/ do |name|
-  name = name.gsub(/\s+/,'_').camelize + 'Record'
-  @activity = name.constantize
-  @characteristics ||= {}
-  @expectations ||= []
-end
-
-Given /^(a )?characteristic "(.*)" of integer value "(.*)"$/ do |_, name, value|
-  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_i\""
-end
-Given /^(a )?characteristic "(.*)" of address value "(.*)"$/ do |_, name, value|
-  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_s\""
-end
-
-Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do |_, name, value, __, converter|
-  if name =~ /\./
-    model_name, attribute = name.split /\./
-    model = begin
-      model_name.singularize.camelize.constantize
-    rescue NameError
-      association = @activity.reflect_on_association model_name.to_sym
-      association.klass
-    end
-    value = model.send "find_by_#{attribute}", value
-    @characteristics[model_name.to_sym] = value
-  elsif name == 'timeframe' || name == 'active_subtimeframe'
-    @characteristics[name.to_sym] = (value.present?) ? Timeframe.interval(value) : nil
-  elsif converter
-    value = value.send converter
-    @characteristics[name.to_sym] = value
-  else
-    value = coerce_value(value)
-    @characteristics[name.to_sym] = value
-  end
-end
-
-Given /^(a )?characteristic "(.*)" including "(.*)"$/ do |_, name, values|
-  @characteristics[name.to_sym] ||= []
-  @characteristics[name.to_sym] += values.split(/,/)
-end
-
 When /^the "(.*)" committee is calculated$/ do |committee_name|
   @expectations.map(&:call)
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
   args = [@characteristics]
-  if @characteristics[:timeframe]
-    args << [@characteristics[:timeframe]]
+  if @timeframe
+    args << [@timeframe]
   else
     args << []
   end
