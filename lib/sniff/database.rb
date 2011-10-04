@@ -100,7 +100,7 @@ module Sniff
     end
 
     def create_emitter_table
-      emitter_class.force_schema! if emitter_class
+      emitter_class.auto_upgrade! if emitter_class
     end
 
     def read_fixtures
@@ -122,7 +122,7 @@ module Sniff
           fixture_file = File.join(fixtures_path, table_name + '.csv')
           if File.exist? fixture_file
             log "Loading fixture #{fixture_file}"
-            Fixtures.create_fixtures(fixtures_path, table_name, resource => table_name)
+            ActiveRecord::Fixtures.create_fixtures(fixtures_path, table_name, resource => table_name)
           end
         end
       end

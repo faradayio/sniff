@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activesupport', '>=3'
   s.add_runtime_dependency 'aaronh-chronic', '>=0.3.9'
   s.add_runtime_dependency 'bueller', '>=0.0.5'
-  s.add_runtime_dependency 'force_schema'
+  s.add_runtime_dependency 'mini_record-compat'
   s.add_runtime_dependency 'cucumber'
   s.add_runtime_dependency 'earth', '>=0.4.5'
   s.add_runtime_dependency 'rake', '>=0.9.0'
@@ -39,6 +39,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'timeframe', '>=0.0.8'
   s.add_runtime_dependency 'watchr'
   s.add_development_dependency 'sandbox'
-  s.add_development_dependency 'emitter', '>= 0.5.0'
+  s.add_development_dependency 'emitter', '>= 0.5.0' unless ENV['LOCAL_EMITTER']
 end
 

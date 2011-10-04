@@ -2,9 +2,8 @@ module BrighterPlanet
   module Dirigible
     module Data
       def self.included(base)
-        base.force_schema do
-          float    'fuel_efficiency'
-          float    'annual_distance_estimate'
+        base.col :fuel_efficiency, :type => :float
+        base.col :annual_distance_estimate, :type => :float
         end
       end
     end
