@@ -1,21 +1,25 @@
 require 'active_support'
+require 'charisma'
+
+def bless_characteristics(characteristics)
+  characteristics.inject({}) do |memo, (k,v)|
+    memo[k] = Charisma::Curator::Curation.new v, @activity.characterization[k]
+    memo
+  end
+end
 
 When /^the "(.*)" committee is calculated$/ do |committee_name|
   @expectations.map(&:call)
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
-  args = [@characteristics]
+  args = [bless_characteristics(@characteristics)]
   if @timeframe
     args << [@timeframe]
   else
     args << []
   end
   @report = @committee.report *args
-#  if @report.nil?
-#    raise "The committee #{@committee.name} did not come to a conclusion. Characteristics: #{@characteristics.inspect}"
-#  else
-    @characteristics[committee_name.to_sym] = @report.try(:conclusion)
-#  end
+  @characteristics[committee_name.to_sym] = @report.try(:conclusion)
 end
 
 Then /^then a report should exist for the committee$/ do
