@@ -56,9 +56,9 @@ When /^impacts are calculated$/ do
   Timecop.travel(@current_date || Time.now) do
     @timeframe ||= Timeframe.this_year
     @activity_instance = @activity.new @characteristics
-    @emission = @activity_instance.emission @timeframe
+    @impact = @activity_instance.impact @timeframe
   end
-  @characteristics = @activity_instance.deliberations[:emission].characteristics
+  @characteristics = @activity_instance.deliberations[:impact].characteristics
 end
 
 Then /^the impact value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, impacts|
