@@ -1,7 +1,7 @@
 require 'time'
 require 'timeframe'
 
-Given %r{^an? (.+) impact$} do |name|
+Given %r{^an? (\w+)( impact)?$} do |name, _|
   name = name.gsub(/\s+/,'_').camelize + 'Record'
   @activity = name.constantize
   @characteristics = {}
@@ -61,9 +61,9 @@ When /^impacts are calculated$/ do
   @characteristics = @activity_instance.deliberations[:impact].characteristics
 end
 
-Then /^the impact value should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |cusion, impacts|
+Then /^the amount of "(.*)" should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |substance, cusion, target|
   @impact.should_not be_nil
-  @impact.should be_within(cusion.to_f).of(impacts.to_f)
+  @impact[substance.to_sym].should be_within(cusion.to_f).of(target.to_f)
 end
 
 Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
