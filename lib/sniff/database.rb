@@ -1,6 +1,8 @@
 require 'active_support'
 require 'sqlite3'
 
+require 'sniff/fixture'
+
 module Sniff
   class Database
     class << self
@@ -26,7 +28,6 @@ module Sniff
         environments.each { |e| e.populate_fixtures }
       end
 
-    private
       def init_environment(root, options = {})
         db = new root, options
         db.init
@@ -55,7 +56,7 @@ module Sniff
     end
 
     attr_accessor :root, :test_support_path, :fixtures_path,
-      :load_data, :fixtures, :logger
+      :load_data, :logger
 
     def initialize(root, options)
       self.root = root
@@ -78,14 +79,10 @@ module Sniff
       @fixtures_path ||= File.join(test_support_path, 'db', 'fixtures')
     end
 
-    def fixtures
-      @fixtures ||= []
-    end
-
     def init
       load_supporting_libs
       create_emitter_table
-      read_fixtures if load_data?
+      Fixture.load_fixtures fixtures_path
     end
 
     def emitter_class
@@ -103,29 +100,8 @@ module Sniff
       emitter_class.auto_upgrade! if emitter_class
     end
 
-    def read_fixtures
-      require 'active_record/fixtures'
-      log "Reading fixtures from #{fixtures_path}/**/*.{yml,csv}"
-
-      Dir["#{fixtures_path}/**/*.{yml,csv}"].each do |fixture_file|
-        fixtures << fixture_file
-      end
-    end
-
     def populate_fixtures
-      Encoding.default_external = 'UTF-8' if Object.const_defined?('Encoding')
-      Earth.resources.each do |resource|
-        next unless Object.const_defined?(resource)
-        resource_model = resource.constantize
-        if resource_model.table_exists?
-          table_name = resource_model.table_name
-          fixture_file = File.join(fixtures_path, table_name + '.csv')
-          if File.exist? fixture_file
-            log "Loading fixture #{fixture_file}"
-            ActiveRecord::Fixtures.create_fixtures(fixtures_path, table_name, resource => table_name)
-          end
-        end
-      end
+      Fixture.load_fixtures fixtures_path
     end
 
     def load_supporting_libs
