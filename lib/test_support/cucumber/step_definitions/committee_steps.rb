@@ -19,7 +19,8 @@ When /^the "(.*)" committee reports$/ do |committee_name|
     args << []
   end
   @report = @committee.report *args
-  @characteristics[committee_name.to_sym] = @report.try(:conclusion)
+  result = @report.try(:conclusion)
+  @characteristics[committee_name.to_sym] = result unless result.nil?
 end
 
 Then /^then a report should exist for the committee$/ do
