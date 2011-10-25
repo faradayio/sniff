@@ -14,6 +14,8 @@ module Leap
             hsh
           end
 
+          item[:compliance] = report.quorum.compliance
+
           reports << item
         end
         delibs
@@ -30,6 +32,8 @@ module Leap
               puts "    Params: "
               step[:params].inspect.split("\n").each { |p| puts "      #{p}" }
             end
+            puts "    Complies: "
+            puts "      #{step[:compliance]}"
             puts "    Result: #{step[:result].inspect}\n"
           end
         else
