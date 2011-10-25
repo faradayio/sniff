@@ -61,7 +61,7 @@ When /^impacts are calculated$/ do
   @characteristics = @activity_instance.deliberations[:impact].characteristics
 end
 
-Then /^the amount of "(.*)" should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |substance, cushion, target|
+Then /^the amount of "(.*)" should be within "([\d\.]+)" of "([\d\.]+)"$/ do |substance, cushion, target|
   @impact.should_not be_nil
   @impact[substance.to_sym].should be_within(cushion.to_f).of(target.to_f)
 end
