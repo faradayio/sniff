@@ -61,9 +61,9 @@ When /^impacts are calculated$/ do
   @characteristics = @activity_instance.deliberations[:impact].characteristics
 end
 
-Then /^the amount of "(.*)" should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |substance, cusion, target|
+Then /^the amount of "(.*)" should be within "([\d\.]+)" kgs of "([\d\.]+)"$/ do |substance, cushion, target|
   @impact.should_not be_nil
-  @impact[substance.to_sym].should be_within(cusion.to_f).of(target.to_f)
+  @impact[substance.to_sym].should be_within(cushion.to_f).of(target.to_f)
 end
 
 Then /^the calculation should have used committees "(.*)"$/ do |committee_list|
@@ -92,8 +92,8 @@ Then /^the calculation should not comply with standards? "(.*)"$/ do |standard_l
   end
 end
 
-Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cusion|
-  @characteristics[committee.to_sym].to_f.should be_within(cusion.to_f).of(value.to_f)
+Then /^the (.+) committee should be close to "([^,]+)", \+\/-"(.+)"$/ do |committee, value, cushion|
+  @characteristics[committee.to_sym].to_f.should be_within(cushion.to_f).of(value.to_f)
 end
 
 Then /^the (.+) committee should be exactly "(.*)"$/ do |committee, value|
