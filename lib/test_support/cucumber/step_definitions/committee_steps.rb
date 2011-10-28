@@ -49,7 +49,9 @@ Then /^the conclusion should not comply with standards? "(.*)"$/ do |standard_li
 end
 
 Then /^the conclusion of the committee should be "(.*)"$/ do |conclusion|
-  compare_values(@report.try(:conclusion), coerce_value(conclusion))
+  conclusion = @report.try(:conclusion)
+  conclusion = conclusion.respond_to?(:value) ? conclusion.value : conclusion
+  compare_values(conclusion, coerce_value(conclusion))
 end
 
 Then /^the conclusion of the committee should be timeframe "(.*)"$/ do |conclusion|
