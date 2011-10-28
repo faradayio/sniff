@@ -49,12 +49,12 @@ Then /^the conclusion should not comply with standards? "(.*)"$/ do |standard_li
 end
 
 Then /^the conclusion of the committee should be "(.*)"$/ do |conclusion|
-  compare_values(@report.try(:conclusion), conclusion)
+  compare_values(@report.try(:conclusion), coerce_value(conclusion))
 end
 
 Then /^the conclusion of the committee should be timeframe "(.*)"$/ do |conclusion|
   timeframe = Timeframe.interval(conclusion)
-  compare_values(@report.try(:conclusion), timeframe)
+  compare_values(@report.try(:conclusion), coerce_value(timeframe))
 end
 
 Then /^the conclusion of the committee should be nil$/ do
@@ -72,13 +72,13 @@ Then /^the conclusion of the committee should include a key of "(.*)" and value 
     @report.conclusion.each do |k, v|
       @report.conclusion[k.to_s] == v
     end
-    compare_values(@report.conclusion[key.to_s], value)
+    compare_values(@report.conclusion[key.to_s], coerce_value(value))
   end
 end
 
 Then /^the conclusion of the committee should have "(.*)" of "(.*)"$/ do |attribute, value|
   report_value = coerce_value @report.conclusion.send(attribute)
-  compare_values report_value, value
+  compare_values report_value, coerce_value(value)
 end
 
 Then /^the conclusion of the committee should include "(.*)"$/ do |value|
@@ -96,7 +96,7 @@ Then /^the conclusion of the committee should have a( single)? record identified
     records = @report.conclusion
     record = records.to_a.find { |r| equality? r.send(id_field), id }
     record.should_not be_nil
-    compare_values record.send(field), value
+    compare_values record.send(field), coerce_value(value)
     if single
       records.count.should == 1
     end
@@ -111,16 +111,16 @@ end
 
 Then /^the conclusion of the committee should have a record with "([^"]*)" equal to "([^"]*)"$/ do |field, value|
   record = @report.conclusion
-  compare_values(coerce_value(record.send(field)),value)
+  compare_values(coerce_value(record.send(field)), coerce_value(value))
 end
 
 Then /^the conclusion of the committee should include a key of "(.*)" and subvalue "(.*)" of "(.*)" and subvalue "(.*)" of "(.*)"$/ do |key, subkey1, subvalue1, subkey2, subvalue2|
   if key.present?
     @report.conclusion.keys.map(&:to_s).should include(key)
     actual_subvalue1 = coerce_value(@report.conclusion[key.to_s][subkey1.to_sym].to_s)
-    compare_values(actual_subvalue1, subvalue1)
+    compare_values(actual_subvalue1, coerce_value(subvalue1))
     actual_subvalue2 = coerce_value(@report.conclusion[key.to_s][subkey2.to_sym].to_s)
-    compare_values(actual_subvalue2, subvalue2)
+    compare_values(actual_subvalue2, coerce_value(subvalue2))
   else
     @report.conclusion.keys.map(&:to_s).should be_blank
   end

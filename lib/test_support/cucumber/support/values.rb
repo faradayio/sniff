@@ -30,23 +30,13 @@ module CucumberValueParser
 
   def compare_values(a, b)
     if b.blank?
-      a.should be_blank
+      a.blank?
+    elsif a.is_a?(Float)
+      a.should be_within(0.00001).of(b)
+    elsif a.is_a? Date
+      a.strftime('%Y-%m-%d').should == b.strftime('%Y-%m-%d')
     elsif a.is_a? Time
-      b = Chronic.parse b unless b.is_a?(Time)
-      a.should == b
-    elsif a.is_a? Date 
-      b = Date.parse b unless b.is_a?(Date)
-      a.should == b
-    elsif b =~ /\d+.*,.*\d/
-      a.should == b
-    elsif b =~ /\d+\.\d+/
-      b = b.to_f
-      a.to_f.should be_within(0.00001).of(b)
-    elsif b =~ /^0/
-      a.to_s.should == b
-    elsif b =~ /^\d+$/
-      b = b.to_i
-      a.to_i.should == b
+      a.strftime('%Y-%m-%d %H:%M:%s').should == b.strftime('%Y-%m-%d %H:%M:%s')
     else
       a.should == b
     end
