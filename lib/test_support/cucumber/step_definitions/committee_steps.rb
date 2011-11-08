@@ -71,10 +71,11 @@ Then /^the conclusion of the committee should include a key of "(.*)" and value 
   end
 
   if value.present?
+    string_keyed_hash = {}
     @report.conclusion.each do |k, v|
-      @report.conclusion[k.to_s] == v
+      string_keyed_hash[k.to_s] = v
     end
-    compare_values(@report.conclusion[key.to_s], coerce_value(value))
+    compare_values(string_keyed_hash[key.to_s], coerce_value(value))
   end
 end
 
