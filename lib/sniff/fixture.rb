@@ -4,6 +4,8 @@ module Sniff
   module Fixture
     extend self
 
+    # FIXME TODO this doesn't work for models where the model name is different from the table name
+    # (e.g. PetroleumAdministrationForDefenseDistrict, ResidentialEnergyConsumptionSurveyResponse)
     def load_fixtures(fixtures_path)
       Encoding.default_external = 'UTF-8' if Object.const_defined?('Encoding')
       Dir.glob(File.join(fixtures_path, '**/*.csv')) do |fixture_file|
