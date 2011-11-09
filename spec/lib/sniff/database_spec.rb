@@ -17,9 +17,10 @@ describe Sniff::Database do
       expect { AutomobileFuelType.count }.should raise_error
     end
     it 'should load data for all domains' do
-      Sniff.init(dirigible_path, :earth => :all, :apply_schemas => true)
+      puts dirigible_path + '/lib/test_support/db/fixtures'
+      Sniff.init(dirigible_path, :earth => :all, :apply_schemas => true,
+                 :fixtures_path => dirigible_path + '/lib/test_support/db/fixtures')
       PetroleumAdministrationForDefenseDistrict.count.should == 7
-      ZipCode.count.should > 0
     end
     it 'should load a schema for the emitter record' do
       Sniff.init(dirigible_path, :apply_schemas => true)

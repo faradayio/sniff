@@ -14,7 +14,7 @@ module Sniff
         next unless Object.const_defined?(model_name)
 
         model = model_name.constantize
-        model.create_table! unless model.table_exists?
+        model.auto_upgrade! unless model.table_exists?
         ActiveRecord::Base.logger.info "Loading fixture #{fixture_file}"
         CSV.foreach(fixture_file, :headers => true) do |row|
           ActiveRecord::Base.connection.insert_fixture(row, table_name) rescue ActiveRecord::RecordNotUnique
