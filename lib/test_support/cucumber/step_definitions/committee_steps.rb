@@ -28,12 +28,12 @@ Then /^then a report should exist for the committee$/ do
 end
 
 Then /^the committee should have used quorum "(.*)"$/ do |quorum|
-  Then 'then a report should exist for the committee'
+  step 'then a report should exist for the committee'
   @report.quorum.name.should == quorum
 end
 
 Then /^the conclusion should comply with standards? "(.*)"$/ do |standard_list|
-  Then 'then a report should exist for the committee'
+  step 'then a report should exist for the committee'
   standards = standard_list.split(/,\s*/)
   standards.each do |standard|
     @report.quorum.compliance.map(&:to_s).should include(standard)
@@ -41,7 +41,7 @@ Then /^the conclusion should comply with standards? "(.*)"$/ do |standard_list|
 end
 
 Then /^the conclusion should not comply with standards? "(.*)"$/ do |standard_list|
-  Then 'then a report should exist for the committee'
+  step 'then a report should exist for the committee'
   standards = standard_list.split(/,\s*/)
   standards.each do |standard|
     @report.quorum.compliance.map(&:to_s).should_not include(standard)
@@ -108,7 +108,7 @@ end
 
 Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" including "(.*)"$/ do |id_field, id, field, values|
   values.split(/,/).each do |value|
-    Then "the conclusion of the committee should have a record identified with \"#{id_field}\" of \"#{id}\" and having \"#{field}\" of \"#{value}\""
+    step "the conclusion of the committee should have a record identified with \"#{id_field}\" of \"#{id}\" and having \"#{field}\" of \"#{value}\""
   end
 end
 

@@ -9,10 +9,10 @@ Given %r{^an? (\w+)( impact)?$} do |name, _|
 end
 
 Given /^(a )?characteristic "(.*)" of integer value "(.*)"$/ do |_, name, value|
-  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_i\""
+  step "characteristic \"#{name}\" of \"#{value}\", converted with \"to_i\""
 end
 Given /^(a )?characteristic "(.*)" of address value "(.*)"$/ do |_, name, value|
-  Given "characteristic \"#{name}\" of \"#{value}\", converted with \"to_s\""
+  step "characteristic \"#{name}\" of \"#{value}\", converted with \"to_s\""
 end
 
 Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do |_, name, value, __, converter|
@@ -48,7 +48,7 @@ Given /^an? (.+) has nothing$/ do |emitter|
 end
 
 Given /^it has "(.+)" of "(.*)"$/ do |field, value|
-  Given %Q{characteristic "#{field}" of "#{value}"}
+  step %Q{characteristic "#{field}" of "#{value}"}
 end
 
 When /^impacts are calculated$/ do
