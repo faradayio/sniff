@@ -10,7 +10,7 @@ end
 
 When /^the "(.*)" committee reports$/ do |committee_name|
   @expectations.map(&:call)
-  @decision ||= @activity.decisions[:impact]
+  @decision ||= @activity.decisions.values.first
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
   args = [bless_characteristics(@characteristics)]
   if @timeframe

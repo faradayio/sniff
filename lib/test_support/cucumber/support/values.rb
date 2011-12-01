@@ -15,6 +15,8 @@ module CucumberValueParser
       value
     elsif value =~ /\d+\.\d+/
       value.to_f
+    elsif value =~ /^0+$/
+      0
     elsif value =~ /^0/
       value
     elsif value =~ /^\d+$/
