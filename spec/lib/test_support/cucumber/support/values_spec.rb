@@ -20,6 +20,9 @@ describe CucumberValueParser do
     it 'should parse a zero-prefixed float' do
       coerce_value('2.0').should == 2.0
     end
+    it 'should parse a range' do
+      coerce_value('12..42').should == (12..42)
+    end
     it 'should parse an integer' do
       coerce_value('2').should == 2
     end
