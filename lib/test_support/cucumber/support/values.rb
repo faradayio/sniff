@@ -34,7 +34,7 @@ module CucumberValueParser
 
   def compare_values(a, b)
     if b.blank?
-      a.blank?
+      a.should be_blank
     elsif a.is_a?(Float)
       a.should be_within(0.00001).of(b)
     elsif a.is_a? Date
