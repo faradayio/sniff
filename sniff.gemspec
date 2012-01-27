@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'cucumber'
   s.add_runtime_dependency 'earth', '>=0.4.5'
   s.add_runtime_dependency 'rake', '>=0.9.0'
-  s.add_runtime_dependency 'rcov'
+  s.add_runtime_dependency 'simplecov'
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'dkastner-rocco'
   s.add_runtime_dependency 'rspec', '~> 2'

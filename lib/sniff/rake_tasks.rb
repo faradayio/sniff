@@ -28,7 +28,7 @@ module Sniff
       RUBY_VERSION =~ /^1\.8/ ? true : false
     end
 
-    def rcov=(val)
+    def simplecov=(val)
       self.coverage = val
     end
 
@@ -44,9 +44,7 @@ module Sniff
     end
 
     def define_tasks
-      if coverage && ruby18?
-        require 'rcov'
-      elsif coverage
+      if coverage
         task :simplecov do
           require 'simplecov' 
 
@@ -171,14 +169,7 @@ module Sniff
           end
         end
 
-        if coverage && ruby18?
-          desc "Run cucumber tests with RCov"
-          Cucumber::Rake::Task.new(:features_with_coverage) do |t|
-            t.cucumber_opts = "features --format pretty"
-            t.rcov = true
-            t.rcov_opts = ['--exclude', 'features']
-          end
-        elsif coverage
+        if coverage
           task :features_with_coverage => [:simplecov, :features]
         end
       end
@@ -195,14 +186,7 @@ module Sniff
           end
         end
 
-        if coverage && ruby18?
-          desc "Run specs with RCov"
-          RSpec::Core::RakeTask.new(:examples_with_coverage) do |t|
-            t.rcov = true
-            t.rcov_opts = ['--exclude', 'spec']
-            t.rspec_opts = '-Ispec'
-          end
-        elsif coverage
+        if coverage
           task :examples_with_coverage => [:simplecov, :examples]
         end
       end
