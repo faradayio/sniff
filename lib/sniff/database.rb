@@ -1,5 +1,4 @@
 require 'active_support'
-require 'sqlite3'
 
 require 'sniff/fixture'
 
