@@ -33,11 +33,11 @@ module Sniff
 
       # Connect to the database and set up an ActiveRecord logger
       def db_init(options)
-        options[:db_adapter] ||= 'sqlite3'
-        options[:db_name] ||= ':memory:'
+        options = options.symbolize_keys
+        options[:adapter] ||= options.delete(:db_adapter) || 'sqlite3'
+        options[:database] ||= options.delete(:db_name) || ':memory:'
         ActiveRecord::Base.logger = Sniff.logger
-        ActiveRecord::Base.establish_connection :adapter => options[:db_adapter],
-          :database => options[:db_name]
+        ActiveRecord::Base.establish_connection options
       end
 
       # Initialize Earth, tell it to load schemas defined by each domain model's
