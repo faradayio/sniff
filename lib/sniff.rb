@@ -36,16 +36,22 @@ module Sniff
   # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
   def init(local_root, options = {})
     options[:earth] ||= :none
+    options[:database] = true if options[:database].nil?
 
     logger = options.delete(:logger) || ENV['LOGGER']
     Sniff.logger = Logger.new logger
     DataMiner.logger = Sniff.logger
 
-    Sniff::Database.init local_root, options
+    Sniff::Database.init local_root, options if options[:database]
 
     if options[:cucumber]
-      cukes = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'cucumber', '**', '*.rb')
+      require 'cucumber'
+      cukes = Dir.glob File.join(File.dirname(__FILE__), %w{test_support cucumber step_definitions ** *.rb})
       cukes.each { |support_file| require support_file }
+      require_relative './test_support/cucumber/support/activity'
+      require_relative './test_support/cucumber/support/values'
+      puts options[:cucumber].inspect
+      options[:cucumber].World(Sniff::Activity, Sniff::Values)
     end
   end
 end

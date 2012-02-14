@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'test_support/cucumber/support/values'
 
-include CucumberValueParser
+include Sniff::Values
 
-describe CucumberValueParser do
+describe Sniff::Values do
   describe '#coerce_value' do
     it 'should leave a nil value alone' do
       coerce_value(nil).should be_nil

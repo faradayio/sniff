@@ -1,30 +1,12 @@
-require 'active_support'
-require 'charisma'
-
-def bless_characteristics(characteristics)
-  characteristics.inject({}) do |memo, (k,v)|
-    memo[k] = Charisma::Curator::Curation.new v, @activity.characterization[k]
-    memo
-  end
-end
-
 When /^the "(.*)" committee reports$/ do |committee_name|
-  @expectations.map(&:call)
-  @decision ||= @activity.decisions.values.first
-  @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
-  args = [bless_characteristics(@characteristics)]
-  if @timeframe
-    args << [@timeframe]
-  else
-    args << []
-  end
-  @report = @committee.report *args
+  expectations.map(&:call)
+  @report = report(committee_name)
   result = @report.try(:conclusion)
-  @characteristics[committee_name.to_sym] = result unless result.nil?
+  characteristics[committee_name.to_sym] = result unless result.nil?
 end
 
 Then /^then a report should exist for the committee$/ do
-  raise "Missing report for committee #{@committee.name}" if @report.nil?
+  raise "Missing report for committee #{committee.name}" if @report.nil?
 end
 
 Then /^the committee should have used quorum "(.*)"$/ do |quorum|
