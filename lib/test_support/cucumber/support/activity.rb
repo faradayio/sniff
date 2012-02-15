@@ -4,10 +4,10 @@ module Sniff
       :current_date, :impact, :decision, :timeframe
 
     def init_activity(activity = Supplier, instance = nil)
-      self.activity ||= activity
+      self.activity = activity
       instance ||= activity.new
-      self.activity_instance ||= instance
-      self.expectations ||= []
+      self.activity_instance = instance
+      self.expectations = []
       self.characteristics = activity_instance.characteristics.characteristics.inject({}) do |hsh, (name, curation)|
         hsh[name] = curation.value
         hsh
