@@ -21,8 +21,8 @@ Sniff comes with a rake task that will load a console with a given earth domain:
 
     require 'sniff'
     require 'sniff/rake_task'
-    Sniff::RakeTask.new do |t|
-      t.earth_domains = [:air, :locality]
+    Sniff::RakeTask.new do
+      earth_domains [:air, :locality]
     end
 
 At the command prompt, do:
@@ -30,6 +30,34 @@ At the command prompt, do:
     > rake console
     irb > ZipCode.first
     #=> <ZipCode id="...>
+
+### In code
+
+In a file like your spec\_helper.rb or cucumber support/env.rb file you may want to set up sniff for your tests. Sniff has several options you can set at initialization time.
+
+    require 'sniff'
+    
+    Sniff.init gem_root do
+      earth_domains [:industry, :locality]
+      earth_options :apply_schemas => true
+      logger Logger.new(STDOUT)
+      data_miner_logger Logger.new(STDOUT)
+      database_enabled true
+      database_logger Logger.new(STDOUT)
+      database_fixtures_enabled true
+      database_fixtures_path File.join(some, path)
+      database_connection :adapter => 'mysql', :database => 'test_emitter'
+    end
+
+### In cucumber setup
+
+Sniff needs to inject its own helpers into cucumber so you have to point Sniff to your current environment:
+
+    # in features/support/env.rb
+    cucumber_env = self
+    Sniff.init gem_root do
+      cucumber cucumber_env
+    end
 
 ## The emitter
 An *emitter* is a software model of a real-world impact source, like a flight. Brighter Planet's emitter libraries each comprise an impact model, an attribute curation policy, a persistence schema, and a summarization strategy.
