@@ -58,8 +58,9 @@ module Sniff
 
       task :console do
         require 'sniff'
-        cwd = Dir.pwd
-        Sniff.init cwd, :earth => earth_domains
+        Sniff.init Dir.pwd do
+          earth_domains earth_domains
+        end
 
         require 'irb'
         ARGV.clear
