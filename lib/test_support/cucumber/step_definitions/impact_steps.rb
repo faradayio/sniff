@@ -35,7 +35,7 @@ Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do 
     @characteristics[name.to_sym] = value
   else
     value = coerce_value(value)
-    @characteristics[name.to_sym] = value
+    @characteristics[name.to_sym] = value unless value.nil?
   end
 end
 
