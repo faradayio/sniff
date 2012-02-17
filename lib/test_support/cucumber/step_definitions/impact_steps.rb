@@ -23,17 +23,17 @@ Given /^(a )?characteristic "(.*)" of "([^\"]*)"(, converted with "(.*)")?$/ do 
       association.klass
     end
     value = model.send "find_by_#{attribute}", value
-    characteristics[model_name.to_sym] = value
+    characteristics[model_name.to_sym] = value unless value.nil?
   elsif name == 'timeframe' 
     self.timeframe = (value.present?) ? Timeframe.interval(value) : nil
   elsif name == 'active_subtimeframe'
     characteristics[:active_subtimeframe] = (value.present?) ? Timeframe.interval(value) : nil
   elsif converter
     value = value.send converter
-    characteristics[name.to_sym] = value
+    characteristics[name.to_sym] = value unless value.nil?
   else
     value = coerce_value(value)
-    characteristics[name.to_sym] = value
+    characteristics[name.to_sym] = value unless value.nil?
   end
 end
 
