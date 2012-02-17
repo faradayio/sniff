@@ -40,13 +40,13 @@ module Sniff
         ActiveRecord::Base.establish_connection options
       end
 
-      # Initialize Earth, tell it to load schemas defined by each domain model's
-      # data_miner definition
+      # Initialize Earth, but don't load schemas - otherwise get blank tables
+      # for any resources in a loaded domain that don't have a fixture
       def earth_init(domains)
         domains ||= :none
         domains = [domains] unless domains.is_a? Array
         args = domains
-        args << {:apply_schemas => true}
+        args << {:apply_schemas => false}
 
         Earth.init *args
       end
