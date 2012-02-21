@@ -13,15 +13,15 @@ module CucumberValueParser
       false
     elsif value =~ /\d+.*,.*\d/ # ???
       value
-    elsif value =~ /^\d+\.\d+$/ # float
+    elsif value =~ /^-?\d+\.\d+$/ # float
       value.to_f
-    elsif value =~ /^\d+(\.\d+)?\.\.\d+(\.\d+)?$/ # range
+    elsif value =~ /^-?\d+(\.\d+)?\.\.-?\d+(\.\d+)?$/ # range
       (value.split('..')[0].to_i)..(value.split('..')[1].to_i)
     elsif value =~ /^0+$/ # all zeros => 0
       0
-    elsif value =~ /^0/ # zero preceding stuff => the input as a string
+    elsif value =~ /^0/ # zero preceding anything but a float or range => the input as a string
       value
-    elsif value =~ /^\d+$/ # integer
+    elsif value =~ /^-?\d+$/ # integer
       value.to_i
     elsif value =~ /Address:/
       value.sub(/Address:\s*/,'')

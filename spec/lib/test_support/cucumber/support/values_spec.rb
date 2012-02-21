@@ -17,14 +17,26 @@ describe CucumberValueParser do
     it 'should parse a float' do
       coerce_value('2.3').should == 2.3
     end
+    it 'should parse a negative float' do
+      coerce_value('-2.3').should == -2.3
+    end
     it 'should parse a zero-prefixed float' do
-      coerce_value('2.0').should == 2.0
+      coerce_value('02.0').should == 2.0
+    end
+    it 'should parse a zero-prefixed integer' do
+      coerce_value('05753').should == '05753'
     end
     it 'should parse a range' do
       coerce_value('12..42').should == (12..42)
     end
+    it 'should parse negative ranges' do
+      coerce_value('-42..-12').should == (-42..-12)
+    end
     it 'should parse an integer' do
       coerce_value('2').should == 2
+    end
+    it 'should parse a negative integer' do
+      coerce_value('-2').should == -2
     end
     it 'should parse a date' do
       coerce_value('today').should be_an_instance_of(Time)
