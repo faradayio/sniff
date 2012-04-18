@@ -1,5 +1,5 @@
 require 'data_miner'
-require 'mini_record'
+require 'active_record_inline_schema'
 require 'sniff/leap_ext'
 require 'logger'
 
