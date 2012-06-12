@@ -16,7 +16,6 @@ module Sniff
     def Database.init(*args)
       options = args.extract_options!.symbolize_keys
       options[:root] ||= Dir.pwd
-      mine_data = options.delete(:mine_data)
 
       db_options = {
         :adapter => options.delete(:adapter) || options.delete(:db_adapter) || 'sqlite3',
@@ -35,9 +34,6 @@ module Sniff
       unless options[:root] == Sniff.root
         fixtures_path = File.join(Sniff.root, 'lib', 'test_support', 'db', 'fixtures')
         environments << init_environment(Sniff.root, :fixtures_path => fixtures_path)
-      end
-
-      if mine_data
       end
     end
 
