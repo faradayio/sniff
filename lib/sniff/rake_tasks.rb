@@ -225,26 +225,30 @@ class Sniff
         end
       end
 
-      sniff = Sniff.new Dir.pwd
-      namespace :sniff do
-        task :init do
-          ActiveRecord::Base.configurations = {
-            Earth.env => ActiveRecord::Base.connection_config
-          }
+      if Earth.env.test?
+        sniff = Sniff.new Dir.pwd
+        namespace :sniff do
+          task :init do
+            sniff.connect
+            ActiveRecord::Base.configurations = {
+              Earth.env => ActiveRecord::Base.connection_config
+            }
+          end
+          task :migrate do
+            sniff.migrate!
+          end
+          task :seed => 'sniff:init' do
+            sniff.seed!
+          end
         end
-        task :migrate do
-          sniff.migrate!
-        end
-        task :seed do
-          sniff.seed!
-        end
-      end
 
-      require 'earth/tasks'
-      Earth::Tasks.new(false)
-      task 'earth:db:load_config' => 'sniff:init'
-      task 'earth:db:migrate' => 'sniff:migrate'
-      task 'earth:db:seed' => 'sniff:seed'
+        require 'earth/tasks'
+        Earth::Tasks.new(false)
+        task 'earth:db:load_config' => 'sniff:init'
+        task 'earth:db:migrate' => 'sniff:migrate'
+        Rake::Task['db:seed'].clear
+        task 'db:seed' => 'sniff:seed'
+      end
     end
   end
 end
