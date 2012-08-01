@@ -9,18 +9,20 @@ def bless_characteristics(characteristics)
 end
 
 When /^the "(.*)" committee reports$/ do |committee_name|
-  @expectations.map(&:call)
-  @decision ||= @activity.decisions.values.first
-  @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
-  args = [bless_characteristics(@characteristics)]
-  if @timeframe
-    args << [@timeframe]
-  else
-    args << []
+  if @characteristics[committee_name.to_sym].nil?
+    @expectations.map(&:call)
+    @decision ||= @activity.decisions.values.first
+    @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
+    args = [bless_characteristics(@characteristics)]
+    if @timeframe
+      args << [@timeframe]
+    else
+      args << []
+    end
+    @report = @committee.report *args
+    result = @report.try(:conclusion)
+    @characteristics[committee_name.to_sym] = result unless result.nil?
   end
-  @report = @committee.report *args
-  result = @report.try(:conclusion)
-  @characteristics[committee_name.to_sym] = result unless result.nil?
 end
 
 Then /^then a report should exist for the committee$/ do
