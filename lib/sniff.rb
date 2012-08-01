@@ -53,10 +53,14 @@ class Sniff
     Sniff.logger ||= Logger.new logger
     DataMiner.logger = Sniff.logger
 
-    if self.options[:cucumber]
-      cukes = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'cucumber', '**', '*.rb')
-      cukes.each { |support_file| require support_file }
-    end
+    init_cucumber if self.options[:cucumber]
+  end
+
+  def init_cucumber
+    require 'cucumber'
+    require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
+    cukes = Dir.glob File.join(File.dirname(__FILE__), 'test_support', 'cucumber', '**', '*.rb')
+    cukes.each { |support_file| require support_file }
   end
 
   def log(str)
