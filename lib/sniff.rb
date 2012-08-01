@@ -23,6 +23,12 @@ class Sniff
     @logger = val
   end
 
+  def Sniff.init(local_root, options = {})
+    sniff = new local_root, options
+    sniff.connect
+    sniff
+  end
+
   attr_accessor :root, :options, :test_support_path, :fixtures_path, :logger
 
   # Prepares the environment for running tests against Earth data and emitter 
