@@ -1,6 +1,6 @@
 require 'csv'
 
-module Sniff
+class Sniff
   module Fixture
     extend self
     

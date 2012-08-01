@@ -3,7 +3,7 @@ require 'rake/clean'
 require 'rdoc/task'
 require 'rake/tasklib'
 
-module Sniff
+class Sniff
   class RakeTasks
     include Rake::DSL
 
@@ -57,8 +57,8 @@ module Sniff
 
       task :console do
         require 'sniff'
-        cwd = Dir.pwd
-        Sniff.init cwd
+        sniff = Sniff.new Dir.pwd
+        sniff.connect
 
         require 'irb'
         ARGV.clear
@@ -225,16 +225,26 @@ module Sniff
         end
       end
 
-      task :sniff_init do
-        Sniff.init Dir.pwd
-        ActiveRecord::Base.configurations = {
-          Earth.env => ActiveRecord::Base.connection_config
-        }
+      sniff = Sniff.new Dir.pwd
+      namespace :sniff do
+        task :init do
+          ActiveRecord::Base.configurations = {
+            Earth.env => ActiveRecord::Base.connection_config
+          }
+        end
+        task :migrate do
+          sniff.migrate!
+        end
+        task :seed do
+          sniff.seed!
+        end
       end
-      task 'earth:db:load_config' => :sniff_init
 
       require 'earth/tasks'
       Earth::Tasks.new(false)
+      task 'earth:db:load_config' => 'sniff:init'
+      task 'earth:db:migrate' => 'sniff:migrate'
+      task 'earth:db:seed' => 'sniff:seed'
     end
   end
 end

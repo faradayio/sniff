@@ -4,3 +4,4 @@ db/schema_output
 spec/db/schema_output
 *~
 Gemfile.lock
+db
