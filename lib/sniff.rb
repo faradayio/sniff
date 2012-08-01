@@ -29,14 +29,12 @@ module Sniff
   # local_root: Root directory of the emitter gem to be tested (path to the repo)
   #
   # options: 
-  # * :earth is the list of domains Earth.init should load (default: none)
-  # * :load_data determines whether fixture data is loaded (default: true)
   # * :logger is a Logger log device used by Sniff and ActiveRecord (default: nil)
   #           logger: nil = no log, string = file path, STDOUT for terminal
   # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
+  # * :reset_schemas tells earth to recreate tables for each model (default: false)
+  # * :cucumber tells Sniff to load cucumber test support files provided by the emitter in <emitter_root>/test_support/cucumber (default: false)
   def init(local_root, options = {})
-    options[:earth] ||= :none
-
     logger = options.delete(:logger) || ENV['LOGGER']
     Sniff.logger = Logger.new logger
     DataMiner.logger = Sniff.logger
@@ -49,8 +47,6 @@ module Sniff
     end
   end
 end
-
-require 'earth'
 
 $:.unshift File.dirname(__FILE__)
 require 'sniff/database'

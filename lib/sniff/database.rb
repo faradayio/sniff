@@ -1,4 +1,5 @@
 require 'active_support'
+require 'earth'
 
 require 'sniff/fixture'
 
@@ -9,12 +10,10 @@ module Sniff
       #
       # local_root: Root directory of the emitter gem to be tested (path to the repo)
       # options: 
-      # * :earth is the list of domains Earth.init should load (default: none)
-      # * :load_data determines whether fixture data is loaded (default: true)
       # * :fixtures_path is the path to your gem's fixtures (default: local_root/features/support/db/fixtures)
+      # * :reset_schemas tells earth to recreate tables for each model (default: false)
       def init(local_root, options = {})
         db_init options
-        earth_init(options[:earth])
 
         environments = []
         environments << init_environment(local_root, options)
@@ -35,41 +34,23 @@ module Sniff
       def db_init(options)
         options = options.symbolize_keys
         options[:adapter] ||= options.delete(:db_adapter) || 'sqlite3'
-        options[:database] ||= options.delete(:db_name) || ':memory:'
+        options[:database] ||= options.delete(:db_name) || 'db/test.sqlite3'
         ActiveRecord::Base.logger = Sniff.logger
         ActiveRecord::Base.establish_connection options
       end
-
-      # Initialize Earth, but don't load schemas - otherwise get blank tables
-      # for any resources in a loaded domain that don't have a fixture
-      def earth_init(domains)
-        domains ||= :none
-        domains = [domains] unless domains.is_a? Array
-        args = domains
-        args << {:apply_schemas => false}
-
-        Earth.init *args
-      end
     end
 
-    attr_accessor :root, :test_support_path, :fixtures_path,
-      :load_data, :logger
+    attr_accessor :root, :test_support_path, :fixtures_path, :logger
 
     def initialize(root, options)
       self.root = root
       self.test_support_path = File.join(root, 'features', 'support')
-      self.load_data = options[:load_data]
       self.fixtures_path = options[:fixtures_path]
       self.logger = Sniff.logger
     end
 
     def log(str)
       logger.info str
-    end
-
-    def load_data?
-      @load_data = true if @load_data.nil?
-      @load_data
     end
 
     def fixtures_path

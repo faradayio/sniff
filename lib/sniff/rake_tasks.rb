@@ -11,10 +11,9 @@ module Sniff
       new(&blk).define_tasks
     end
 
-    attr_accessor :earth_domains, :cucumber, :rspec, :coverage, :rocco, :bueller, :watchr
+    attr_accessor :cucumber, :rspec, :coverage, :rocco, :bueller, :watchr
 
     def initialize
-      self.earth_domains = :all
       self.cucumber = true
       self.rspec = false
       self.coverage = true
@@ -59,7 +58,7 @@ module Sniff
       task :console do
         require 'sniff'
         cwd = Dir.pwd
-        Sniff.init cwd, :earth => earth_domains
+        Sniff.init cwd
 
         require 'irb'
         ARGV.clear
@@ -225,6 +224,17 @@ module Sniff
           end
         end
       end
+
+      task :sniff_init do
+        Sniff.init Dir.pwd
+        ActiveRecord::Base.configurations = {
+          Earth.env => ActiveRecord::Base.connection_config
+        }
+      end
+      task 'earth:db:load_config' => :sniff_init
+
+      require 'earth/tasks'
+      Earth::Tasks.new(false)
     end
   end
 end

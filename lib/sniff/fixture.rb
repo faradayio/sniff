@@ -11,9 +11,7 @@ module Sniff
         next unless Object.const_defined?(model_name)
         
         model = model_name.constantize
-        model.auto_upgrade!
-        model.delete_all # always import from scratch
-        ActiveRecord::Base.logger.info "Loading fixture #{fixture_file}"
+        model.delete_all
         CSV.foreach(fixture_file, :headers => true) do |row|
           ActiveRecord::Base.connection.insert_fixture(row, model.table_name) rescue ActiveRecord::RecordNotUnique
         end
