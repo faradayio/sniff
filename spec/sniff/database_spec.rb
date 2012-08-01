@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Sniff::Database do
   describe '#connect' do
-    let(:dirigible_path) { File.expand_path '../../fixtures/dirigible', File.dirname(__FILE__) }
+    let(:dirigible_path) { File.expand_path '../../fixtures/dirigible', __FILE__ }
     
     before :all do
       $:.unshift File.join(dirigible_path, 'lib')
