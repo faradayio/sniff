@@ -47,7 +47,7 @@ class Sniff
   # * :project is the current project (e.g. 'flight'). Default is guessed from CWD
   def initialize(local_root, options = {})
     self.root = local_root
-    self.project = options[:project] || File.basename(local_root)
+    self.project = options[:project] || File.basename(File.expand_path(local_root))
     self.options = options.symbolize_keys
     self.test_support_path = File.join(root, 'features', 'support')
     self.fixtures_path = options[:fixtures_path]
