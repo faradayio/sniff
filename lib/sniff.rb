@@ -1,5 +1,6 @@
-require 'data_miner'
 require 'active_record_inline_schema'
+require 'data_miner'
+require 'earth'
 require 'logger'
 
 require 'sniff/fixture'
@@ -29,7 +30,8 @@ class Sniff
     sniff
   end
 
-  attr_accessor :root, :options, :test_support_path, :fixtures_path, :logger
+  attr_accessor :root, :options, :test_support_path, :fixtures_path,
+    :logger, :project
 
   # Prepares the environment for running tests against Earth data and emitter 
   # gems.
@@ -42,8 +44,10 @@ class Sniff
   # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
   # * :reset_schemas tells earth to recreate tables for each model (default: false)
   # * :cucumber tells Sniff to load cucumber test support files provided by the emitter in <emitter_root>/test_support/cucumber (default: false)
+  # * :project is the current project (e.g. 'flight'). Default is guessed from CWD
   def initialize(local_root, options = {})
     self.root = local_root
+    self.project = options[:project] || File.basename(local_root)
     self.options = options.symbolize_keys
     self.test_support_path = File.join(root, 'features', 'support')
     self.fixtures_path = options[:fixtures_path]
@@ -52,6 +56,9 @@ class Sniff
     logger = self.options[:logger] || ENV['LOGGER']
     Sniff.logger ||= Logger.new logger
     DataMiner.logger = Sniff.logger
+    DataMiner.unit_converter = :conversions
+
+    ENV['DATABASE_URL'] ||= "postgres://localhost/test_#{project}"
 
     init_cucumber if self.options[:cucumber]
   end
@@ -73,10 +80,8 @@ class Sniff
 
   # Connect to the database and set up an ActiveRecord logger
   def connect
-    options[:adapter] ||= options[:db_adapter] || 'sqlite3'
-    options[:database] ||= options[:db_name] || 'db/test.sqlite3'
     ActiveRecord::Base.logger = Sniff.logger
-    ActiveRecord::Base.establish_connection options
+    Earth.connect
   end
 
   def emitter_class
@@ -99,6 +104,8 @@ class Sniff
   end
 
   def load_supporting_libs
+    require project
+
     $:.unshift File.join(root, 'lib')
     Dir[File.join(root, 'lib', 'test_support', '*.rb')].each do |lib|
       log "Loading #{lib}"

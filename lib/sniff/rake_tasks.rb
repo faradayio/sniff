@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/clean'
 require 'rdoc/task'
 require 'rake/tasklib'
+require 'earth'
 
 class Sniff
   class RakeTasks
@@ -230,23 +231,19 @@ class Sniff
         namespace :sniff do
           task :init do
             sniff.connect
-            ActiveRecord::Base.configurations = {
-              Earth.env => ActiveRecord::Base.connection_config
-            }
           end
-          task :migrate do
+          task :migrate => :init do
             sniff.migrate!
           end
-          task :seed => 'sniff:init' do
+          task :seed => :init do
             sniff.seed!
           end
         end
 
         require 'earth/tasks'
-        Earth::Tasks.new(false)
-        task 'earth:db:load_config' => 'sniff:init'
-        task 'earth:db:migrate' => 'sniff:migrate'
-        Rake::Task['db:seed'].clear
+        Earth::Tasks.new
+        #task 'db:load_config' => 'sniff:init'
+        task 'db:migrate' => 'sniff:migrate'
         task 'db:seed' => 'sniff:seed'
       end
     end

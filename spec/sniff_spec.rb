@@ -6,7 +6,7 @@ require 'earth/locality/petroleum_administration_for_defense_district'
 describe Sniff do
   let(:dirigible_path) { File.expand_path '../fixtures/dirigible', __FILE__ }
   let(:sniff) do
-    sniff = Sniff.new(dirigible_path, :fixtures_path => dirigible_path + '/lib/test_support/db/fixtures')
+    sniff = Sniff.new(dirigible_path, :fixtures_path => dirigible_path + '/lib/test_support/db/fixtures', :project => 'sniff')
     sniff.connect
     sniff
   end
