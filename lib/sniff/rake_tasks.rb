@@ -226,26 +226,24 @@ class Sniff
         end
       end
 
-      if Earth.env.test?
-        sniff = Sniff.new Dir.pwd
-        namespace :sniff do
-          task :init do
-            sniff.connect
-          end
-          task :migrate => :init do
-            sniff.migrate!
-          end
-          task :seed => :init do
-            sniff.seed!
-          end
+      require 'sniff'
+      sniff = Sniff.new Dir.pwd
+      namespace :sniff do
+        task :init do
+          sniff.connect
         end
-
-        require 'earth/tasks'
-        Earth::Tasks.new
-        #task 'db:load_config' => 'sniff:init'
-        task 'db:migrate' => 'sniff:migrate'
-        task 'db:seed' => 'sniff:seed'
+        task :migrate => :init do
+          sniff.migrate!
+        end
+        task :seed => :init do
+          sniff.seed!
+        end
       end
+
+      require 'earth/tasks'
+      Earth::Tasks.new
+      task 'db:migrate' => 'sniff:migrate'
+      task 'db:seed' => 'sniff:seed'
     end
   end
 end

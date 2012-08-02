@@ -51,14 +51,15 @@ class Sniff
     self.options = options.symbolize_keys
     self.test_support_path = File.join(root, 'features', 'support')
     self.fixtures_path = options[:fixtures_path]
+
+    ENV['DATABASE_URL'] ||= "mysql2://root:password@localhost/test_#{project}"
+
     load_supporting_libs
 
     logger = self.options[:logger] || ENV['LOGGER']
     Sniff.logger ||= Logger.new logger
     DataMiner.logger = Sniff.logger
     DataMiner.unit_converter = :conversions
-
-    ENV['DATABASE_URL'] ||= "postgres://localhost/test_#{project}"
 
     init_cucumber if self.options[:cucumber]
   end
