@@ -242,6 +242,7 @@ class Sniff
 
       require 'earth/tasks'
       Earth::Tasks.new
+      Rake::Task['earth:db:seed'].clear
       task 'db:migrate' => 'sniff:migrate'
       task 'db:seed' => 'sniff:seed'
     end
