@@ -11,7 +11,7 @@ describe Sniff::RakeTasks do
   end
 
   let(:tasks) { Sniff::RakeTask.new }
-  let(:emitter_path) { File.expand_path '../../../', File.dirname(__FILE__) }
+  let(:emitter_path) { File.expand_path '../../../', __FILE__ }
   let(:rakefile) do
     rakefile = <<-RAKEFILE
 Encoding.default_external = Encoding.find 'UTF-8'
