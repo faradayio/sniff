@@ -1,3 +1,3 @@
 class Sniff
-  VERSION = "0.11.12"
+  VERSION = "1.0.0"
 end
