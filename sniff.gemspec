@@ -26,8 +26,10 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'aaronh-chronic', '>=0.3.9'
   s.add_runtime_dependency 'bueller', '>=0.0.5'
   s.add_runtime_dependency 'active_record_inline_schema'
+  s.add_runtime_dependency 'conversions'
   s.add_runtime_dependency 'cucumber'
-  s.add_runtime_dependency 'earth', '>=0.4.5'
+  s.add_runtime_dependency 'earth', '~>1.0.0'
+  s.add_runtime_dependency 'mysql2'
   s.add_runtime_dependency 'rake', '>=0.9.0'
   s.add_runtime_dependency 'simplecov'
   s.add_runtime_dependency 'rdoc'
@@ -38,7 +40,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'timeframe', '>=0.0.8'
   s.add_runtime_dependency 'watchr'
   s.add_development_dependency 'sandbox'
-  s.add_development_dependency 'emitter', '>= 0.5.0' unless ENV['LOCAL_EMITTER']
-  s.add_development_dependency 'sqlite3-ruby'
+  s.add_development_dependency 'emitter', '~> 0.12.0'
 end
 
