@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'active_record_inline_schema'
   s.add_runtime_dependency 'conversions'
   s.add_runtime_dependency 'cucumber'
-  s.add_runtime_dependency 'earth', '~>1.0.0'
+  s.add_runtime_dependency 'earth', '~>1.1.0'
   s.add_runtime_dependency 'mysql2'
   s.add_runtime_dependency 'rake', '>=0.9.0'
   s.add_runtime_dependency 'simplecov'
