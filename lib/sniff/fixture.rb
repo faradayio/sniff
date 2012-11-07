@@ -11,7 +11,7 @@ class Sniff
         next unless Object.const_defined?(model_name)
         
         model = model_name.constantize
-        model.delete_all
+        model.create_table!
         CSV.foreach(fixture_file, :headers => true) do |row|
           ActiveRecord::Base.connection.insert_fixture(row, model.table_name) rescue ActiveRecord::RecordNotUnique
         end

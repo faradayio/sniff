@@ -56,6 +56,7 @@ class Sniff
         end
       end
 
+      desc "Load a console"
       task :console do
         require 'sniff'
         sniff = Sniff.new Dir.pwd
@@ -176,8 +177,8 @@ class Sniff
 
       if rspec
         require 'rspec/core/rake_task'
-
-        desc "Run all examples"
+      
+        desc "Run all rspec examples"
         RSpec::Core::RakeTask.new('examples') do |c|
           if ENV['RSPEC_FORMAT']
             c.rspec_opts = "-Ispec --format #{ENV['RSPEC_FORMAT']}"
@@ -197,6 +198,7 @@ class Sniff
       test_tasks << :examples if rspec
       test_tasks << :features if cucumber
       unless test_tasks.empty?
+        desc "Run tests"
         task :test => test_tasks
         task :default => :test
       end

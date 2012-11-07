@@ -27,6 +27,8 @@ class Sniff
   def Sniff.init(local_root, options = {})
     sniff = new local_root, options
     sniff.connect
+    sniff.migrate!
+    sniff.seed!
     sniff
   end
 
@@ -42,7 +44,6 @@ class Sniff
   # * :logger is a Logger log device used by Sniff and ActiveRecord (default: nil)
   #           logger: nil = no log, string = file path, STDOUT for terminal
   # * :fixtures_path is the path to your gem's fixtures (default: local_root/lib/db/fixtures)
-  # * :reset_schemas tells earth to recreate tables for each model (default: false)
   # * :cucumber tells Sniff to load cucumber test support files provided by the emitter in <emitter_root>/test_support/cucumber (default: false)
   # * :project is the current project (e.g. 'flight'). Default is guessed from CWD
   def initialize(local_root, options = {})
